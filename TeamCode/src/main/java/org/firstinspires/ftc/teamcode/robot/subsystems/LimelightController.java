@@ -57,4 +57,11 @@ public class LimelightController {
     public void stop() {
         limelight.stop();
     }
+    public Limelight3A getLimelight() {
+        return limelight;
+    }
+
+    public LLResult getResult() {
+        return result;
+    }
 }
