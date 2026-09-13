@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robot.hardware.HardwareNames;
-import org.firstinspires.ftc.teamcode.robot.subsystems.LimelightController;
+import org.firstinspires.ftc.teamcode.robot.subsystems.LL;
 
 public class Robot {
     public final Follower follower;
@@ -23,7 +23,7 @@ public class Robot {
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
 
-    public LimelightController limelightController;
+    public LL LL;
 
     public Robot(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.get(DcMotorEx.class, HardwareNames.FRONT_LEFT_DRIVE);
@@ -40,7 +40,7 @@ public class Robot {
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         follower = Constants.createFollower(hardwareMap);
-        limelightController = new LimelightController(hardwareMap);
+        LL = new LL(hardwareMap);
         macros = new RobotMacros();
     }
 
@@ -69,13 +69,13 @@ public class Robot {
         }
 
         follower.update();
-        limelightController.update();
+        LL.update();
     }
 
     public void stop() {
         follower.stop();
         macros.stop();
-        limelightController.stop();
+        LL.stop();
     }
 
     public class RobotMacros {

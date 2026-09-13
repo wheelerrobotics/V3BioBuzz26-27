@@ -7,15 +7,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.robot.hardware.HardwareNames;
 
 /** Owns the Limelight camera and exposes vision data to the rest of the robot. */
-public class LimelightController {
+public class LL {
     private static final int DEFAULT_PIPELINE = 0;
     private static final int POLL_RATE_HZ = 100;
     private static final double METERS_TO_INCHES = 39.3701;
-
     private final Limelight3A limelight;
     private LLResult result;
 
-    public LimelightController(HardwareMap hardwareMap) {
+    public LL(HardwareMap hardwareMap) {
         limelight = hardwareMap.get(Limelight3A.class, HardwareNames.LIMELIGHT);
         limelight.setPollRateHz(POLL_RATE_HZ);
         limelight.pipelineSwitch(DEFAULT_PIPELINE);

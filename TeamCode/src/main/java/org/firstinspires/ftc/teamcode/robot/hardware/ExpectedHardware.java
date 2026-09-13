@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.robot.hardware.util.HardwareDeviceSpec;
 
 /** The complete list of devices expected on the current robot. */
 public final class ExpectedHardware {
+    private ExpectedHardware() {}
     public static final HardwareDeviceSpec[] DEVICES = {
             new HardwareDeviceSpec(
                     FRONT_LEFT_DRIVE,
@@ -42,6 +43,4 @@ public final class ExpectedHardware {
                     "The Pinpoint"
             )
     };
-
-    private ExpectedHardware() {}
 }
