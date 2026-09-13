@@ -6,8 +6,8 @@ import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.config.RobotConstants;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants;
 
 @TeleOp(name = "SampleTele1", group = "Samples")
 public class SampleTele1 extends OpMode {
