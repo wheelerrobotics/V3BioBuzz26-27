@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.robot.helpers;
+package org.firstinspires.ftc.teamcode.bioBuzz.helpers;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
