@@ -25,7 +25,7 @@ public class PoseLib {
     public static Pose bottomFlower = field.of(8, 47.5, 180); public static Pose bottomFlowerCTRL = field.of(17, 47.5, 180);
     public static Pose partnerPickup = field.of(31, 133.5, 90); public static Pose partnerPickupCTRL = field.of(35, 113, 90);
     public static Pose gardenPickup = field.of(9, 9, 270); public static Pose gardenPickupCTRL = field.of(9, 16, 270);
-    public static Pose parkPickup = field.of(10, 95, 90);
+    public static Pose park = field.of(10, 95, 90);
     public static Pose nectarCell = field.of(58,56,90); public static Pose emptyCell = field.of(nectarCell.x(), nectarCell.invert().y(),270);
 
     public enum Target {
