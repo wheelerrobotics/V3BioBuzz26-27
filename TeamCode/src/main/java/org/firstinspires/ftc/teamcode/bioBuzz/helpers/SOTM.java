@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.bioBuzz.helpers;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class SOTM {
     private static ElapsedTime elapsedTime = new ElapsedTime();
     private static double lastTime = 0;
@@ -43,19 +45,16 @@ public class SOTM {
         return ay;
     }
 
-    private static double getTFlight() {
-        return 1; // FIXME: 9/13/26
-    }
-
     private static double modelLead(double vr, double ar, double tFlight) {
-        return vr * tFlight + 0.5 * (ar * tFlight * tFlight);
+        return vr * tFlight + 0.5 * (ar * Math.pow(tFlight, 2));
     }
 
-    public static double getLead(Follower f) {
+    public static double getLead(Follower f, double time, Telemetry t) {
         double vr = getAngular(f.velocity().vx, f.velocity().vy);
         double ar = getAngular(getXAcceleration(f), getYAcceleration(f));
-        double tFlight = getTFlight();
-        return modelLead(vr, ar, tFlight);
+        double lead = modelLead(vr, ar, time);
+        t.addData("lead angle for SOTM", lead);
+        return lead;
     }
 
 }
