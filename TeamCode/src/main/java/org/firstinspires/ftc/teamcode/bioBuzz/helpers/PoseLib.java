@@ -41,6 +41,9 @@ public class PoseLib {
             cFactoryTarget = nTarget;
         }
     }
+    public static Target getTarget() {
+        return cFactoryTarget;
+    }
 
     public static Pose tPose() {
         return tPose;
