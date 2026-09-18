@@ -56,7 +56,8 @@ public class LL {
     public void stop() {
         limelight.stop();
     }
-    public Limelight3A getLimelight() {
+
+    public Limelight3A get() {
         return limelight;
     }
 

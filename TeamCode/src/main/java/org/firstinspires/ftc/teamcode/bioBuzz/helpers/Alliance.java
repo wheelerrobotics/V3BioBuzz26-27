@@ -10,12 +10,8 @@ public class Alliance {
 
     private static Color currentAlliance = null;
 
-    public static Color alliance() throws Exception {
-        try {
-            return Objects.requireNonNull(currentAlliance);
-        } catch (NullPointerException e) {
-            throw new Exception("Alliance was accessed before set", e);
-        }
+    public static Color get()  {
+        return Objects.requireNonNull(currentAlliance);
     }
 
     public static void set(Color nAlliance) {

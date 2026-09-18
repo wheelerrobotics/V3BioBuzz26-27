@@ -24,7 +24,7 @@ public class BalisticsHelper {
         return (departureMath * tps) / 60 * Constants.encoderTPR;
     }
 
-    private static double getDepartureSpeed(double tps, Telemetry t) {
+    public static double getDepartureSpeed(double tps, Telemetry t) {
         double v0 = getFlywheelSurfaceSpeed(tps) * Constants.kDeparture;
         t.addData("departure speed", v0);
         return v0;
