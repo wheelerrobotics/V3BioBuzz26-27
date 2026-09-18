@@ -1,8 +1,20 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.auto;
 
+import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.api.Paths.path;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.bottomFlower;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.bottomFlowerCTRL;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.gardenPickup;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.gardenPickupCTRL;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.park;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.partnerPickup;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.partnerPickupCTRL;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.passUnderCTRL;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.sideFlower;
+import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.startNectarSide;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -10,12 +22,12 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-@TeleOp
+@Autonomous
 public class V3EmadAuto extends OpMode {
 
     private Follower f; //normal just short to f
@@ -28,27 +40,36 @@ public class V3EmadAuto extends OpMode {
     private static final Pose d = p.of(48,24,0);
 
     private static Path ab() {
-        return line(a,b).constant(0);
+        return curve(startNectarSide, passUnderCTRL, sideFlower, partnerPickup).constant(90);
     }
 
     private static Path bc() {
-        return line(b,c).constant(0);
+        return line(partnerPickup, sideFlower).linear(90,270);
     }
 
     private static Path cd() {
-        return line(c,d).constant(0);
+        return curve(sideFlower, partnerPickupCTRL, gardenPickupCTRL, gardenPickup).linear(270, 0);
     }
 
     private static Path da() {
-        return line(d,a).constant(0);
+        return curve(gardenPickup,bottomFlowerCTRL,bottomFlower).constant(0);
+    }
+
+    private static Path e() {
+        return line(bottomFlower, bottomFlowerCTRL).linear(0, 180);
+    }
+
+    private static Path f() {
+        return line(bottomFlowerCTRL, park).tangent();
+    }
+
+    private static Path all(){
+        return path(ab(),bc(),cd(),da(),e(),f());
     }
 
     private Command autoRoutine() {
         return sequential(
-                follow(f, ab()),
-                follow(f, bc()),
-                follow(f, cd()),
-                follow(f, da())
+                follow(f,all())
         );
     }
 
@@ -56,7 +77,7 @@ public class V3EmadAuto extends OpMode {
     public void init() {
         Scheduler.reset(); //for ivy
         f = Constants.createFollower(hardwareMap); //this is the same
-        f.setPose(a); //crucial, this is a replacement for setStartingPose(), i think
+        f.setPose(startNectarSide); //crucial, this is a replacement for setStartingPose(), i think
     }
 
     @Override
@@ -66,6 +87,7 @@ public class V3EmadAuto extends OpMode {
 
     @Override
     public void loop() {
+        f.update();
         Scheduler.execute(); //ivy update
     }
 

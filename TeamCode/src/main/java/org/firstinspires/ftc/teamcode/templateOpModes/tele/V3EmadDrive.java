@@ -20,8 +20,8 @@ public class V3EmadDrive extends OpMode {
 
     @Override
     public void loop() {
-        f.manual(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         f.update();
+        f.manual(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
     }
 
 }
