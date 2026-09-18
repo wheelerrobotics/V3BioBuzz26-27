@@ -34,6 +34,13 @@ public class HelperDebug extends OpMode {
             Alliance.set(Alliance.Color.RED);
         }
 
+        if (gamepad1.right_bumper) {
+            PoseLib.setTarget(PoseLib.Target.NECTAR);
+        } else if (gamepad1.left_bumper) {
+            PoseLib.setTarget(PoseLib.Target.EMPTY);
+        }
+
+        telemetry.addData("target", PoseLib.getTarget());
         telemetry.addData("alliance", Alliance.get());
 
         double v0 = BalisticsHelper.getDepartureSpeed(2000, telemetry);

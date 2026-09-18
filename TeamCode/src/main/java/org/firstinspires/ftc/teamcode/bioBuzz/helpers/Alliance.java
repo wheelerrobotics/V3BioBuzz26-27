@@ -15,6 +15,7 @@ public class Alliance {
     }
 
     public static void set(Color nAlliance) {
+        PoseLib.setField(nAlliance);
         currentAlliance = nAlliance;
     }
 
