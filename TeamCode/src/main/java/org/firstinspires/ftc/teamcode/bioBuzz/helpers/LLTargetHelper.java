@@ -6,13 +6,13 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class LLTargetHelper {
 
-    public static List<Integer> getCurrentIDs() {
-        List<Integer> list = new ArrayList<>();
+    public static HashSet<Integer> getCurrentIDs() {
+        HashSet<Integer> list = new HashSet<>();
         if (Alliance.get() == Alliance.Color.RED) {
             if (PoseLib.getTarget() == PoseLib.Target.NECTAR) {
                 list.add(34);
@@ -42,34 +42,40 @@ public class LLTargetHelper {
         return list;
 
     }
+
+    public static LLResultTypes.FiducialResult checkResultID(LLResult r) {
+        List<LLResultTypes.FiducialResult> results = r.getFiducialResults();
+        LLResultTypes.FiducialResult idealResult = null;
+        HashSet<Integer> IDs = getCurrentIDs();
+        double lastArea = 0;
+        for (LLResultTypes.FiducialResult result : results) {
+            if (IDs.contains(result.getFiducialId())) {
+                if (result.getTargetArea() > lastArea) { //pick the result of the most visible tag
+                    lastArea = result.getTargetArea();
+                    idealResult = result;
+                }
+            }
+
+        }
+        return idealResult;
+    }
+
     public static double getHorizontalDistance(LLResult r, Telemetry telemetry) {
         if (!r.isValid()) {
+            telemetry.addData("distance", "not valid 65");
             return 0; // returns 0 if things don't work out
         }
 
-        List<LLResultTypes.FiducialResult> results = r.getFiducialResults();
-        LLResultTypes.FiducialResult idealResult = null;
-        int ID;
-        List<Integer> IDs= getCurrentIDs();
-        double lastArea = 0;
-        for (LLResultTypes.FiducialResult result : results) {
-            for (Integer i : IDs) {
-                if (result.getFiducialId() == IDs.get(i)) {
-                    if (result.getTargetArea() > lastArea) { //pick the result of the most visible tag
-                        ID = result.getFiducialId();
-                        idealResult = result;
-                    }
-                }
-            }
-        }
+        LLResultTypes.FiducialResult idealResult = checkResultID(r);
 
         if (idealResult == null) {
+            telemetry.addData("distance", "null 72");
             return 0; // returns 0 if things don't work out
         }
 
         Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
         double distance = tPose.getPosition().x;
-        telemetry.addData("distace", distance);
+        telemetry.addData("distance", distance);
         return distance;
 
     }
