@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
-import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static com.pedropathing.api.Paths.line;
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -11,18 +11,19 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
     public final Follower follower;
     public final RobotMacros macros;
+    public final Hood hood;
     public DcMotorEx frontLeft;
     public DcMotorEx frontRight;
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
-
     public LL LL;
 
     public Robot(HardwareMap hardwareMap) {
@@ -42,6 +43,9 @@ public class Robot {
         follower = Constants.createFollower(hardwareMap);
         LL = new LL(hardwareMap);
         macros = new RobotMacros();
+
+        //Subsystems
+        hood = new Hood(hardwareMap);
     }
 
     public void motorDriveXYVectors(double x, double y, double rotation) {
