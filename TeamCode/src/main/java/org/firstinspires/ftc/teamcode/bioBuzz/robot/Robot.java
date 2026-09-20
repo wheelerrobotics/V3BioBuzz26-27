@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
@@ -24,6 +25,7 @@ public class Robot {
     public DcMotorEx backRight;
 
     public LL LL;
+    public final Shooter shooter;
 
     public Robot(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.get(DcMotorEx.class, HardwareNames.FRONT_LEFT_DRIVE);
@@ -42,6 +44,9 @@ public class Robot {
         follower = Constants.createFollower(hardwareMap);
         LL = new LL(hardwareMap);
         macros = new RobotMacros();
+
+
+        shooter = new Shooter(hardwareMap);
     }
 
     public void motorDriveXYVectors(double x, double y, double rotation) {
