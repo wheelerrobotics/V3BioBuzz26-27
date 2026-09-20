@@ -1,11 +1,15 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.helpers;
+package org.firstinspires.ftc.teamcode.bioBuzz.helpers.Balistics;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Scheduler;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.ExpectedHardware;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
@@ -22,6 +26,8 @@ public class HelperDebug extends OpMode {
         Scheduler.reset();
         limelight = hardwareMap.get(Limelight3A.class, HardwareNames.LIMELIGHT);
         limelight.start();
+        DcMotorEx fakeShooter = hardwareMap.get(DcMotorEx.class, ExpectedHardware.DEVICES[1].getConfigName());
+        Ballistics.init(f, limelight, telemetry, fakeShooter);
     }
 
     @Override
@@ -35,24 +41,20 @@ public class HelperDebug extends OpMode {
         }
 
         if (gamepad1.right_bumper) {
-            PoseLib.setTarget(PoseLib.Target.NECTAR);
+            PoseLib.setActiveCell(PoseLib.Cell.NECTAR);
         } else if (gamepad1.left_bumper) {
-            PoseLib.setTarget(PoseLib.Target.EMPTY);
+            PoseLib.setActiveCell(PoseLib.Cell.EMPTY);
         }
 
-        telemetry.addData("target", PoseLib.getTarget());
+        telemetry.addData("target", PoseLib.getActiveCell());
         telemetry.addData("alliance", Alliance.get());
 
-        double v0 = BalisticsHelper.getDepartureSpeed(2000, telemetry);
-        double x = LLTargetHelper.getHorizontalDistance(limelight.getLatestResult(), telemetry);
-        double angle = BalisticsHelper.getHoodAngle(v0, x, telemetry);
-        double time = BalisticsHelper.getFlightTime(v0, x, angle, telemetry);
+        Ballistics.update();
+
+        Ballistics.getResult();
 
         f.update();
         f.manual(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
-
-        SOTM.getLead(f, time, telemetry);
-
 
     }
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 public final class RobotConstants {
+    private RobotConstants() {}
     public static final class Drive {
         private Drive() {}
         public static final double MAX_DRIVE_POWER = 1.0;
@@ -22,5 +23,4 @@ public final class RobotConstants {
      * }
      */
 
-    private RobotConstants() {}
 }

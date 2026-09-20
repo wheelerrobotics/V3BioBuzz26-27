@@ -28,24 +28,24 @@ public class PoseLib {
     public static Pose park = field.of(10, 95, 90);
     public static Pose nectarCell = field.of(58,56,90); public static Pose emptyCell = field.of(nectarCell.x(), nectarCell.invert().y(),270);
 
-    public enum Target {
+    public enum Cell {
         NECTAR,
         EMPTY
     }
-    private static Target cFactoryTarget = Target.NECTAR;
+    private static Cell cFactoryCell = Cell.NECTAR;
     private static final PoseFactory target = PoseFactory.degrees();
-    private static final Pose tPose = target.of(58, 56, 90);
-    public static void setTarget(Target nTarget) {
-        if (cFactoryTarget != nTarget) {
+    private static final Pose tPose = target.of(58, 60, 90);
+    public static void setActiveCell(Cell nCell) {
+        if (cFactoryCell != nCell) {
             target.mirrorY(70.75);
-            cFactoryTarget = nTarget;
+            cFactoryCell = nCell;
         }
     }
-    public static Target getTarget() {
-        return cFactoryTarget;
+    public static Cell getActiveCell() {
+        return cFactoryCell;
     }
 
-    public static Pose tPose() {
+    public static Pose targetPose() {
         return tPose;
     }
 
