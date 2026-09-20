@@ -8,4 +8,5 @@ public final class HardwareNames {
     public static final String BACK_RIGHT_DRIVE = "motorBackRight";
     public static final String LIMELIGHT = "limelight";
     public static final String PINPOINT = "pinpoint";
+    public static final String HOOD = "hood";
 }
