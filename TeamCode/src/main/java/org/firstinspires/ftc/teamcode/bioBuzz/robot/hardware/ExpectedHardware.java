@@ -33,6 +33,16 @@ public final class ExpectedHardware {
                     "Back-right drivetrain motor"
             ),
             new HardwareDeviceSpec(
+                    SHOOTER1,
+                    DcMotorEx.class,
+                    "top shooter"
+            ),
+            new HardwareDeviceSpec(
+                    SHOOTER2,
+                    DcMotorEx.class,
+                    "bottom shooter"
+            ),
+            new HardwareDeviceSpec(
                     LIMELIGHT,
                     Limelight3A.class,
                     "Vision camera"
