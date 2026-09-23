@@ -1,12 +1,11 @@
-package org.firstinspires.ftc.teamcode.robot.subsystems;
+package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
-import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Intake.intakePower;
 
-import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robot.hardware.HardwareNames;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
+
 
 public class Intake {
     public DcMotorEx intake;

@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.robot.subsystems;
+package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.robot.hardware.HardwareNames;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
+
 
 public class Stopper {
     public Servo stopper;
