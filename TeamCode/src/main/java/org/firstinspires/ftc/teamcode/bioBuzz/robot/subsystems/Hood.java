@@ -6,7 +6,8 @@ import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Balistics.Ballistics;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
+
 
 @Configurable
 public final class Hood {

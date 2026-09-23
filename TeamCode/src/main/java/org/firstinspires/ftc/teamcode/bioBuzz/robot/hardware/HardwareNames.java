@@ -10,6 +10,8 @@ public final class HardwareNames {
     public static final String PINPOINT = "pinpoint";
     public static final String TURRET_SERVO_1 = "servo1";
     public static final String TURRET_SERVO_2 = "servo2";
+    public static final String SHOOTER1 = "s1";
+    public static final String SHOOTER2 = "s2";
 
     public static final String TRANSFER = "transfer";
     public static final String INTAKE = "intake";
