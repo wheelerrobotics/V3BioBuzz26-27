@@ -55,7 +55,6 @@ public class SquareAuto extends OpMode {
     private Command autoRoutine() {
         return sequential(
                 follow(follower,side1()),
-
                 follow(follower,side2()),
                 follow(follower,side3()),
                 follow(follower,side4())
