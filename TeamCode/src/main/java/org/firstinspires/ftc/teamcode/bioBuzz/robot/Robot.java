@@ -5,6 +5,9 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Intake
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperIn;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperOut;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transfer.transferPower;
+import static com.pedropathing.ivy.commands.Commands.lazy;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+import static com.pedropathing.ivy.pedro.PedroCommands.hold;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.pedropathing.follower.Follower;
@@ -133,8 +136,23 @@ public class Robot {
                     .setExecute(() -> stopper.setStopperPos(stopperOut));
         }
 
+        public Command driveToPos(Pose destination, double drivePower, double positionTolerance) {
+            return lazy(() -> {
+                Pose start = follower.pose();
+
+                if (start.distance(destination) < positionTolerance) {
+                    return hold(follower, destination)
+                            .requiring(follower);
+                }
+
+                Path path = line(start, destination)
+                        .linear(start, destination)
+                        .with(Constants.foresightConfig.maxPathSpeed.at(drivePower));
+
+                follower.holdEnd.set(true);
+                return follow(follower, path)
+                        .requiring(follower);
+            }).requiring(follower);
+        }
     }
-
-
-
 }
