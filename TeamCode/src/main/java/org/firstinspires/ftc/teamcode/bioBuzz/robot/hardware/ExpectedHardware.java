@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.util.HardwareDeviceSpec;
 
@@ -32,6 +33,9 @@ public final class ExpectedHardware {
                     DcMotorEx.class,
                     "Back-right drivetrain motor"
             ),
+            new HardwareDeviceSpec(HOOD,
+                    Servo.class,
+                    "the hood"),
             new HardwareDeviceSpec(
                     SHOOTER1,
                     DcMotorEx.class,
