@@ -1,23 +1,21 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
-import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.math.Pose;
-import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.bioBuzz.Commands;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
     public final Follower follower;
-    public final RobotMacros macros;
+    public final Commands commands;
     public DcMotorEx frontLeft;
     public DcMotorEx frontRight;
     public DcMotorEx backLeft;
@@ -41,7 +39,8 @@ public class Robot {
 
         follower = Constants.createFollower(hardwareMap);
         LL = new LL(hardwareMap);
-        macros = new RobotMacros();
+
+        commands = new Commands(this);
     }
 
     public void motorDriveXYVectors(double x, double y, double rotation) {
@@ -62,10 +61,9 @@ public class Robot {
                 Math.abs(gamepad1.left_stick_y) > 0.1 ||
                 Math.abs(gamepad1.right_stick_x) > 0.1;
 
-        // Do not stop normal manual driving. Only interrupt an active automatic
-        // path/hold when the driver moves a joystick.
+
         if (driverWantsControl && (follower.following() || follower.holding())) {
-            macros.stop();
+            follower.stop();
         }
 
         follower.update();
@@ -74,29 +72,6 @@ public class Robot {
 
     public void stop() {
         follower.stop();
-        macros.stop();
         LL.stop();
-    }
-
-    public class RobotMacros {
-        public void driveToPos(Pose destination) {driveToPos(destination, 1.0, 1.0);}
-        public void driveToPos(Pose destination, double drive_power, double position_tolerance) {
-            Pose start = follower.pose();
-
-            if (Math.hypot(destination.x() - start.x(), destination.y() - start.y())
-                    < position_tolerance) {
-                follower.hold(destination);
-            } else {
-                Path path = line(start, destination)
-                        .linear(start, destination)
-                        .with(Constants.foresightConfig.maxPathSpeed.at(drive_power));
-                follower.holdEnd.set(true);
-                follower.follow(path);
-            }
-        }
-
-        public void stop() {
-            follower.stop();
-        }
     }
 }
