@@ -9,5 +9,9 @@ public final class HardwareNames {
 
     public static final String PINPOINT = "pinpoint";
 
+    public static final String TRANSFER = "transfer";
+    public static final String INTAKE = "intake";
+    public static final String STOPPER = "stopper";
+
     private HardwareNames() {}
 }
