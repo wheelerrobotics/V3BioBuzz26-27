@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Balistics.Ballistics;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PIDController;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
 
 public class Shooter {

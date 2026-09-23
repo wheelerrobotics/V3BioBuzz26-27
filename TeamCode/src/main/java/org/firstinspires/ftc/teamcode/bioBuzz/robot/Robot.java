@@ -39,7 +39,6 @@ public class Robot {
 
     public LL limelight;
     public Turret turret;
-    public LL LL;
     public final Shooter shooter;
     public Transfer transfer;
     public Intake intake;
@@ -57,7 +56,7 @@ public class Robot {
         turret = new Turret(hardwareMap, limelight);
 
         commands = new Commands();
-        LL = new LL(hardwareMap);
+        limelight = new LL(hardwareMap);
 
         //Subsystems
         hood = new Hood(hardwareMap);
