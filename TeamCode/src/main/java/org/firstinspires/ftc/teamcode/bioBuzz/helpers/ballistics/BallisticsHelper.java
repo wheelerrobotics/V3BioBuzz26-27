@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.helpers.Balistics;
+package org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics;
 
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
@@ -18,11 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class BallisticsHelper {
-
-    public enum Result {
-        HOOD_ANGLE,
-        SOTM_OFFSET
-    }
 
     @Configurable
     public static class Constants {
@@ -91,7 +86,7 @@ public class BallisticsHelper {
     }
 
     private static double getHoodAngle(double tps, double x, Telemetry t) {
-        double g = getGeff(tps, t);
+        double g = getG_eff(tps, t);
 
         double angle = Math.atan(
                 (Math.pow(v0, 2) + Math.sqrt(Math.pow(v0, 4) - g * (g * Math.pow(x, 2) + 2 * Constants.targetY * Math.pow(v0, 2))))
@@ -119,17 +114,17 @@ public class BallisticsHelper {
         return S;
     }
 
-    private static double getGeff(double tps, Telemetry t) {
+    private static double getG_eff(double tps, Telemetry t) {
         double S = getSpinRate(tps, t);
         double V = getV(t);
-        double geff = Constants.gravity - ((Constants.p *
+        double g_eff = Constants.gravity - ((Constants.p *
                 Constants.kBallSpin *
                 S *
                 A *
                 Math.pow(V, 2))
                 / (2 * Constants.ballMass));
-        t.addData("getGeff()", geff);
-        return geff;
+        t.addData("getG_eff()", g_eff);
+        return g_eff;
     }
 
     private static double updateTargetX(Follower f, LLResult r, Telemetry t) {
@@ -144,7 +139,7 @@ public class BallisticsHelper {
             if (error < Constants.kTargetErrorTolerance) {
                 targetErrorIntegral = 0;
             } else {
-                targetErrorIntegral += error * nowTime;
+                targetErrorIntegral += error * dt;
             }
             if (targetErrorIntegral > Constants.kTargetErrorIntegralMax) {
                 RobotVars.setFollowerDisabled(true);
