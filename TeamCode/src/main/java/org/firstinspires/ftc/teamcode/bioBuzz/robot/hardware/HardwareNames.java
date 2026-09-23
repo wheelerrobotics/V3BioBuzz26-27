@@ -10,5 +10,11 @@ public final class HardwareNames {
     public static final String SHOOTER2 = "shooter2";
     public static final String LIMELIGHT = "limelight";
     public static final String PINPOINT = "pinpoint";
+
+    public static final String TRANSFER = "transfer";
+    public static final String INTAKE = "intake";
+    public static final String STOPPER = "stopper";
+
+    private HardwareNames() {}
     public static final String HOOD = "hood";
 }

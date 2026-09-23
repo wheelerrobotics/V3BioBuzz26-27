@@ -9,6 +9,21 @@ public final class RobotConstants {
         public static final double MAX_DEBUG_POWER = 0.40;
     }
 
+    public static final class Transfer {
+        public static final double transferPower = 1;
+    }
+
+    public static final class Intake {
+        public static final double intakePower = 1;
+    }
+
+    public static final class Stopper {
+        public static final double stopperIn = 0;
+        public static final double stopperOut = 0.5;
+    }
+
+
+
     /*
      * Add season-specific groups here as subsystems are created. Example:
      *

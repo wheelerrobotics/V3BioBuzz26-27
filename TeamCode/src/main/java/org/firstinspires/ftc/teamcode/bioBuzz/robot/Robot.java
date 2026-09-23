@@ -3,13 +3,20 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 import static com.pedropathing.api.Paths.line;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Intake.intakePower;
+import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Stopper.stopperIn;
+import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Stopper.stopperOut;
+import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Transfer.transferPower;
+
 import com.pedropathing.follower.Follower;
+import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
@@ -17,6 +24,11 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.robot.hardware.HardwareNames;
+import org.firstinspires.ftc.teamcode.robot.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.robot.subsystems.LimelightController;
+import org.firstinspires.ftc.teamcode.robot.subsystems.Stopper;
+import org.firstinspires.ftc.teamcode.robot.subsystems.Transfer;
 
 public class Robot {
     public final Follower follower;
@@ -29,19 +41,18 @@ public class Robot {
     public LL LL;
     public final Shooter shooter;
 
+    public LimelightController limelightController;
+
+    public Transfer transfer;
+    public Intake intake;
+    public Stopper stopper;
+
+
     public Robot(HardwareMap hardwareMap) {
-        frontLeft = hardwareMap.get(DcMotorEx.class, HardwareNames.FRONT_LEFT_DRIVE);
-        frontRight = hardwareMap.get(DcMotorEx.class, HardwareNames.FRONT_RIGHT_DRIVE);
-        backLeft = hardwareMap.get(DcMotorEx.class, HardwareNames.BACK_LEFT_DRIVE);
-        backRight = hardwareMap.get(DcMotorEx.class, HardwareNames.BACK_RIGHT_DRIVE);
+        transfer = new Transfer(hardwareMap);
+        intake = new Intake(hardwareMap);
+        stopper = new Stopper(hardwareMap);
 
-        frontLeft.setZeroPowerBehavior(BRAKE);
-        frontRight.setZeroPowerBehavior(BRAKE);
-        backLeft.setZeroPowerBehavior(BRAKE);
-        backRight.setZeroPowerBehavior(BRAKE);
-
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         follower = Constants.createFollower(hardwareMap);
         LL = new LL(hardwareMap);
@@ -59,11 +70,6 @@ public class Robot {
         double backLeftPower = y - x + rotation;
         double frontRightPower = y - x - rotation;
         double backRightPower = y + x - rotation;
-
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
     }
 
     public void tick(Gamepad gamepad1, Gamepad gamepad2) {
@@ -109,4 +115,49 @@ public class Robot {
             follower.stop();
         }
     }
+
+
+    //COMMANDS
+    public class Commands {
+
+        //TRANSFER
+        public Command transferOn() {
+            return Command.build()
+                    .setExecute(() -> transfer.setTransferPower(transferPower));
+        }
+        public Command transferOff() {
+            return Command.build()
+                    .setExecute(() -> transfer.setTransferPower(0));
+        }
+
+
+        //INTAKE
+        public Command intakeIn() {
+            return Command.build()
+                    .setExecute(() -> intake.setIntakePower(intakePower));
+        }
+        public Command intakeOff() {
+            return Command.build()
+                    .setExecute(() -> intake.setIntakePower(0));
+        }
+        public Command outtake() {
+            return Command.build()
+                    .setExecute(() -> intake.setIntakePower(-intakePower));
+        }
+
+
+        //STOPPER
+        public Command stopperIn() {
+            return Command.build()
+                    .setExecute(() -> stopper.setStopperPos(stopperIn));
+        }
+        public Command stopperOut() {
+            return Command.build()
+                    .setExecute(() -> stopper.setStopperPos(stopperOut));
+        }
+
+    }
+
+
+
 }
