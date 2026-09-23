@@ -168,9 +168,9 @@ public class BallisticsHelper {
         double hoodAngle = getHoodAngle(tps, distance, t);
 
         double flightTime = getFlightTime(distance, hoodAngle, t);
-        double sotmOffset = SOTM.getLead(f, flightTime, t);
+        double turretAngle_rs = SOTM.getTurretAngle_rs(f, flightTime, t);
 
-        return new BallisticResult(hoodAngle, sotmOffset, distance, readyToShoot);
+        return new BallisticResult(hoodAngle, turretAngle_rs, distance, readyToShoot);
     }
 
 
@@ -305,6 +305,16 @@ public class BallisticsHelper {
             double lead = modelLead(vr, ar, flightTime);
             t.addData("lead angle for SOTM", lead);
             return lead;
+        }
+
+        public static double getTurretAngle_rs(Follower f, double flightTime, Telemetry t) {
+            double y = f.pose().y() - PoseLib.targetPose().y();
+            double x = f.pose().x() - PoseLib.targetPose().x();
+            double targetAngle_fs = Math.tan(y/x);
+            t.addData("TargetAngle_fs", targetAngle_fs);
+            double targetAngle_rs = f.pose().heading() - targetAngle_fs;
+            t.addData("TargetAngle_rs", targetAngle_rs);
+            return targetAngle_rs + getLead(f, flightTime, t);
         }
 
     }
