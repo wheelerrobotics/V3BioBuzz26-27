@@ -1,32 +1,24 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import static com.pedropathing.api.Paths.line;
-import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
-
-import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Intake.intakePower;
-import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Stopper.stopperIn;
-import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Stopper.stopperOut;
-import static org.firstinspires.ftc.teamcode.robot.config.RobotConstants.Transfer.transferPower;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Intake.intakePower;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperIn;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperOut;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transfer.transferPower;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.robot.subsystems.LimelightController;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Stopper;
 import org.firstinspires.ftc.teamcode.robot.subsystems.Transfer;
 
@@ -40,9 +32,6 @@ public class Robot {
     public DcMotorEx backRight;
     public LL LL;
     public final Shooter shooter;
-
-    public LimelightController limelightController;
-
     public Transfer transfer;
     public Intake intake;
     public Stopper stopper;
