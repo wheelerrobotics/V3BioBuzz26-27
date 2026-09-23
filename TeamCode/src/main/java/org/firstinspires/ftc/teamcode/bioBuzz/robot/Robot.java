@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.bioBuzz.Commands;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
@@ -21,7 +22,8 @@ public class Robot {
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
 
-    public LL LL;
+    public LL limelight;
+    public Turret turret;
 
     public Robot(HardwareMap hardwareMap) {
         frontLeft = hardwareMap.get(DcMotorEx.class, HardwareNames.FRONT_LEFT_DRIVE);
@@ -38,7 +40,8 @@ public class Robot {
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         follower = Constants.createFollower(hardwareMap);
-        LL = new LL(hardwareMap);
+        limelight = new LL(hardwareMap);
+        turret = new Turret(hardwareMap, limelight);
 
         commands = new Commands(this);
     }
@@ -67,11 +70,12 @@ public class Robot {
         }
 
         follower.update();
-        LL.update();
+        limelight.update();
     }
 
     public void stop() {
         follower.stop();
-        LL.stop();
+        limelight.stop();
+        turret.stop();
     }
 }
