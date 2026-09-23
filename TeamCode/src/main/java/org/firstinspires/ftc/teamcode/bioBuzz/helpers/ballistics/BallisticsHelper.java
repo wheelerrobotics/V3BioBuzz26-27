@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.helpers.Balistics;
+package org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics;
 
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
@@ -18,11 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class BallisticsHelper {
-    
-    public enum Result {
-        HOOD_ANGLE,
-        SOTM_OFFSET
-    }
 
     @Configurable
     public static class Constants {
@@ -56,6 +51,7 @@ public class BallisticsHelper {
     private static boolean readyToShoot = true;
     private static double lastTargetTime = 0;
     private static double targetErrorIntegral = 0;
+    private static double v0 = 0;
 
 
     BallisticsHelper(Follower f, Limelight3A ll, Telemetry t, DcMotorEx... motors) {
@@ -72,10 +68,10 @@ public class BallisticsHelper {
 
     private double getMotorTPS() {
         double speeds = 0;
-        for (DcMotorEx motor: motors) {
+        for (DcMotorEx motor : motors) {
             speeds += motor.getVelocity();
         }
-        return speeds/motors.length;
+        return speeds / motors.length;
     }
 
     private static double getFlywheelSurfaceSpeed(double tps) {
@@ -90,8 +86,7 @@ public class BallisticsHelper {
     }
 
     private static double getHoodAngle(double tps, double x, Telemetry t) {
-        double v0 = getV0(tps, t);
-        double g = getGeff(tps, t);
+        double g = getG_eff(tps, t);
 
         double angle = Math.atan(
                 (Math.pow(v0, 2) + Math.sqrt(Math.pow(v0, 4) - g * (g * Math.pow(x, 2) + 2 * Constants.targetY * Math.pow(v0, 2))))
@@ -101,37 +96,35 @@ public class BallisticsHelper {
         return angle;
     }
 
-    private static double getFlightTime(double tps, double x, double hoodAngle, Telemetry t) {
-        double v0 = getV0(tps, t);
+    private static double getFlightTime(double x, double hoodAngle, Telemetry t) {
         double time = x / (v0 * Math.cos(hoodAngle));
         t.addData("getFlightTime()", time);
         return time;
     }
 
-    private static double getV(double tps, Telemetry t) {
-        double v0 = getV0(tps, t);
+    private static double getV(Telemetry t) {
         double v = Math.sqrt(Math.pow(v0, 2) - (2 * Constants.gravity * Constants.targetY));
         t.addData("getV()", v);
         return v;
     }
 
     private static double getSpinRate(double tps, Telemetry t) {
-        double S = lut.get(tps) / getV(tps, t);
+        double S = lut.get(tps) / getV(t);
         t.addData("getSpinRate()", S);
         return S;
     }
 
-    private static double getGeff(double tps, Telemetry t) {
+    private static double getG_eff(double tps, Telemetry t) {
         double S = getSpinRate(tps, t);
-        double V = getV(tps, t);
-        double geff = Constants.gravity - ((Constants.p *
+        double V = getV(t);
+        double g_eff = Constants.gravity - ((Constants.p *
                 Constants.kBallSpin *
                 S *
                 A *
                 Math.pow(V, 2))
                 / (2 * Constants.ballMass));
-        t.addData("getGeff()", geff);
-        return geff;
+        t.addData("getG_eff()", g_eff);
+        return g_eff;
     }
 
     private static double updateTargetX(Follower f, LLResult r, Telemetry t) {
@@ -146,7 +139,7 @@ public class BallisticsHelper {
             if (error < Constants.kTargetErrorTolerance) {
                 targetErrorIntegral = 0;
             } else {
-                targetErrorIntegral += error * nowTime;
+                targetErrorIntegral += error * dt;
             }
             if (targetErrorIntegral > Constants.kTargetErrorIntegralMax) {
                 RobotVars.setFollowerDisabled(true);
@@ -166,20 +159,19 @@ public class BallisticsHelper {
     }
 
 
-    
     BallisticResult getResult() {
         LLResult r = ll.getLatestResult();
-        double distance = updateTargetX(f, r, t);
         double tps = getMotorTPS();
+        v0 = getV0(tps, t);
+        double distance = updateTargetX(f, r, t);
 
         double hoodAngle = getHoodAngle(tps, distance, t);
 
-        double flightTime = getFlightTime(tps, distance, hoodAngle, t);
-        double sotmOffset = SOTM.getLead(f, flightTime, t);
+        double flightTime = getFlightTime(distance, hoodAngle, t);
+        double turretAngle_rs = SOTM.getTurretAngle_rs(f, flightTime, t);
 
-        return new BallisticResult(hoodAngle, sotmOffset, distance, readyToShoot);
+        return new BallisticResult(hoodAngle, turretAngle_rs, distance, readyToShoot);
     }
-
 
 
     private static class TargetHelper {
@@ -266,10 +258,12 @@ public class BallisticsHelper {
         private static double lastTime = 0;
         private static double lastVx = 0;
         private static double lastVy = 0;
-        private SOTM() {}
+
+        private SOTM() {
+        }
 
         private static double getAngular(double x, double y) {
-            return 90 - Math.tan(y/x);
+            return 90 - Math.tan(y / x);
         }
 
 
@@ -311,6 +305,16 @@ public class BallisticsHelper {
             double lead = modelLead(vr, ar, flightTime);
             t.addData("lead angle for SOTM", lead);
             return lead;
+        }
+
+        public static double getTurretAngle_rs(Follower f, double flightTime, Telemetry t) {
+            double y = f.pose().y() - PoseLib.targetPose().y();
+            double x = f.pose().x() - PoseLib.targetPose().x();
+            double targetAngle_fs = Math.tan(y/x);
+            t.addData("TargetAngle_fs", targetAngle_fs);
+            double targetAngle_rs = f.pose().heading() - targetAngle_fs;
+            t.addData("TargetAngle_rs", targetAngle_rs);
+            return targetAngle_rs + getLead(f, flightTime, t);
         }
 
     }

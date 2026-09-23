@@ -1,7 +1,9 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.helpers.Balistics;
+package org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics;
+
+import static com.pedropathing.ivy.Scheduler.execute;
+import static com.pedropathing.ivy.Scheduler.reset;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.ivy.Scheduler;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -23,7 +25,7 @@ public class HelperDebug extends OpMode {
     public void init() {
         Alliance.set(Alliance.Color.RED);
         f = Constants.createFollower(hardwareMap);
-        Scheduler.reset();
+        reset();
         limelight = hardwareMap.get(Limelight3A.class, HardwareNames.LIMELIGHT);
         limelight.start();
         DcMotorEx fakeShooter = hardwareMap.get(DcMotorEx.class, ExpectedHardware.DEVICES[1].getConfigName());
@@ -32,7 +34,7 @@ public class HelperDebug extends OpMode {
 
     @Override
     public void loop() {
-        Scheduler.execute();
+        execute();
 
         if (gamepad1.x) {
             Alliance.set(Alliance.Color.BLUE);

@@ -6,10 +6,10 @@ public final class HardwareNames {
     public static final String FRONT_RIGHT_DRIVE = "motorFrontRight";
     public static final String BACK_LEFT_DRIVE = "motorBackLeft";
     public static final String BACK_RIGHT_DRIVE = "motorBackRight";
-    public static final String SHOOTER1 = "shooter1";
-    public static final String SHOOTER2 = "shooter2";
     public static final String LIMELIGHT = "limelight";
     public static final String PINPOINT = "pinpoint";
+    public static final String TURRET_SERVO_1 = "servo1";
+    public static final String TURRET_SERVO_2 = "servo2";
 
     public static final String TRANSFER = "transfer";
     public static final String INTAKE = "intake";

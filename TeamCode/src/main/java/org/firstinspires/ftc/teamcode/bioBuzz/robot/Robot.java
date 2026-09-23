@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Intake
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperIn;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperOut;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transfer.transferPower;
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
@@ -16,21 +17,28 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.bioBuzz.Commands;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
     public final Follower follower;
-    public final RobotMacros macros;
+    public final Commands commands;
     public final Hood hood;
     public DcMotorEx frontLeft;
     public DcMotorEx frontRight;
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
+
+    public LL limelight;
+    public Turret turret;
     public LL LL;
     public final Shooter shooter;
     public Transfer transfer;
@@ -45,8 +53,11 @@ public class Robot {
 
 
         follower = Constants.createFollower(hardwareMap);
+        limelight = new LL(hardwareMap);
+        turret = new Turret(hardwareMap, limelight);
+
+        commands = new Commands();
         LL = new LL(hardwareMap);
-        macros = new RobotMacros();
 
         //Subsystems
         hood = new Hood(hardwareMap);
@@ -68,42 +79,19 @@ public class Robot {
                 Math.abs(gamepad1.left_stick_y) > 0.1 ||
                 Math.abs(gamepad1.right_stick_x) > 0.1;
 
-        // Do not stop normal manual driving. Only interrupt an active automatic
-        // path/hold when the driver moves a joystick.
+
         if (driverWantsControl && (follower.following() || follower.holding())) {
-            macros.stop();
+            follower.stop();
         }
 
         follower.update();
-        LL.update();
+        limelight.update();
     }
 
     public void stop() {
         follower.stop();
-        macros.stop();
-        LL.stop();
-    }
-
-    public class RobotMacros {
-        public void driveToPos(Pose destination) {driveToPos(destination, 1.0, 1.0);}
-        public void driveToPos(Pose destination, double drive_power, double position_tolerance) {
-            Pose start = follower.pose();
-
-            if (Math.hypot(destination.x() - start.x(), destination.y() - start.y())
-                    < position_tolerance) {
-                follower.hold(destination);
-            } else {
-                Path path = line(start, destination)
-                        .linear(start, destination)
-                        .with(Constants.foresightConfig.maxPathSpeed.at(drive_power));
-                follower.holdEnd.set(true);
-                follower.follow(path);
-            }
-        }
-
-        public void stop() {
-            follower.stop();
-        }
+        limelight.stop();
+        turret.stop();
     }
 
 

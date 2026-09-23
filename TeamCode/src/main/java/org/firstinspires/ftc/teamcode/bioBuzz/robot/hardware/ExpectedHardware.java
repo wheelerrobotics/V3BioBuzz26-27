@@ -55,6 +55,16 @@ public final class ExpectedHardware {
                     PINPOINT,
                     GoBildaPinpointDriver.class,
                     "The Pinpoint"
+            ),
+            new HardwareDeviceSpec(
+                    TURRET_SERVO_1,
+                    Servo.class,
+                    "First Turret servo"
+            ),
+            new HardwareDeviceSpec(
+                    TURRET_SERVO_2,
+                    Servo.class,
+                    "Second Turret servo"
             )
     };
 }
