@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.ivy.commands.Commands.lazy;
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+import static com.pedropathing.ivy.pedro.PedroCommands.hold;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Intake.intakePower;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperIn;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperOut;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transfer.transferPower;
-import static com.pedropathing.ivy.commands.Commands.lazy;
-import static com.pedropathing.ivy.pedro.PedroCommands.follow;
-import static com.pedropathing.ivy.pedro.PedroCommands.hold;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_LEFT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_RIGHT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_LEFT_DRIVE;
@@ -28,9 +28,8 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
-
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
     public final Follower follower;
@@ -139,6 +138,17 @@ public class Robot {
                     .setExecute(() -> stopper.setStopperPos(stopperOut));
         }
 
+        //Shooter + Hood
+        public Command shoot() {
+            return Command.build()
+                    .setExecute(shooter::update);
+        }
+
+        public Command hood() {
+            return Command.build()
+                    .setExecute(hood::updatePosition);
+        }
+
         public Command driveToPos(Pose destination, double drivePower, double positionTolerance) {
             return lazy(() -> {
                 Pose start = follower.pose();
@@ -157,5 +167,7 @@ public class Robot {
                         .requiring(follower);
             }).requiring(follower);
         }
+
+
     }
 }
