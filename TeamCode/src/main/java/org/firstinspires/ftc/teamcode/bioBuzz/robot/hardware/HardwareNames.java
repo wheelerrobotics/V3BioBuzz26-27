@@ -17,4 +17,7 @@ public final class HardwareNames {
     public static final String INTAKE = "intake";
     public static final String STOPPER = "stopper";
     public static final String HOOD = "hood";
+    public static final String BREAKBEAMS = "breakbeams";
+    public static final String IN_SWITCH = "in";
+    public static final String OUT_SWITCH = "out";
 }
