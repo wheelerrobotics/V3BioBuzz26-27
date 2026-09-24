@@ -107,35 +107,35 @@ public class Robot {
         //TRANSFER
         public Command transferOn() {
             return Command.build()
-                    .setExecute(() -> transfer.setTransferPower(transferPower));
+                    .setStart(() -> transfer.setTransferPower(transferPower));
         }
         public Command transferOff() {
             return Command.build()
-                    .setExecute(() -> transfer.setTransferPower(0));
+                    .setStart(() -> transfer.setTransferPower(0));
         }
 
         //INTAKE
         public Command intakeIn() {
             return Command.build()
-                    .setExecute(() -> intake.setIntakePower(intakePower));
+                    .setStart(() -> intake.setIntakePower(intakePower));
         }
         public Command intakeOff() {
             return Command.build()
-                    .setExecute(() -> intake.setIntakePower(0));
+                    .setStart(() -> intake.setIntakePower(0));
         }
         public Command outtake() {
             return Command.build()
-                    .setExecute(() -> intake.setIntakePower(-intakePower));
+                    .setStart(() -> intake.setIntakePower(-intakePower));
         }
 
         //STOPPER
         public Command stopperIn() {
             return Command.build()
-                    .setExecute(() -> stopper.setStopperPos(stopperIn));
+                    .setStart(() -> stopper.setStopperPos(stopperIn)).setDone(() -> true);
         }
         public Command stopperOut() {
             return Command.build()
-                    .setExecute(() -> stopper.setStopperPos(stopperOut));
+                    .setStart(() -> stopper.setStopperPos(stopperOut)).setDone(() -> true);
         }
 
         //Shooter + Hood
