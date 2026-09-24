@@ -15,6 +15,10 @@ public class Turret {
     private final LL limelight;
     public static boolean SERVO_1_REVERSED = false;
     public static boolean SERVO_2_REVERSED = false;
+    public static Servo.Direction SERVO_1_DIRECTION = Servo.Direction.REVERSE;
+    public static Servo.Direction SERVO_2_DIRECTION = Servo.Direction.REVERSE;
+
+
 
     // Servo to turret
     public static double GEAR_RATIO = 1.44;
@@ -31,8 +35,8 @@ public class Turret {
         servo1 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_1);
         servo2 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_2);
 
-        if (SERVO_1_REVERSED) servo1.setDirection(Servo.Direction.REVERSE);
-        if (SERVO_2_REVERSED) servo2.setDirection(Servo.Direction.REVERSE);
+        servo1.setDirection(SERVO_1_DIRECTION);
+        servo2.setDirection(SERVO_2_DIRECTION);
 
         this.limelight = limelight;
     }
