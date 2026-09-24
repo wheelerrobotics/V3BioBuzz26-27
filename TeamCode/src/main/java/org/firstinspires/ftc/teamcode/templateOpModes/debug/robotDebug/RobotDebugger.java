@@ -37,8 +37,8 @@ public class RobotDebugger extends OpMode {
 
     @Override
     public void loop() {
-        updateDrivetrain();
         robot.tick(gamepad1,gamepad2);
+        updateDrivetrain();
 
         telemetryM.addData("Master Enable", MASTER_ENABLE);
         telemetryM.addLine("================================");
@@ -58,24 +58,22 @@ public class RobotDebugger extends OpMode {
 
             robot.follower.manual(y, x, rotation);
         } else {
-            double y = (DriveDebug.FRONT_LEFT_POWER
-                    + DriveDebug.BACK_LEFT_POWER
-                    + DriveDebug.FRONT_RIGHT_POWER
-                    + DriveDebug.BACK_RIGHT_POWER) / 4.0;
-            double x = (DriveDebug.FRONT_LEFT_POWER
-                    - DriveDebug.BACK_LEFT_POWER
-                    - DriveDebug.FRONT_RIGHT_POWER
-                    + DriveDebug.BACK_RIGHT_POWER) / 4.0;
-            double rotation = (DriveDebug.FRONT_LEFT_POWER
-                    + DriveDebug.BACK_LEFT_POWER
-                    - DriveDebug.FRONT_RIGHT_POWER
-                    - DriveDebug.BACK_RIGHT_POWER) / 4.0;
+            robot.follower.stop();
 
-            robot.follower.manual(y, x, rotation);
+            robot.frontLeft.setPower(DriveDebug.FRONT_LEFT_POWER);
+            robot.frontRight.setPower(DriveDebug.FRONT_RIGHT_POWER);
+            robot.backLeft.setPower(DriveDebug.BACK_LEFT_POWER);
+            robot.backRight.setPower(DriveDebug.BACK_RIGHT_POWER);
         }
     }
+
     private void stopDrivetrain() {
         robot.follower.manual(0, 0, 0);
+
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
     }
 
     @Override

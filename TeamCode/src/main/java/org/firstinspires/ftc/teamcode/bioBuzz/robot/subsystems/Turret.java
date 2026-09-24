@@ -59,6 +59,7 @@ public class Turret {
     public void startFollowingTarget() {
         trackingEnabled = true;
     }
+
     public void stop() {
         trackingEnabled = false;
     }

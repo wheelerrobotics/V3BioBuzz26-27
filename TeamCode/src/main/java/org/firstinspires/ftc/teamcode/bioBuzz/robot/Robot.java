@@ -8,12 +8,17 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transf
 import static com.pedropathing.ivy.commands.Commands.lazy;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import static com.pedropathing.ivy.pedro.PedroCommands.hold;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_LEFT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_RIGHT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_LEFT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_RIGHT_DRIVE;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -51,6 +56,17 @@ public class Robot {
 
 
         follower = Constants.createFollower(hardwareMap);
+
+        frontLeft = hardwareMap.get(DcMotorEx.class, FRONT_LEFT_DRIVE);
+        frontRight = hardwareMap.get(DcMotorEx.class, FRONT_RIGHT_DRIVE);
+        backLeft = hardwareMap.get(DcMotorEx.class, BACK_LEFT_DRIVE);
+        backRight = hardwareMap.get(DcMotorEx.class, BACK_RIGHT_DRIVE);
+
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
         limelight = new LL(hardwareMap);
         turret = new Turret(hardwareMap, limelight);
 
