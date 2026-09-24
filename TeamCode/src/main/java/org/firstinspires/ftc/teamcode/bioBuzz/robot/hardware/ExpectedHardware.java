@@ -65,6 +65,21 @@ public final class ExpectedHardware {
                     TURRET_SERVO_2,
                     Servo.class,
                     "Second Turret servo"
+            ),
+            new HardwareDeviceSpec(
+                    INTAKE,
+                    DcMotorEx.class,
+                    "Intake motor"
+            ),
+            new HardwareDeviceSpec(
+                    TRANSFER,
+                    DcMotorEx.class,
+                    "Transfer motor"
+            ),
+            new HardwareDeviceSpec(
+                    STOPPER,
+                    Servo.class,
+                    "Game-piece stopper servo"
             )
     };
 }

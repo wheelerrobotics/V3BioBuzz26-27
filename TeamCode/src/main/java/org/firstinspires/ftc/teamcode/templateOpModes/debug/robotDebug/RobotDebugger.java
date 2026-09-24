@@ -56,23 +56,30 @@ public class RobotDebugger extends OpMode {
             double y = -gamepad1.left_stick_y;
             double rotation = gamepad1.right_stick_x;
 
-            robot.motorDriveXYVectors(x,y,rotation);
+            robot.follower.manual(y, x, rotation);
         } else {
-            robot.frontLeft.setPower(DriveDebug.FRONT_LEFT_POWER);
-            robot.frontRight.setPower(DriveDebug.FRONT_RIGHT_POWER);
-            robot.backLeft.setPower(DriveDebug.BACK_LEFT_POWER);
-            robot.backRight.setPower(DriveDebug.BACK_RIGHT_POWER);
+            double y = (DriveDebug.FRONT_LEFT_POWER
+                    + DriveDebug.BACK_LEFT_POWER
+                    + DriveDebug.FRONT_RIGHT_POWER
+                    + DriveDebug.BACK_RIGHT_POWER) / 4.0;
+            double x = (DriveDebug.FRONT_LEFT_POWER
+                    - DriveDebug.BACK_LEFT_POWER
+                    - DriveDebug.FRONT_RIGHT_POWER
+                    + DriveDebug.BACK_RIGHT_POWER) / 4.0;
+            double rotation = (DriveDebug.FRONT_LEFT_POWER
+                    + DriveDebug.BACK_LEFT_POWER
+                    - DriveDebug.FRONT_RIGHT_POWER
+                    - DriveDebug.BACK_RIGHT_POWER) / 4.0;
+
+            robot.follower.manual(y, x, rotation);
         }
     }
     private void stopDrivetrain() {
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);
+        robot.follower.manual(0, 0, 0);
     }
 
     @Override
     public void stop() {
-        stopDrivetrain();
+        robot.stop();
     }
 }

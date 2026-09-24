@@ -20,7 +20,14 @@ public abstract class BaseOpMode extends OpMode {
     @Override
     public void loop() {
         execute();
-        r.follower.update();
+        r.tick(gamepad1, gamepad2);
+    }
+
+    @Override
+    public void stop() {
+        if (r != null) {
+            r.stop();
+        }
     }
 
 }

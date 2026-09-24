@@ -8,7 +8,6 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transf
 import static com.pedropathing.ivy.commands.Commands.lazy;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import static com.pedropathing.ivy.pedro.PedroCommands.hold;
-import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
@@ -20,8 +19,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.bioBuzz.Commands;
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
@@ -29,7 +26,6 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
     public final Follower follower;
@@ -59,20 +55,12 @@ public class Robot {
         turret = new Turret(hardwareMap, limelight);
 
         commands = new Commands();
-        limelight = new LL(hardwareMap);
 
         //Subsystems
         hood = new Hood(hardwareMap);
 
 
         shooter = new Shooter(hardwareMap);
-    }
-
-    public void motorDriveXYVectors(double x, double y, double rotation) {
-        double frontLeftPower = y + x + rotation;
-        double backLeftPower = y - x + rotation;
-        double frontRightPower = y - x - rotation;
-        double backRightPower = y + x - rotation;
     }
 
     public void tick(Gamepad gamepad1, Gamepad gamepad2) {
@@ -88,12 +76,13 @@ public class Robot {
 
         follower.update();
         limelight.update();
+        turret.update();
     }
 
     public void stop() {
         follower.stop();
-        limelight.stop();
         turret.stop();
+        limelight.stop();
     }
 
 
@@ -110,7 +99,6 @@ public class Robot {
                     .setExecute(() -> transfer.setTransferPower(0));
         }
 
-
         //INTAKE
         public Command intakeIn() {
             return Command.build()
@@ -124,7 +112,6 @@ public class Robot {
             return Command.build()
                     .setExecute(() -> intake.setIntakePower(-intakePower));
         }
-
 
         //STOPPER
         public Command stopperIn() {
