@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
 // This is made for two positional servos
@@ -20,7 +21,9 @@ public class Turret {
 
 
 
+
     // Servo to turret
+    public static double SERVO_RATIO = 360;
     public static double GEAR_RATIO = 1.44;
     public static double TX_TOLERANCE_DEGREES = 1.0;
     public static double MAX_STEP_DEGREES = 3.0;
@@ -28,7 +31,6 @@ public class Turret {
     public static double AIM_DIRECTION = 1.0;
     public static double MAX_ANGLE_DEGREES = 360;
     public static double MIN_ANGLE_DEGREES = 0;
-
     public boolean trackingEnabled = false;
 
     public Turret(HardwareMap hardwareMap, LL limelight) {
@@ -48,7 +50,7 @@ public class Turret {
                 MAX_ANGLE_DEGREES
         );
 
-        double servoPos = (angle/GEAR_RATIO)/360;
+        double servoPos = (angle/GEAR_RATIO)/SERVO_RATIO;
 
         servo1.setPosition(servoPos);
         servo2.setPosition(servoPos);
@@ -87,9 +89,13 @@ public class Turret {
         turnTo(getAngle()+turretCorrectionDegrees*AIM_DIRECTION);
     }
 
+    private void followBallisticAngle() {
+        turnTo(Ballistics.getResult().getTurretAngleRS());
+    }
+
     public void update() {
         if (trackingEnabled) {
-            followTargetTick();
+            followBallisticAngle();
         }
     }
 }
