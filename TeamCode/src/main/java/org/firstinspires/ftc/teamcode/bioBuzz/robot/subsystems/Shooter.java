@@ -18,6 +18,14 @@ public class Shooter {
     public static double kP = 0.1;
     public static double kI = 0;
     public static double kD = 0;
+
+    public DcMotorEx getShooter1() {
+        return shooter1;
+    }
+    public DcMotorEx getShooter2() {
+        return shooter2;
+    }
+
     private final DcMotorEx shooter1;
     private final DcMotorEx shooter2;
     private final PIDController pid1;

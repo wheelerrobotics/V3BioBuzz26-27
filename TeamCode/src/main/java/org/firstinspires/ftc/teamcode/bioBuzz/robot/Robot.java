@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.ivy.commands.Commands.infinite;
 import static com.pedropathing.ivy.commands.Commands.lazy;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import static com.pedropathing.ivy.pedro.PedroCommands.hold;
@@ -17,11 +18,15 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
@@ -49,12 +54,18 @@ public class Robot {
 
 
     public Robot(HardwareMap hardwareMap) {
+        follower = Constants.createFollower(hardwareMap);
+        shooter = new Shooter(hardwareMap);
+        Ballistics.init(follower,
+                hardwareMap.get(Limelight3A.class, HardwareNames.LIMELIGHT),
+                GlobalT.get_telemetry(),
+                shooter.getShooter1(),
+                shooter.getShooter2());
+
+
         transfer = new Transfer(hardwareMap);
         intake = new Intake(hardwareMap);
         stopper = new Stopper(hardwareMap);
-
-
-        follower = Constants.createFollower(hardwareMap);
 
         frontLeft = hardwareMap.get(DcMotorEx.class, FRONT_LEFT_DRIVE);
         frontRight = hardwareMap.get(DcMotorEx.class, FRONT_RIGHT_DRIVE);
@@ -75,7 +86,7 @@ public class Robot {
         hood = new Hood(hardwareMap);
 
 
-        shooter = new Shooter(hardwareMap);
+
     }
 
     public void tick(Gamepad gamepad1, Gamepad gamepad2) {
@@ -107,17 +118,26 @@ public class Robot {
         //TRANSFER
         public Command transferOn() {
             return Command.build()
-                    .setStart(() -> transfer.setTransferPower(transferPower));
+                    .setStart(() -> transfer.setTransferPower(transferPower))
+                    .requiring(Transfer.class);
         }
         public Command transferOff() {
             return Command.build()
-                    .setStart(() -> transfer.setTransferPower(0));
+                    .setStart(() -> transfer.setTransferPower(0))
+                    .requiring(Transfer.class);
         }
 
         //INTAKE
-        public Command intakeIn() {
-            return Command.build()
-                    .setStart(() -> intake.setIntakePower(intakePower));
+        public Command intake() {
+            return infinite(() -> {
+                if (intake.pollenPresent() && stopper.getNumBalls() < 4) {
+                    intake.setIntakePower(intakePower);
+                } else {
+                    intake.setIntakePower(0);
+                }
+            })
+                    .setPriority(1)
+                    .requiring(Intake.class);
         }
         public Command intakeOff() {
             return Command.build()
@@ -125,17 +145,20 @@ public class Robot {
         }
         public Command outtake() {
             return Command.build()
-                    .setStart(() -> intake.setIntakePower(-intakePower));
+                    .setStart(() -> {
+                        intake.setIntakePower(-intakePower);
+                        transfer.setTransferPower(-transferPower);
+                    })
+                    .requiring(Transfer.class)
+                    .setPriority(10000);
         }
 
         //STOPPER
-        public Command stopperIn() {
+        public Command stopper() {
             return Command.build()
-                    .setStart(() -> stopper.setStopperPos(stopperIn)).setDone(() -> true);
-        }
-        public Command stopperOut() {
-            return Command.build()
-                    .setStart(() -> stopper.setStopperPos(stopperOut)).setDone(() -> true);
+                    .setStart(() -> stopper.setStopperPos(stopperOut))
+                    .setDone(() -> stopper.isEmpty())
+                    .setEnd(endCondition -> stopper.setStopperPos(stopperIn));
         }
 
         //Shooter + Hood
@@ -147,6 +170,10 @@ public class Robot {
         public Command hood() {
             return Command.build()
                     .setExecute(hood::updatePosition);
+        }
+
+        public Command updateBallistics() {
+            return infinite(Ballistics::update);
         }
 
         public Command driveToPos(Pose destination, double drivePower, double positionTolerance) {

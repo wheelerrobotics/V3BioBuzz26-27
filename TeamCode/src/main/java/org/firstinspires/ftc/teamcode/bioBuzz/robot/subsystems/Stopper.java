@@ -57,5 +57,10 @@ public class Stopper {
         return numBalls;
     }
 
+    public boolean isEmpty() {
+        return numBalls == 0;
+    }
+
+
 
 }
