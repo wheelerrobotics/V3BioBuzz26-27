@@ -16,6 +16,7 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -160,9 +161,26 @@ public class Robot {
                     .setEnd(endCondition -> stopper.setStopperPos(stopperIn));
         }
 
+
         //Shooter + Hood
         public Command shoot() {
             return infinite(shooter::update);
+        }
+
+        public Command shootCommand() {
+            return Command.build()
+                    .setStart(() -> {
+                        transfer().schedule();
+                    })
+                    .setExecute(() -> {
+                        hood().schedule();
+                        shoot().schedule();
+                        stopper().schedule();
+                    })
+                    .setEnd(endCondition -> {
+                        Scheduler.cancel(transfer());
+                    });
+
         }
 
         public Command hood() {
