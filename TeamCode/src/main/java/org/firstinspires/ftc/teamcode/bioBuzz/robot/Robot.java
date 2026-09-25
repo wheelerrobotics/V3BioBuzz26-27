@@ -116,7 +116,7 @@ public class Robot {
     public class Commands {
 
         //TRANSFER
-        public Command transferOn() {
+        public Command transfer() {
             return Command.build()
                     .setStart(() -> transfer.setTransferPower(transferPower))
                     .setEnd(endCondition -> transfer.setTransferPower(0))
@@ -137,7 +137,10 @@ public class Robot {
         }
         public Command intakeOff() {
             return Command.build()
-                    .setStart(() -> intake.setIntakePower(0));
+                    .setStart(() -> intake.setIntakePower(0))
+                    .setEnd(endCondition -> intake().schedule())
+                    .requiring(Intake.class)
+                    .setPriority(10);
         }
         public Command outtake() {
             return Command.build()
@@ -145,8 +148,8 @@ public class Robot {
                         intake.setIntakePower(-intakePower);
                         transfer.setTransferPower(-transferPower);
                     })
-                    .requiring(Transfer.class)
-                    .setPriority(10000);
+                    .requiring(Transfer.class, Intake.class)
+                    .setPriority(100);
         }
 
         //STOPPER
@@ -159,13 +162,11 @@ public class Robot {
 
         //Shooter + Hood
         public Command shoot() {
-            return Command.build()
-                    .setExecute(shooter::update);
+            return infinite(shooter::update);
         }
 
         public Command hood() {
-            return Command.build()
-                    .setExecute(hood::updatePosition);
+            return infinite(hood::updatePosition);
         }
 
         public Command updateBallistics() {
