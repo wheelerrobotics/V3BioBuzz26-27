@@ -119,11 +119,7 @@ public class Robot {
         public Command transferOn() {
             return Command.build()
                     .setStart(() -> transfer.setTransferPower(transferPower))
-                    .requiring(Transfer.class);
-        }
-        public Command transferOff() {
-            return Command.build()
-                    .setStart(() -> transfer.setTransferPower(0))
+                    .setEnd(endCondition -> transfer.setTransferPower(0))
                     .requiring(Transfer.class);
         }
 
