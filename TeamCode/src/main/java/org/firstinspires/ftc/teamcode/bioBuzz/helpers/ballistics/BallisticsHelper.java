@@ -22,13 +22,13 @@ public class BallisticsHelper {
     @Configurable
     public static class Constants {
         public static double flywheelDiameter = 5; // FIXME: 9/19/26 SET
-        public static double kDeparture = -0.01; // FIXME: 9/19/26 TUNE
+        public static double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE
         public static double encoderTPR = 24;
-        public static double targetY = 86;
+        public static double targetY = 86; // FIXME: 9/19/26 TUNE
         public static double gravity = 9.81;
         public static double p = 1.2; // air density
-        public static double ballDiameter = 0.071;
-        public static double ballMass = 0.071;
+        public static double ballDiameter = 0.071; // FIXME: 9/19/26 TUNE
+        public static double ballMass = 0.071; // FIXME: 9/19/26 TUNE
         public static double kBallSpin = 1; // FIXME: 9/19/26 TUNE
         public static double kTargetErrorTolerance = 0.13; // meters
         public static double kTargetErrorIntegralMax = 9999999; // meters // FIXME: 9/19/26 TUNE
@@ -75,11 +75,11 @@ public class BallisticsHelper {
     }
 
     private static double getFlywheelSurfaceSpeed(double tps) {
-        return (departureMath * tps) / 60 * Constants.encoderTPR;
+        return ((departureMath * tps) / Constants.encoderTPR) * 60;
     }
 
     private static double getV0(double tps, Telemetry t) {
-        double v0 = getFlywheelSurfaceSpeed(tps) * Constants.kDeparture;
+        double v0 = getFlywheelSurfaceSpeed(tps) * Constants.kDepartureLoss;
         t.addData("getV0()", v0);
         return v0;
 
@@ -255,7 +255,9 @@ public class BallisticsHelper {
     }
 
     private static class SOTM {
-        private static double lastTime = 0;
+        private static double lastTimex = 0;
+        private static double lastTimey = 0;
+
         private static double lastVx = 0;
         private static double lastVy = 0;
 
@@ -263,7 +265,7 @@ public class BallisticsHelper {
         }
 
         private static double getAngular(double x, double y) {
-            return 90 - Math.tan(y / x);
+            return Math.PI - Math.atan(y / x);
         }
 
 
@@ -272,11 +274,11 @@ public class BallisticsHelper {
 
             long now = System.nanoTime();
 
-            double dt = (now - lastTime) / 1e9; // seconds
+            double dt = (now - lastTimex) / 1e9; // seconds
             double ax = (vx - lastVx) / dt;
 
             lastVx = vx;
-            lastTime = now;
+            lastTimex = now;
 
             return ax;
         }
@@ -286,11 +288,11 @@ public class BallisticsHelper {
 
             long now = System.nanoTime();
 
-            double dt = (now - lastTime) / 1e9; // seconds
+            double dt = (now - lastTimey) / 1e9; // seconds
             double ay = (vy - lastVy) / dt;
 
             lastVy = vy;
-            lastTime = now;
+            lastTimey = now;
 
             return ay;
         }
