@@ -157,7 +157,6 @@ public class Robot {
         public Command stopper() {
             return Command.build()
                     .setStart(() -> stopper.setStopperPos(stopperOut))
-                    .setDone(() -> stopper.isEmpty())
                     .setEnd(endCondition -> stopper.setStopperPos(stopperIn));
         }
 
@@ -173,12 +172,14 @@ public class Robot {
                         transfer().schedule();
                     })
                     .setExecute(() -> {
-                        hood().schedule();
-                        shoot().schedule();
+//                        hood().schedule(); hood can just always be on
+//                        shoot().schedule(); do this if we want shooter to not always be on
                         stopper().schedule();
                     })
+                    .setDone(() -> stopper.isEmpty())
                     .setEnd(endCondition -> {
                         Scheduler.cancel(transfer());
+                        Scheduler.cancel(stopper());
                     });
 
         }
