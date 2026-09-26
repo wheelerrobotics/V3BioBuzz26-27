@@ -41,7 +41,7 @@ public class Shooter {
     }
 
     public void data(Double target) {
-        tm.addData("setpoint", target);
+        tm.addData("targetTicks", target);
         tm.addData("s1 velocity", shooter1.getVelocity());
         tm.addData("s2 velocity", shooter2.getVelocity());
         tm.addData("s1 current", shooter1.getCurrent(CurrentUnit.AMPS));
@@ -66,7 +66,6 @@ public class Shooter {
         pid2.setTarget(v);
         shooter1.setPower(pid1.update(shooter1.getVelocity()));
         shooter2.setPower(pid2.update(shooter2.getVelocity()));
-
         data(v);
     }
 
