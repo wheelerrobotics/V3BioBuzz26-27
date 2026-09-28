@@ -38,7 +38,7 @@ public class SampleTele1 extends OpMode {
                 x * RobotConstants.Drive.MAX_DRIVE_POWER,
                 r * RobotConstants.Drive.MAX_DRIVE_POWER);
 
-        robot.tick(gamepad1,gamepad2);
+        robot.update(gamepad1,gamepad2);
 
         Pose pose = robot.follower.pose();
         telemetryM.addData("X (in)", pose.x());

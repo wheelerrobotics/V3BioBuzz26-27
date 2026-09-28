@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.bioBuzz;
 import static com.pedropathing.ivy.Scheduler.execute;
 import static com.pedropathing.ivy.Scheduler.reset;
 
+import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
@@ -11,18 +12,28 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
 public abstract class BaseOpMode extends OpMode {
 
     Robot r;
+    TelemetryManager telemetryManager;
 
     @Override
     public void init() {
+        reset();
         GlobalT.set_telemetry(telemetry);
         r = new Robot(hardwareMap);
-        reset();
+    }
+
+    @Override
+    public void start() {
+        r.commands.shooterUpdate().schedule();
+        r.commands.hood().schedule();
+        r.commands.updateBallistics().schedule();
     }
 
     @Override
     public void loop() {
+        r.update(gamepad1, gamepad2);
+        telemetryManager.update();
+        r.follower.update();
         execute();
-        r.tick(gamepad1, gamepad2);
     }
 
     @Override

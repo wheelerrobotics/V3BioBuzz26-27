@@ -90,16 +90,16 @@ public class Robot {
 
     }
 
-    public void tick(Gamepad gamepad1, Gamepad gamepad2) {
-        boolean driverWantsControl =
-                Math.abs(gamepad1.left_stick_x) > 0.1 ||
-                Math.abs(gamepad1.left_stick_y) > 0.1 ||
-                Math.abs(gamepad1.right_stick_x) > 0.1;
-
-
-        if (driverWantsControl && (follower.following() || follower.holding())) {
-            follower.stop();
-        }
+    public void update(Gamepad gamepad1, Gamepad gamepad2) {
+//        boolean driverWantsControl =
+//                Math.abs(gamepad1.left_stick_x) > 0.1 ||
+//                Math.abs(gamepad1.left_stick_y) > 0.1 ||
+//                Math.abs(gamepad1.right_stick_x) > 0.1;
+//
+//
+//        if (driverWantsControl && (follower.following() || follower.holding())) {
+//            follower.stop();
+//        }
 
         follower.update();
         limelight.update();
@@ -162,7 +162,7 @@ public class Robot {
 
 
         //Shooter + Hood
-        public Command shoot() {
+        public Command shooterUpdate() {
             return infinite(shooter::update);
         }
 
@@ -170,10 +170,6 @@ public class Robot {
             return Command.build()
                     .setStart(() -> {
                         transfer().schedule();
-                    })
-                    .setExecute(() -> {
-//                        hood().schedule(); hood can just always be on
-//                        shoot().schedule(); do this if we want shooter to not always be on
                         stopper().schedule();
                     })
                     .setDone(() -> stopper.isEmpty())

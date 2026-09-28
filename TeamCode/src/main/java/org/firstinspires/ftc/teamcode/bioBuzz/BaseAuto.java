@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.bioBuzz;
 
-public class BaseAuto extends BaseOpMode {
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
+
+public abstract class BaseAuto extends BaseOpMode {
     @Override
     public void init() {
         super.init();
@@ -8,6 +10,7 @@ public class BaseAuto extends BaseOpMode {
 
     @Override
     public void loop() {
+        RobotVars.setLastPose(r.follower.pose());
         super.loop();
     }
 }

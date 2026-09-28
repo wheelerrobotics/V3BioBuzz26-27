@@ -37,7 +37,7 @@ public class RobotDebugger extends OpMode {
 
     @Override
     public void loop() {
-        robot.tick(gamepad1,gamepad2);
+        robot.update(gamepad1,gamepad2);
         updateDrivetrain();
 
         telemetryM.addData("Master Enable", MASTER_ENABLE);
