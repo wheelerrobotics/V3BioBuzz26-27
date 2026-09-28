@@ -36,7 +36,6 @@ public class Stopper {
 
 
     public void updateBalls() {
-
         if (in.readRawVoltage() > 2 && !lastIn) {
             numBalls++;
             lastIn = true;
@@ -51,6 +50,7 @@ public class Stopper {
             lastOut = false;
         }
 
+        if (areBalls()) numBalls = 0;
     }
 
     public int getNumBalls() {
