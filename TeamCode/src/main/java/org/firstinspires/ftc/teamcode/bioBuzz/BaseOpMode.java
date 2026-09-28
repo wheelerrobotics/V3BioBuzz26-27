@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
 
 public abstract class BaseOpMode extends OpMode {
 
-    Robot r;
+    public Robot r;
     TelemetryManager telemetryManager;
 
     @Override

@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.bioBuzz;
+package org.firstinspires.ftc.teamcode.bioBuzz.topAuto;
 
 import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.ivy.groups.Groups.sequential;
 import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.bottomFlower;
 import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.bottomFlowerCTRL;
 import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.gardenPickup;
@@ -14,44 +15,42 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.sideFlower;
 import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.startNectarSide;
 
 import com.pedropathing.api.PoseFactory;
+import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.CommandBuilder;
 import com.pedropathing.paths.Path;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
+import org.firstinspires.ftc.teamcode.bioBuzz.BaseAuto;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
-public abstract class BaseAuto extends BaseOpMode {
+public class BlueAuto extends BaseAuto {
 
-    private static Path ab() {
-        return curve(startNectarSide, passUnderCTRL, sideFlower, partnerPickup).constant(90);
-    }
+    private Command autoRoutine() {
+        return sequential(
 
-    private static Path bc() {
-        return line(partnerPickup, sideFlower).linear(90,270);
-    }
 
-    private static Path cd() {
-        return curve(sideFlower, partnerPickupCTRL, gardenPickupCTRL, gardenPickup).linear(270, 0);
-    }
-
-    private static Path da() {
-        return curve(gardenPickup,bottomFlowerCTRL,bottomFlower).constant(0);
-    }
-
-    private static Path e() {
-        return line(bottomFlower, bottomFlowerCTRL).linear(0, 180);
-    }
-
-    private static Path f() {
-        return line(bottomFlowerCTRL, park).tangent();
+        );
     }
 
     @Override
     public void init() {
         super.init();
+        Alliance.set(Alliance.Color.BLUE);
+        r.follower.setPose(startNectarSide);
     }
 
     @Override
     public void loop() {
-        RobotVars.setLastPose(r.follower.pose());
         super.loop();
+        r.follower.update();
+    }
+
+    @Override
+    public void start() {
+        super.start();
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
     }
 }
