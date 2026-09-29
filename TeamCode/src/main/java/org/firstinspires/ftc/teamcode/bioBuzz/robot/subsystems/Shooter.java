@@ -49,9 +49,9 @@ public class Shooter {
     }
 
     public void test(Double tps) {
-        shooter1.setPower(pid1.calculate(shooter1.getVelocity(), tps));
+        shooter1.setPower(pid1.calculate(tps, shooter1.getVelocity()));
 
-        shooter2.setPower(pid2.calculate(shooter2.getVelocity(), tps));
+        shooter2.setPower(pid2.calculate(tps, shooter1.getVelocity()));
 
         data(tps);
     }
@@ -59,9 +59,9 @@ public class Shooter {
     public void update() {
         double v = ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
 
-        shooter1.setPower(pid1.calculate(shooter1.getVelocity(), v));
+        shooter1.setPower(pid1.calculate(v, shooter1.getVelocity()));
 
-        shooter2.setPower(pid2.calculate(shooter2.getVelocity(), v));
+        shooter2.setPower(pid2.calculate(v, shooter1.getVelocity()));
 
         data(v);
     }
