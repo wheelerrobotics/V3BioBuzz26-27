@@ -19,11 +19,11 @@ public class ShooterTest extends OpMode {
         RUN_HOOD_DEGREES //NOT RECOMMENDED
     }
 
-    TestMode testMode = TestMode.STOPPED;
-    TelemetryManager tm;
-    double targetRPM = 1000;
-    int hoodPos = 0;
-    int hoodAngle = 10;
+    public static TestMode testMode = TestMode.STOPPED;
+    public static TelemetryManager tm;
+    public static double targetRPM = 1000;
+    public static int hoodPos = 0;
+    public static int hoodAngle = 10;
 
     Shooter shooter;
     Hood hood;
