@@ -40,12 +40,10 @@ public class ShooterTest extends OpMode {
         switch (testMode) {
             case RUN:
                 shooter.test(targetRPM);
-                shooter.data(targetRPM);
                 hood.test(hoodPos);
                 break;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
-                shooter.data(targetRPM);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodPos));
             case STOPPED:
                 shooter.getShooter1().setPower(0);

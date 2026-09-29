@@ -5,11 +5,11 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
+import com.pedropathing.controllers.Controller;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PIDController;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
 
@@ -28,15 +28,15 @@ public class Shooter {
 
     private final DcMotorEx shooter1;
     private final DcMotorEx shooter2;
-    private final PIDController pid1;
-    private final PIDController pid2;
+    private final Controller pid1;
+    private final Controller pid2;
 
     public Shooter(HardwareMap hardwareMap) {
         tm = PanelsTelemetry.INSTANCE.getTelemetry();
         shooter1 = hardwareMap.get(DcMotorEx.class, SHOOTER1);
         shooter2 = hardwareMap.get(DcMotorEx.class, SHOOTER2);
-        pid1 = new PIDController(kP, kI, kD);
-        pid2 = new PIDController(kP, kI, kD);
+        pid1 = Controller.pid(kP, kI, kD);
+        pid2 = Controller.pid(kP, kI, kD);
         ShooterLUT.init();
     }
 
@@ -49,23 +49,20 @@ public class Shooter {
     }
 
     public void test(Double tps) {
-        pid1.setCoefficients(kP, kI, kD);
-        pid1.setTarget(tps);
-        shooter1.setPower(pid1.update(shooter1.getVelocity()));
+        shooter1.setPower(pid1.calculate(shooter1.getVelocity(), tps));
 
-        pid2.setCoefficients(kP, kI, kD);
-        pid2.setTarget(tps);
-        shooter2.setPower(pid2.update(shooter2.getVelocity()));
+        shooter2.setPower(pid2.calculate(shooter2.getVelocity(), tps));
 
         data(tps);
     }
 
     public void update() {
         double v = ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
-        pid1.setTarget(v);
-        pid2.setTarget(v);
-        shooter1.setPower(pid1.update(shooter1.getVelocity()));
-        shooter2.setPower(pid2.update(shooter2.getVelocity()));
+
+        shooter1.setPower(pid1.calculate(shooter1.getVelocity(), v));
+
+        shooter2.setPower(pid2.calculate(shooter2.getVelocity(), v));
+
         data(v);
     }
 
