@@ -80,6 +80,16 @@ public final class ExpectedHardware {
                     STOPPER,
                     Servo.class,
                     "Game-piece stopper servo"
+            ),
+            new HardwareDeviceSpec(
+                    RIGHT_SLIDE_SERVO,
+                    Servo.class,
+                    "Right slide servo"
+            ),
+            new HardwareDeviceSpec(
+                    LEFT_SLIDE_SERVO,
+                    Servo.class,
+                    "Left slide servo"
             )
     };
 }

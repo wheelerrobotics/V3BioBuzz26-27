@@ -14,8 +14,6 @@ public class Turret {
     private final Servo servo1;
     private final Servo servo2;
     private final LL limelight;
-    public static boolean SERVO_1_REVERSED = false;
-    public static boolean SERVO_2_REVERSED = false;
     public static Servo.Direction SERVO_1_DIRECTION = Servo.Direction.REVERSE;
     public static Servo.Direction SERVO_2_DIRECTION = Servo.Direction.REVERSE;
 
