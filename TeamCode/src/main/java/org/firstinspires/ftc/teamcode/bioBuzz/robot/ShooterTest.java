@@ -47,6 +47,7 @@ public class ShooterTest extends OpMode {
                 shooter.test(targetRPM);
                 shooter.data(targetRPM);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodPos));
+                break;
             case STOPPED:
                 shooter.getShooter1().setPower(0);
                 shooter.getShooter2().setPower(0);
