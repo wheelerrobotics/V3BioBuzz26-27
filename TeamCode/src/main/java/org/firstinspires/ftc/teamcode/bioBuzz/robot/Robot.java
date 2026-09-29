@@ -149,6 +149,7 @@ public class Robot {
                         intake.setIntakePower(-intakePower);
                         transfer.setTransferPower(-transferPower);
                     })
+                    .setEnd(endCondition -> intake().schedule())
                     .requiring(Transfer.class, Intake.class)
                     .setPriority(100);
         }

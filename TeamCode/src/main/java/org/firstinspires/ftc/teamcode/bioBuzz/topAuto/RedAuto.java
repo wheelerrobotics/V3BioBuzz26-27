@@ -6,9 +6,8 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 public class RedAuto extends BaseAuto {
 
     public void init() {
-        super.init();
         Alliance.set(Alliance.Color.RED);
-
+        super.init();
     }
 
 

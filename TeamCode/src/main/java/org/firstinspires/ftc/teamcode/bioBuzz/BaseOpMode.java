@@ -25,6 +25,7 @@ public abstract class BaseOpMode extends OpMode {
     public void start() {
         r.commands.shooterUpdate().schedule();
         r.commands.hood().schedule();
+        r.commands.intake().schedule();
         r.commands.updateBallistics().schedule();
     }
 
