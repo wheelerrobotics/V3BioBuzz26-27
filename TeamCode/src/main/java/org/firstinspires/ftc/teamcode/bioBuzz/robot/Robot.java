@@ -5,14 +5,14 @@ import static com.pedropathing.ivy.commands.Commands.infinite;
 import static com.pedropathing.ivy.commands.Commands.lazy;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import static com.pedropathing.ivy.pedro.PedroCommands.hold;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Intake.intakePower;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperIn;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Stopper.stopperOut;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants.Transfer.transferPower;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_LEFT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_RIGHT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_LEFT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_RIGHT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake.intakePower;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper.stopperIn;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper.stopperOut;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer.transferPower;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
@@ -32,6 +32,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Slides;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
@@ -52,6 +53,7 @@ public class Robot {
     public Transfer transfer;
     public Intake intake;
     public Stopper stopper;
+    public Slides slides;
 
 
     public Robot(HardwareMap hardwareMap) {
@@ -67,6 +69,7 @@ public class Robot {
         transfer = new Transfer(hardwareMap);
         intake = new Intake(hardwareMap);
         stopper = new Stopper(hardwareMap);
+        slides = new Slides(hardwareMap);
 
         frontLeft = hardwareMap.get(DcMotorEx.class, FRONT_LEFT_DRIVE);
         frontRight = hardwareMap.get(DcMotorEx.class, FRONT_RIGHT_DRIVE);
@@ -136,6 +139,16 @@ public class Robot {
                     .setPriority(1)
                     .requiring(Intake.class);
         }
+
+        public Command intakeOn() {
+            return Command.build()
+                    .setStart(() -> intake.setIntakePower(intakePower))
+                    .setDone(() -> stopper.getNumBalls() >= 4)
+                    .setEnd(endCondition -> intake.setIntakePower(0))
+                    .requiring(Intake.class)
+                    .setPriority(10);
+        }
+
         public Command intakeOff() {
             return Command.build()
                     .setStart(() -> intake.setIntakePower(0))
@@ -152,6 +165,17 @@ public class Robot {
                     .setEnd(endCondition -> intake().schedule())
                     .requiring(Transfer.class, Intake.class)
                     .setPriority(100);
+        }
+
+        //INTAKE SLIDES
+        public Command extendOut() {
+            return Command.build()
+                    .setStart(() -> slides.extendMax());
+        }
+
+        public Command extendIn() {
+            return Command.build()
+                    .setStart(() -> slides.extendMin());
         }
 
         //STOPPER

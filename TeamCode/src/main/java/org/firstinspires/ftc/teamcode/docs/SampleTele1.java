@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.docs;
 
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,11 +11,11 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotConstants;
 @TeleOp(name = "SampleTele1", group = "Samples")
 public class SampleTele1 extends OpMode {
     private Robot robot;
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         robot = new Robot(hardwareMap);
 
         robot.follower.setPose(Pose.zero());

@@ -4,6 +4,7 @@ import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.deadline;
+import static com.pedropathing.ivy.groups.Groups.parallel;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import static org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib.bottomFlower;
@@ -57,12 +58,20 @@ public abstract class BaseAuto extends BaseOpMode {
                 r.commands.shootCommand(),
                 follow(r.follower,ab()),
                 follow(r.follower,bc()),
-                //Flower intake while shooting
-                r.commands.shootCommand(),
-                follow(r.follower,cd()), //extend intake in parallel
+                parallel( //Flower intake while shooting
+                        r.commands.intakeOn(),
+                        r.commands.shootCommand()
+                ),
+                parallel(
+                        follow(r.follower,cd()),
+                        r.commands.extendOut()
+                ),
                 shootWhileFollowing(de()),
-                //flower intake without shooting
-                follow(r.follower,ef()), //retract intake in parallel
+                r.commands.intakeOn(),
+                parallel(
+                        follow(r.follower,ef()),
+                        r.commands.extendIn()
+                ),
                 follow(r.follower,fg())
         );
     }
@@ -70,6 +79,7 @@ public abstract class BaseAuto extends BaseOpMode {
     @Override
     public void init() {
         super.init();
+        r.follower.setPose(startNectarSide);
         schedule(auto());
     }
 

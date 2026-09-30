@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.debug.robotDebug;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.templateOpModes.debug.robotDebug.RobotDebuggerVals.*;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
@@ -15,10 +14,10 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
  * added. Put mechanism behavior in the subsystem; this OpMode should only set
  * targets, enable tuning controls, and display live state.
  */
-@Configurable
+@Config
 @TeleOp(name = "Robot Debugger", group = "Debug")
 public class RobotDebugger extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     public static boolean MASTER_ENABLE = true;
 
@@ -26,12 +25,12 @@ public class RobotDebugger extends OpMode {
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         robot = new Robot(hardwareMap);
         stopDrivetrain();
 
         telemetryM.addLine("Robot Debugger initialized");
-        telemetryM.addLine("Enable MASTER_ENABLE and the desired subsystem in Panels");
+        telemetryM.addLine("Enable MASTER_ENABLE and the desired subsystem in FTC Dashboard");
         telemetryM.update(telemetry);
     }
 

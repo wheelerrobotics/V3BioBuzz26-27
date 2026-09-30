@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.debug.robotDebug;
 
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 
-@Configurable
+@Config
 public class RobotDebuggerVals {
-    @Configurable
+    @Config
     public static class DriveDebug {
         public static boolean ENABLED = false;
         public static boolean CONTROLLER = false;

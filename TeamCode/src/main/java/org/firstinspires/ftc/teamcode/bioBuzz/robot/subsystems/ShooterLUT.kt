@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems
 
-import com.bylazar.configurables.annotations.Configurable
+import com.acmerobotics.dashboard.config.Config
 import com.seattlesolvers.solverslib.util.InterpLUT
 
 data class ShootPoint(val d: Int, val v: Int)
 
-@Configurable
+@Config
 object ShooterLUT {
     @JvmField
     val points = arrayOf(

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BallisticsHelper {
 
-    @Configurable
+    @Config
     public static class Constants {
         public static double flywheelDiameter = 5; // FIXME: 9/19/26 SET
         public static double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE

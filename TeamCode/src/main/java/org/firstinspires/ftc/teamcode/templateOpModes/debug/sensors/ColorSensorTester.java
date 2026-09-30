@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.templateOpModes.debug.sensors;
 
 import java.util.Locale;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -11,15 +11,14 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.templateOpModes.debug.util.HardwareTelemetry;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /** Displays raw and optional advanced readings from any configured color sensor. */
-@Configurable
+@Config
 @TeleOp(name = "Color Sensor Tester", group = "Debug/Sensors")
 public class ColorSensorTester extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     public static String SENSOR_NAME = "colorSensor";
 
@@ -28,8 +27,8 @@ public class ColorSensorTester extends OpMode {
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-        telemetryM.addLine("Enter a color sensor name in Panels");
+        telemetryM = DashboardTelemetry.begin(telemetry);
+        telemetryM.addLine("Enter a color sensor name in FTC Dashboard");
         telemetryM.update(telemetry);
     }
 
@@ -43,7 +42,7 @@ public class ColorSensorTester extends OpMode {
             return;
         }
 
-        HardwareTelemetry.addDeviceInfo(telemetry, loadedName, sensor);
+        HardwareTelemetry.addDeviceInfo(telemetryM, loadedName, sensor);
         telemetryM.addLine("Raw Color Readings");
         telemetryM.addData("Red", sensor.red());
         telemetryM.addData("Green", sensor.green());

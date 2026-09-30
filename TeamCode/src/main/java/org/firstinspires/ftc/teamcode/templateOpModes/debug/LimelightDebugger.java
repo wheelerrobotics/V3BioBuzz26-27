@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.templateOpModes.debug;
 
 import java.util.Locale;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes.BarcodeResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes.ClassifierResult;
@@ -12,8 +12,7 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes.FiducialResult;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.Range;
 
@@ -23,10 +22,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /** Displays live status and pipeline results from any configured Limelight 3A. */
-@Configurable
+@Config
 @TeleOp(name = "Limelight Debugger", group = "Debug")
 public class LimelightDebugger extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     public static String LIMELIGHT_NAME = "limelight";
     public static int PIPELINE = 0;
@@ -42,8 +41,8 @@ public class LimelightDebugger extends OpMode {
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-        telemetryM.addLine("Enter a Limelight configuration name and pipeline in Panels");
+        telemetryM = DashboardTelemetry.begin(telemetry);
+        telemetryM.addLine("Enter a Limelight configuration name and pipeline in FTC Dashboard");
         telemetryM.update(telemetry);
     }
 
@@ -58,7 +57,7 @@ public class LimelightDebugger extends OpMode {
         }
 
         applyConfiguration();
-        HardwareTelemetry.addDeviceInfo(telemetry, loadedName, limelight);
+        HardwareTelemetry.addDeviceInfo(telemetryM, loadedName, limelight);
         addCameraStatus();
 
         LLResult result = limelight.getLatestResult();
