@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,7 +12,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 @Configurable
 public class ShooterTest extends OpMode {
 
-    enum TestMode {
+    public enum TestMode {
         STOPPED,
         RUN_NO_HOOD,
         RUN,
@@ -31,28 +30,39 @@ public class ShooterTest extends OpMode {
 
     @Override
     public void init() {
-        tm = PanelsTelemetry.INSTANCE.getTelemetry();
+//        tm = PanelsTelemetry.INSTANCE.getTelemetry();
         shooter = new Shooter(hardwareMap);
         hood = new Hood(hardwareMap);
     }
 
     @Override
     public void loop() {
-        tm.addData("targetRPM JAVA", targetRPM);
-        tm.addData("hoodPos JAVA", hoodPos);
-        tm.addData("testMode JAVA", testMode.toString());
+        telemetry.addData("targetRPM JAVA", targetRPM);
+        telemetry.addData("hoodPos JAVA", hoodPos);
+        telemetry.addData("testMode JAVA", testMode.toString());
+
+        if (gamepad1.a) testMode = TestMode.RUN;
+        if (gamepad1.b) testMode = TestMode.STOPPED;
+
+        if (gamepad1.x) targetRPM = targetRPM + 10;
+        if (gamepad1.y) targetRPM = targetRPM - 10;
 
         switch (testMode) {
             case RUN:
                 shooter.test(targetRPM);
-                hood.test(hoodPos);
-                break;
+//                hood.test(hoodPos);
+//                shooter.getShooter1().setPower(1);
+                telemetry.addData("reached1", testMode.toString());
+                return;
             case RUN_NO_HOOD:
                 shooter.test(targetRPM);
+//                shooter.getShooter1().setPower(1);
+                return;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
+//                shooter.getShooter1().setPower(1);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
-                break;
+                return;
             case STOPPED:
                 shooter.getShooter1().setPower(0);
                 shooter.getShooter2().setPower(0);
