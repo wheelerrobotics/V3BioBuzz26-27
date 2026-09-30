@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
-import com.acmerobotics.dashboard.config.Config;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
+
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -37,21 +38,32 @@ public class ShooterTest extends OpMode {
 
     @Override
     public void loop() {
-        tm.addData("targetRPM JAVA", targetRPM);
-        tm.addData("hoodPos JAVA", hoodPos);
-        tm.addData("testMode JAVA", testMode.toString());
+        telemetry.addData("targetRPM JAVA", targetRPM);
+        telemetry.addData("hoodPos JAVA", hoodPos);
+        telemetry.addData("testMode JAVA", testMode.toString());
+
+        if (gamepad1.a) testMode = TestMode.RUN;
+        if (gamepad1.b) testMode = TestMode.STOPPED;
+
+        if (gamepad1.x) targetRPM = targetRPM + 10;
+        if (gamepad1.y) targetRPM = targetRPM - 10;
 
         switch (testMode) {
             case RUN:
                 shooter.test(targetRPM);
-                hood.test(hoodPos);
-                break;
+//                hood.test(hoodPos);
+//                shooter.getShooter1().setPower(1);
+                telemetry.addData("reached1", testMode.toString());
+                return;
             case RUN_NO_HOOD:
                 shooter.test(targetRPM);
+//                shooter.getShooter1().setPower(1);
+                return;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
+//                shooter.getShooter1().setPower(1);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
-                break;
+                return;
             case STOPPED:
                 shooter.getShooter1().setPower(0);
                 shooter.getShooter2().setPower(0);

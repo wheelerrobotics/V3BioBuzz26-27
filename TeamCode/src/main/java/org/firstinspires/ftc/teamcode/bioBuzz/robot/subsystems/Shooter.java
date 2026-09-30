@@ -7,10 +7,10 @@ import com.acmerobotics.dashboard.config.Config;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.pedropathing.controllers.Controller;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
 @Config
 public class Shooter {
@@ -35,6 +35,7 @@ public class Shooter {
         tm = DashboardTelemetry.getInstance();
         shooter1 = hardwareMap.get(DcMotorEx.class, SHOOTER1);
         shooter2 = hardwareMap.get(DcMotorEx.class, SHOOTER2);
+        shooter2.setDirection(DcMotorSimple.Direction.REVERSE);
         pid1 = Controller.pid(kP, kI, kD);
         pid2 = Controller.pid(kP, kI, kD);
         ShooterLUT.init();
@@ -48,22 +49,23 @@ public class Shooter {
         tm.addData("s2 current", shooter2.getCurrent(CurrentUnit.AMPS));
     }
 
+    private double lastTime = 0;
     public void test(Double tps) {
-        shooter1.setPower(pid1.calculate(tps, shooter1.getVelocity()));
-
-        shooter2.setPower(pid2.calculate(tps, shooter1.getVelocity()));
+        double dt = 0 - lastTime;
+        shooter1.setPower(pid1.calculate(tps, (tps - shooter1.getVelocity()), dt));
+        shooter2.setPower(pid1.calculate(tps, (tps - shooter2.getVelocity()), dt));
 
         data(tps);
     }
 
     public void update() {
-        double v = ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
+        double tps = 0;//ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
 
-        shooter1.setPower(pid1.calculate(v, shooter1.getVelocity()));
+        double dt = 0 - lastTime;
+        shooter1.setPower(pid1.calculate(tps, (tps - shooter1.getVelocity()), dt));
+        shooter2.setPower(pid1.calculate(tps, (tps - shooter2.getVelocity()), dt));
 
-        shooter2.setPower(pid2.calculate(v, shooter1.getVelocity()));
-
-        data(v);
+        data(tps);
     }
 
 }
