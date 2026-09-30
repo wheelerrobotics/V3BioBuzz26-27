@@ -15,6 +15,7 @@ public class ShooterTest extends OpMode {
 
     enum TestMode {
         STOPPED,
+        RUN_NO_HOOD,
         RUN,
         RUN_HOOD_DEGREES //NOT RECOMMENDED
     }
@@ -37,14 +38,20 @@ public class ShooterTest extends OpMode {
 
     @Override
     public void loop() {
+        tm.addData("targetRPM JAVA", targetRPM);
+        tm.addData("hoodPos JAVA", hoodPos);
+        tm.addData("testMode JAVA", testMode.toString());
+
         switch (testMode) {
             case RUN:
                 shooter.test(targetRPM);
                 hood.test(hoodPos);
                 break;
+            case RUN_NO_HOOD:
+                shooter.test(targetRPM);
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
-                tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodPos));
+                tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
                 break;
             case STOPPED:
                 shooter.getShooter1().setPower(0);

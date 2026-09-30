@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER1;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER2;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.controllers.Controller;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
-
+@Configurable
 public class Shooter {
     private final TelemetryManager tm;
     public static double kP = 0.1;
