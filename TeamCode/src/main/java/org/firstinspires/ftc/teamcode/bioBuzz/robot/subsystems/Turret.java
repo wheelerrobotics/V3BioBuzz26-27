@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
 // This is made for two positional servos
-@Configurable
+@Config
 public class Turret {
     private final Servo servo1;
     private final Servo servo2;

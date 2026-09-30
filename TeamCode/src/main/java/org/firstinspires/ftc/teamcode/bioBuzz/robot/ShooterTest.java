@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
-import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import com.acmerobotics.dashboard.config.Config;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,10 +9,10 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 
 @TeleOp
-@Configurable
+@Config
 public class ShooterTest extends OpMode {
 
-    enum TestMode {
+    public enum TestMode {
         STOPPED,
         RUN_NO_HOOD,
         RUN,
@@ -21,7 +20,7 @@ public class ShooterTest extends OpMode {
     }
 
     public static TestMode testMode = TestMode.STOPPED;
-    public static TelemetryManager tm;
+    private DashboardTelemetry tm;
     public static double targetRPM = 1000;
     public static int hoodPos = 0;
     public static int hoodAngle = 10;
@@ -31,7 +30,7 @@ public class ShooterTest extends OpMode {
 
     @Override
     public void init() {
-        tm = PanelsTelemetry.INSTANCE.getTelemetry();
+        tm = DashboardTelemetry.begin(telemetry);
         shooter = new Shooter(hardwareMap);
         hood = new Hood(hardwareMap);
     }
@@ -58,5 +57,6 @@ public class ShooterTest extends OpMode {
                 shooter.getShooter2().setPower(0);
                 break;
         }
+        tm.update(telemetry);
     }
 }

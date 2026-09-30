@@ -3,9 +3,8 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER1;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER2;
 
-import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import com.acmerobotics.dashboard.config.Config;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.pedropathing.controllers.Controller;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,9 +12,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
-@Configurable
+@Config
 public class Shooter {
-    private final TelemetryManager tm;
+    private final DashboardTelemetry tm;
     public static double kP = 0.1;
     public static double kI = 0;
     public static double kD = 0;
@@ -33,7 +32,7 @@ public class Shooter {
     private final Controller pid2;
 
     public Shooter(HardwareMap hardwareMap) {
-        tm = PanelsTelemetry.INSTANCE.getTelemetry();
+        tm = DashboardTelemetry.getInstance();
         shooter1 = hardwareMap.get(DcMotorEx.class, SHOOTER1);
         shooter2 = hardwareMap.get(DcMotorEx.class, SHOOTER2);
         pid1 = Controller.pid(kP, kI, kD);

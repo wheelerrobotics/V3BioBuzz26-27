@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.debug;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.templateOpModes.debug.util.HardwareTelemetry;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Configurable
+@Config
 @TeleOp(name = "Servo Tester", group = "Debug")
 public class ServoTester extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
 
     public static String SERVO_NAME = "servo";
@@ -25,7 +24,7 @@ public class ServoTester extends OpMode {
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         telemetryM.addLine("Enter servo name in Dashboard");
         telemetryM.addLine("Set ENABLE_SERVO = true when ready");
         telemetryM.update(telemetry);
@@ -63,7 +62,7 @@ public class ServoTester extends OpMode {
         }
 
         if (servo != null) {
-            HardwareTelemetry.addDeviceInfo(telemetry, currentServoName, servo);
+            HardwareTelemetry.addDeviceInfo(telemetryM, currentServoName, servo);
             telemetryM.addLine("Servo Readings");
             telemetryM.addData("Enabled", ENABLE_SERVO);
             telemetryM.addData("Position", servo.getPosition());

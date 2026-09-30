@@ -20,7 +20,9 @@ dependencies {
 
     implementation 'com.pedropathing:revhub:3.0.0'
     implementation 'com.pedropathing:tuning:1.0.0'
-    implementation 'com.bylazar:fullpanels:1.0.12'
+    // Sloth-aware FTC Dashboard: config edits target the running TeamCode classes.
+    implementation 'com.acmerobotics.slothboard:dashboard:0.3.2+0.6.0'
+    implementation 'dev.frozenmilk.sinister:Sloth:0.3.2'
 
     implementation 'com.pedropathing.ivy:core:1.1.0'
     implementation 'com.pedropathing.ivy:pedro:1.1.0'

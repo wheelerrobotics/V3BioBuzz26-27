@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.templateOpModes.debug;
 import java.util.Locale;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 
@@ -17,14 +16,14 @@ import java.util.List;
 /** Verifies the presence and type of every device declared in ExpectedHardware. */
 @TeleOp(name = "Hardware Verifier", group = "Debug")
 public class HardwareVerifier extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     private final List<VerificationResult> results = new ArrayList<>();
     private int passed;
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         verifyHardware();
     }
 

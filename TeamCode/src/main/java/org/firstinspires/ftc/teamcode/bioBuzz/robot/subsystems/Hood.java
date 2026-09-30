@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.HOOD;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
 
-@Configurable
+@Config
 public final class Hood {
     private final Servo hoodServo;
     public static double radPosRelation = 0.5; // FIXME: 9/20/26 TUNE

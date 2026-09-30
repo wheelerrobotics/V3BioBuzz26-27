@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.debug.sensors;
 
-import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import com.acmerobotics.dashboard.config.Config;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -17,7 +16,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /** Displays live pose, velocity, encoder, configuration, and status data from a Pinpoint. */
-@Configurable
+@Config
 @TeleOp(name = "Pinpoint Tester", group = "Debug/Sensors")
 public class PinpointTester extends OpMode {
     public static String PINPOINT_NAME = HardwareNames.PINPOINT;
@@ -25,16 +24,16 @@ public class PinpointTester extends OpMode {
     public static boolean RECALIBRATE_IMU = false;
     public static boolean RESET_POSITION_AND_IMU = false;
 
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
     private GoBildaPinpointDriver pinpoint;
     private String loadedName = "";
     private String lastAction = "None";
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         clearActions();
-        telemetryM.addLine("Enter the Pinpoint configuration name in Panels");
+        telemetryM.addLine("Enter the Pinpoint configuration name in FTC Dashboard");
         telemetryM.addLine("Keep the robot still while recalibrating the IMU");
         telemetryM.update(telemetry);
     }

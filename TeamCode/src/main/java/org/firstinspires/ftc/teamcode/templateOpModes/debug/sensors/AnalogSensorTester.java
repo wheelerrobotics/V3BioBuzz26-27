@@ -2,20 +2,19 @@ package org.firstinspires.ftc.teamcode.templateOpModes.debug.sensors;
 
 import java.util.Locale;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 
 import org.firstinspires.ftc.teamcode.templateOpModes.debug.util.HardwareTelemetry;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /** Displays voltage and range information for any configured analog input. */
-@Configurable
+@Config
 @TeleOp(name = "Analog Sensor Tester", group = "Debug/Sensors")
 public class AnalogSensorTester extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     public static String SENSOR_NAME = "analogSensor";
 
@@ -24,8 +23,8 @@ public class AnalogSensorTester extends OpMode {
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-        telemetryM.addLine("Enter an analog sensor name in Panels");
+        telemetryM = DashboardTelemetry.begin(telemetry);
+        telemetryM.addLine("Enter an analog sensor name in FTC Dashboard");
         telemetryM.update(telemetry);
     }
 
@@ -42,7 +41,7 @@ public class AnalogSensorTester extends OpMode {
         double voltage = sensor.getVoltage();
         double maxVoltage = sensor.getMaxVoltage();
 
-        HardwareTelemetry.addDeviceInfo(telemetry, loadedName, sensor);
+        HardwareTelemetry.addDeviceInfo(telemetryM, loadedName, sensor);
         telemetryM.addLine("Analog Readings");
         telemetryM.addData("Voltage", String.format(Locale.US,  "%.4f V", voltage));
         telemetryM.addData("Maximum Voltage", String.format(Locale.US,  "%.4f V", maxVoltage));

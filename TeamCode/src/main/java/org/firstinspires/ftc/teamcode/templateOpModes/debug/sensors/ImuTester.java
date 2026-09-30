@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.templateOpModes.debug.sensors;
 import java.util.Locale;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -19,14 +18,14 @@ import java.util.List;
 /** Automatically finds and displays safe diagnostic readings from the robot's IMU. */
 @TeleOp(name = "IMU Tester", group = "Debug/Sensors")
 public class ImuTester extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     private IMU imu;
     private String error;
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         List<IMU> imus = hardwareMap.getAll(IMU.class);
 
         if (imus.isEmpty()) {
@@ -50,7 +49,7 @@ public class ImuTester extends OpMode {
         AngularVelocity velocity = imu.getRobotAngularVelocity(AngleUnit.DEGREES);
         Quaternion quaternion = imu.getRobotOrientationAsQuaternion();
 
-        HardwareTelemetry.addDeviceInfo(telemetry, "Automatically detected", imu);
+        HardwareTelemetry.addDeviceInfo(telemetryM, "Automatically detected", imu);
         telemetryM.addLine("Orientation");
         telemetryM.addData("Yaw", String.format(Locale.US,  "%.3f°", angles.getYaw(AngleUnit.DEGREES)));
         telemetryM.addData("Pitch", String.format(Locale.US,  "%.3f°", angles.getPitch(AngleUnit.DEGREES)));

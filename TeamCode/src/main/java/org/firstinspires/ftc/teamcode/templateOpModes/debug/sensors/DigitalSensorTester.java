@@ -1,21 +1,20 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.debug.sensors;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.templateOpModes.debug.util.HardwareTelemetry;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /** Displays live values from a digital channel or touch sensor. */
-@Configurable
+@Config
 @TeleOp(name = "Digital Sensor Tester", group = "Debug/Sensors")
 public class DigitalSensorTester extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     public static String SENSOR_NAME = "digitalSensor";
     public static boolean ACTIVE_LOW = true;
@@ -26,8 +25,8 @@ public class DigitalSensorTester extends OpMode {
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-        telemetryM.addLine("Enter a digital or touch sensor name in Panels");
+        telemetryM = DashboardTelemetry.begin(telemetry);
+        telemetryM.addLine("Enter a digital or touch sensor name in FTC Dashboard");
         telemetryM.update(telemetry);
     }
 
@@ -42,7 +41,7 @@ public class DigitalSensorTester extends OpMode {
             return;
         }
 
-        HardwareTelemetry.addDeviceInfo(telemetry, loadedName, device);
+        HardwareTelemetry.addDeviceInfo(telemetryM, loadedName, device);
         telemetryM.addLine("Digital Readings");
 
         if (digitalChannel != null) {

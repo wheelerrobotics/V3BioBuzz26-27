@@ -4,8 +4,7 @@ import java.util.Locale;
 
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -20,13 +19,13 @@ import java.util.List;
 /** Automatically displays safe, read-only diagnostics for every connected REV hub. */
 @TeleOp(name = "REV Hub Tester", group = "Debug")
 public class HubTester extends OpMode {
-    private TelemetryManager telemetryM;
+    private DashboardTelemetry telemetryM;
 
     private final List<LynxModule> hubs = new ArrayList<>();
 
     @Override
     public void init() {
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        telemetryM = DashboardTelemetry.begin(telemetry);
         hubs.addAll(hardwareMap.getAll(LynxModule.class));
         hubs.sort(Comparator.comparingInt(LynxModule::getModuleAddress));
 
@@ -57,7 +56,7 @@ public class HubTester extends OpMode {
         telemetryM.addLine("================================");
         telemetryM.addLine("Hub " + number + ": " + hubType);
         HardwareTelemetry.addDeviceInfo(
-                telemetry,
+                telemetryM,
                 "Module address " + hub.getModuleAddress(),
                 hub);
 
