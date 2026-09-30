@@ -22,7 +22,9 @@ public class ShooterTest extends OpMode {
     public static TestMode testMode = TestMode.STOPPED;
     private DashboardTelemetry tm;
     public static double targetRPM = 1000;
+    @SuppressWarnings("CanBeFinal")
     public static double hoodPos = 0;
+    @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
 
     Shooter shooter;
@@ -35,6 +37,7 @@ public class ShooterTest extends OpMode {
         hood = new Hood(hardwareMap);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public void loop() {
         telemetry.addData("targetRPM JAVA", targetRPM);

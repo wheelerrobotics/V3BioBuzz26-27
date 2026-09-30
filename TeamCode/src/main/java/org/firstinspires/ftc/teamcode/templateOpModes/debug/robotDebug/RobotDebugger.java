@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.templateOpModes.debug.robotDebug;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.firstinspires.ftc.teamcode.templateOpModes.debug.robotDebug.RobotDebuggerVals.*;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
+import org.firstinspires.ftc.teamcode.templateOpModes.debug.robotDebug.RobotDebuggerVals.DriveDebug;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 /**
  * Season-specific control panel for testing the complete robot in real time.
@@ -59,20 +60,20 @@ public class RobotDebugger extends OpMode {
         } else {
             robot.follower.stop();
 
-            robot.frontLeft.setPower(DriveDebug.FRONT_LEFT_POWER);
-            robot.frontRight.setPower(DriveDebug.FRONT_RIGHT_POWER);
-            robot.backLeft.setPower(DriveDebug.BACK_LEFT_POWER);
-            robot.backRight.setPower(DriveDebug.BACK_RIGHT_POWER);
+//            robot.frontLeft.setPower(DriveDebug.FRONT_LEFT_POWER);
+//            robot.frontRight.setPower(DriveDebug.FRONT_RIGHT_POWER);
+//            robot.backLeft.setPower(DriveDebug.BACK_LEFT_POWER);
+//            robot.backRight.setPower(DriveDebug.BACK_RIGHT_POWER);
         }
     }
 
     private void stopDrivetrain() {
         robot.follower.manual(0, 0, 0);
 
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);
+//        robot.frontLeft.setPower(0);
+//        robot.frontRight.setPower(0);
+//        robot.backLeft.setPower(0);
+//        robot.backRight.setPower(0);
     }
 
     @Override

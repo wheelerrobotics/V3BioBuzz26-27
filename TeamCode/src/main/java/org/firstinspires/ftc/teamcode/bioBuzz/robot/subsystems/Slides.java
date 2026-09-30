@@ -9,12 +9,13 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
 @Config
 public class Slides {
-    private Servo LEFT_SERVO;
-    private Servo RIGHT_SERVO;
-    public static Servo.Direction SERVO_LEFT_DIRECTION = Servo.Direction.REVERSE;
-    public static Servo.Direction SERVO_RIGHT_DIRECTION = Servo.Direction.REVERSE;
-    public static double MIN_POSITION = 0;
-    public static double MAX_POSTION = 1;
+    private final Servo LEFT_SERVO;
+    private final Servo RIGHT_SERVO;
+    public static final Servo.Direction SERVO_LEFT_DIRECTION = Servo.Direction.REVERSE;
+    public static final Servo.Direction SERVO_RIGHT_DIRECTION = Servo.Direction.REVERSE;
+    public static final double MIN_POSITION = 0;
+    @SuppressWarnings("SpellCheckingInspection")
+    public static final double MAX_POSTION = 1;
     public Slides(HardwareMap hardwareMap) {
         LEFT_SERVO = hardwareMap.get(Servo.class, HardwareNames.LEFT_SLIDE_SERVO);
         RIGHT_SERVO = hardwareMap.get(Servo.class, HardwareNames.RIGHT_SLIDE_SERVO);

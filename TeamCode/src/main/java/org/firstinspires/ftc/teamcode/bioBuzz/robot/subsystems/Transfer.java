@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
-@Configurable
+@Config
 public class Transfer {
-    public DcMotorEx transfer;
+    public final DcMotorEx transfer;
     public static final double transferPower = 1;
 
 

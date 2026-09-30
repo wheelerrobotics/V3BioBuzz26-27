@@ -1,3 +1,5 @@
+@file:Suppress("ObjectPropertyName")
+
 package org.firstinspires.ftc.teamcode.bioBuzz.helpers
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
@@ -9,5 +11,5 @@ object GlobalT {
         get() = _telemetry
         set(value) {
             _telemetry = value
-        };
+        }
 }

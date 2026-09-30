@@ -14,21 +14,21 @@ public class Turret {
     private final Servo servo1;
     private final Servo servo2;
     private final LL limelight;
-    public static Servo.Direction SERVO_1_DIRECTION = Servo.Direction.REVERSE;
-    public static Servo.Direction SERVO_2_DIRECTION = Servo.Direction.REVERSE;
+    public static final Servo.Direction SERVO_1_DIRECTION = Servo.Direction.REVERSE;
+    public static final Servo.Direction SERVO_2_DIRECTION = Servo.Direction.REVERSE;
 
 
 
 
     // Servo to turret
-    public static double SERVO_RATIO = 360;
-    public static double GEAR_RATIO = 1.44;
-    public static double TX_TOLERANCE_DEGREES = 1.0;
-    public static double MAX_STEP_DEGREES = 3.0;
-    public static double AIM_KP = 0.15;
-    public static double AIM_DIRECTION = 1.0;
-    public static double MAX_ANGLE_DEGREES = 360;
-    public static double MIN_ANGLE_DEGREES = 0;
+    public static final double SERVO_RATIO = 360;
+    public static final double GEAR_RATIO = 1.44;
+    public static final double TX_TOLERANCE_DEGREES = 1.0;
+    public static final double MAX_STEP_DEGREES = 3.0;
+    public static final double AIM_KP = 0.15;
+    public static final double AIM_DIRECTION = 1.0;
+    public static final double MAX_ANGLE_DEGREES = 360;
+    public static final double MIN_ANGLE_DEGREES = 0;
     public boolean trackingEnabled = false;
 
     public Turret(HardwareMap hardwareMap, LL limelight) {

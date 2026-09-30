@@ -21,23 +21,23 @@ public class BallisticsHelper {
 
     @Config
     public static class Constants {
-        public static double flywheelDiameter = 5; // FIXME: 9/19/26 SET
-        public static double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE
-        public static double encoderTPR = 24;
-        public static double targetY = 86; // FIXME: 9/19/26 TUNE
-        public static double gravity = 9.81;
-        public static double p = 1.2; // air density
-        public static double ballDiameter = 0.071; // FIXME: 9/19/26 TUNE
-        public static double ballMass = 0.071; // FIXME: 9/19/26 TUNE
-        public static double kBallSpin = 1; // FIXME: 9/19/26 TUNE
-        public static double kTargetErrorTolerance = 0.13; // meters
-        public static double kTargetErrorIntegralMax = 9999999; // meters // FIXME: 9/19/26 TUNE
+        public static final double flywheelDiameter = 5; // FIXME: 9/19/26 SET
+        public static final double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE
+        public static final double encoderTPR = 24;
+        public static final double targetY = 86; // FIXME: 9/19/26 TUNE
+        public static final double gravity = 9.81;
+        public static final double p = 1.2; // air density
+        public static final double ballDiameter = 0.071; // FIXME: 9/19/26 TUNE
+        public static final double ballMass = 0.071; // FIXME: 9/19/26 TUNE
+        public static final double kBallSpin = 1; // FIXME: 9/19/26 TUNE
+        public static final double kTargetErrorTolerance = 0.13; // meters
+        public static final double kTargetErrorIntegralMax = 9999999; // meters // FIXME: 9/19/26 TUNE
 
         //Spin values in rad/s
-        public static double spinAt1000TPS = 0;
-        public static double spinAt1500TPS = 0;
-        public static double spinAt2000TPS = 0;
-        public static double spinAt2500TPS = 0;
+        public static final double spinAt1000TPS = 0;
+        public static final double spinAt1500TPS = 0;
+        public static final double spinAt2000TPS = 0;
+        public static final double spinAt2500TPS = 0;
     }
 
     private final Follower f;
@@ -256,6 +256,7 @@ public class BallisticsHelper {
 
     private static class SOTM {
         private static double lastTimex = 0;
+        @SuppressWarnings("SpellCheckingInspection")
         private static double lastTimey = 0;
 
         private static double lastVx = 0;

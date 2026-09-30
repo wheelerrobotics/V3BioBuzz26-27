@@ -30,7 +30,7 @@ object ShooterLUT {
         val listD = points.map { it.d.toDouble() }.toList()
         val listV = points.map { it.v.toDouble() }.toList()
         lut = InterpLUT(listD, listV)
-        lut.createLUT();
+        lut.createLUT()
     }
 
 

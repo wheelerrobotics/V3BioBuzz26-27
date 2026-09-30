@@ -15,9 +15,9 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 @Config
 public class Shooter {
     private final DashboardTelemetry tm;
-    public static double kP = 0.1;
-    public static double kI = 0;
-    public static double kD = 0;
+    public static final double kP = 0.1;
+    public static final double kI = 0;
+    public static final double kD = 0;
 
     public DcMotorEx getShooter1() {
         return shooter1;
@@ -52,8 +52,9 @@ public class Shooter {
     private double lastTime = 0;
     public void test(Double tps) {
         double dt = 0 - lastTime;
+        lastTime = System.nanoTime();
         shooter1.setPower(pid1.calculate(tps, (tps - shooter1.getVelocity()), dt));
-        shooter2.setPower(pid1.calculate(tps, (tps - shooter2.getVelocity()), dt));
+        shooter2.setPower(pid2.calculate(tps, (tps - shooter2.getVelocity()), dt));
 
         data(tps);
     }
@@ -62,8 +63,10 @@ public class Shooter {
         double tps = 0;//ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
 
         double dt = 0 - lastTime;
+        lastTime = System.nanoTime();
+
         shooter1.setPower(pid1.calculate(tps, (tps - shooter1.getVelocity()), dt));
-        shooter2.setPower(pid1.calculate(tps, (tps - shooter2.getVelocity()), dt));
+        shooter2.setPower(pid2.calculate(tps, (tps - shooter2.getVelocity()), dt));
 
         data(tps);
     }

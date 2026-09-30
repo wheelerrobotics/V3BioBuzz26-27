@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.ivy.Command.build;
+import static com.pedropathing.ivy.Scheduler.cancel;
 import static com.pedropathing.ivy.commands.Commands.infinite;
 import static com.pedropathing.ivy.commands.Commands.lazy;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import static com.pedropathing.ivy.pedro.PedroCommands.hold;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_LEFT_DRIVE;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_RIGHT_DRIVE;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_LEFT_DRIVE;
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_RIGHT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake.intakePower;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper.stopperIn;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper.stopperOut;
@@ -16,12 +14,9 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer.t
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
-import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -42,18 +37,14 @@ public class Robot {
     public final Follower follower;
     public final Commands commands;
     public final Hood hood;
-    public DcMotorEx frontLeft;
-    public DcMotorEx frontRight;
-    public DcMotorEx backLeft;
-    public DcMotorEx backRight;
 
-    public LL limelight;
-    public Turret turret;
+    public final LL limelight;
+    public final Turret turret;
     public final Shooter shooter;
-    public Transfer transfer;
-    public Intake intake;
-    public Stopper stopper;
-    public Slides slides;
+    public final Transfer transfer;
+    public final Intake intake;
+    public final Stopper stopper;
+    public final Slides slides;
 
 
     public Robot(HardwareMap hardwareMap) {
@@ -70,16 +61,6 @@ public class Robot {
         intake = new Intake(hardwareMap);
         stopper = new Stopper(hardwareMap);
         slides = new Slides(hardwareMap);
-
-        frontLeft = hardwareMap.get(DcMotorEx.class, FRONT_LEFT_DRIVE);
-        frontRight = hardwareMap.get(DcMotorEx.class, FRONT_RIGHT_DRIVE);
-        backLeft = hardwareMap.get(DcMotorEx.class, BACK_LEFT_DRIVE);
-        backRight = hardwareMap.get(DcMotorEx.class, BACK_RIGHT_DRIVE);
-
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         limelight = new LL(hardwareMap);
         turret = new Turret(hardwareMap, limelight);
@@ -121,7 +102,7 @@ public class Robot {
 
         //TRANSFER
         public Command transfer() {
-            return Command.build()
+            return build()
                     .setStart(() -> transfer.setTransferPower(transferPower))
                     .setEnd(endCondition -> transfer.setTransferPower(0))
                     .requiring(Transfer.class);
@@ -141,7 +122,7 @@ public class Robot {
         }
 
         public Command intakeOn() {
-            return Command.build()
+            return build()
                     .setStart(() -> intake.setIntakePower(intakePower))
                     .setDone(() -> stopper.getNumBalls() >= 4)
                     .setEnd(endCondition -> intake.setIntakePower(0))
@@ -150,14 +131,14 @@ public class Robot {
         }
 
         public Command intakeOff() {
-            return Command.build()
+            return build()
                     .setStart(() -> intake.setIntakePower(0))
                     .setEnd(endCondition -> intake().schedule())
                     .requiring(Intake.class)
                     .setPriority(10);
         }
         public Command outtake() {
-            return Command.build()
+            return build()
                     .setStart(() -> {
                         intake.setIntakePower(-intakePower);
                         transfer.setTransferPower(-transferPower);
@@ -169,18 +150,18 @@ public class Robot {
 
         //INTAKE SLIDES
         public Command extendOut() {
-            return Command.build()
-                    .setStart(() -> slides.extendMax());
+            return build()
+                    .setStart(slides::extendMax);
         }
 
         public Command extendIn() {
-            return Command.build()
-                    .setStart(() -> slides.extendMin());
+            return build()
+                    .setStart(slides::extendMin);
         }
 
         //STOPPER
         public Command stopper() {
-            return Command.build()
+            return build()
                     .setStart(() -> stopper.setStopperPos(stopperOut))
                     .setEnd(endCondition -> stopper.setStopperPos(stopperIn));
         }
@@ -192,15 +173,15 @@ public class Robot {
         }
 
         public Command shootCommand() {
-            return Command.build()
+            return build()
                     .setStart(() -> {
                         transfer().schedule();
                         stopper().schedule();
                     })
-                    .setDone(() -> stopper.isEmpty())
+                    .setDone(stopper::isEmpty)
                     .setEnd(endCondition -> {
-                        Scheduler.cancel(transfer());
-                        Scheduler.cancel(stopper());
+                        cancel(transfer());
+                        cancel(stopper());
                     });
 
         }

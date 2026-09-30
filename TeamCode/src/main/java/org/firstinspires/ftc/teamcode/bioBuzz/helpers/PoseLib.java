@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.bioBuzz.helpers;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 
+@SuppressWarnings("CanBeFinal")
 public class PoseLib {
     private PoseLib() {}
     private static final PoseFactory field = PoseFactory.degrees();

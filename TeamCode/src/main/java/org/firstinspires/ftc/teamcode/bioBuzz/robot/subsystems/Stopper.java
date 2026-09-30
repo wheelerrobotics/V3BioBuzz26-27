@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
-@Configurable
+@Config
 public class Stopper {
-    public Servo stopper;
-    public AnalogSensor breakbeams;
-    public AnalogSensor in;
-    public AnalogSensor out;
+    public final Servo stopper;
+    @SuppressWarnings("SpellCheckingInspection")
+    public final AnalogSensor breakbeams;
+    public final AnalogSensor in;
+    public final AnalogSensor out;
     public boolean lastIn = false;
     public boolean lastOut = false;
     public static final double stopperIn = 0;

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
  * This class does not control hardware directly. Call {@link #update(double)}
  * once per OpMode loop and apply the returned output in the owning subsystem.
  */
+@SuppressWarnings("ALL")
 public class PIDController {
     private double kP;
     private double kI;

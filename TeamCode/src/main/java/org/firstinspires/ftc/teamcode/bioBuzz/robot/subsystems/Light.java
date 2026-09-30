@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Light {
     //emad wrote this comment using nano in terminal :)
+    @SuppressWarnings("SpellCheckingInspection")
     final Servo light;
     public Light(HardwareMap hardwareMap) {
         super();

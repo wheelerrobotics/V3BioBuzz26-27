@@ -1,17 +1,17 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
-@Configurable
+@Config
 public class Intake {
-    public DcMotorEx intake;
-    public AnalogSensor intakeSensor;
+    public final DcMotorEx intake;
+    public final AnalogSensor intakeSensor;
 
     public static final double intakePower = 1;
 
