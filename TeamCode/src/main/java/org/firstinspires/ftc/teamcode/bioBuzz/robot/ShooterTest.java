@@ -22,8 +22,8 @@ public class ShooterTest extends OpMode {
     public static TestMode testMode = TestMode.RUN_NO_HOOD;
     public static TelemetryManager tm;
     public static double targetRPM = 1000;
-    public static int hoodPos = 0;
-    public static int hoodAngle = 10;
+    public static double hoodPos = 0;
+    public static double hoodAngle = 10;
 
     Shooter shooter;
     Hood hood;
