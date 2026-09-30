@@ -28,6 +28,7 @@ public abstract class BaseOpMode extends OpMode {
         r.commands.hood().schedule();
         r.commands.intake().schedule();
         r.commands.updateBallistics().schedule();
+        r.commands.intakeOn().schedule();
     }
 
     @Override

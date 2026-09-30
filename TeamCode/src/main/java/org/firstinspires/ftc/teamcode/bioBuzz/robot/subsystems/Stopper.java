@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
-
+@Configurable
 public class Stopper {
     public Servo stopper;
     public AnalogSensor breakbeams;
@@ -14,6 +15,8 @@ public class Stopper {
     public AnalogSensor out;
     public boolean lastIn = false;
     public boolean lastOut = false;
+    public static final double stopperIn = 0;
+    public static final double stopperOut = 0.5;
 
 
     public int numBalls;
@@ -35,7 +38,7 @@ public class Stopper {
     }
 
 
-    public void updateBalls() {
+    public void updateNum() {
         if (in.readRawVoltage() > 2 && !lastIn) {
             numBalls++;
             lastIn = true;

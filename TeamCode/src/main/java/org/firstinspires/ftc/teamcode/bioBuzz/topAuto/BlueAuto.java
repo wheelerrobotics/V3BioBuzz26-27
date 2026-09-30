@@ -10,18 +10,10 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
 public class BlueAuto extends BaseAuto {
 
-    private Command autoRoutine() {
-        return sequential(
-
-
-        );
-    }
-
     @Override
     public void init() {
         Alliance.set(Alliance.Color.BLUE);
         super.init();
-        r.follower.setPose(startNectarSide);
     }
 
     @Override

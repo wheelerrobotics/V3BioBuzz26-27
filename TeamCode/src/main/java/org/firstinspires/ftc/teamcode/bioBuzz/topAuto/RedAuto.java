@@ -13,7 +13,17 @@ public class RedAuto extends BaseAuto {
 
     public void loop() {
         super.loop();
+        r.follower.update();
+    }
 
+    @Override
+    public void start() {
+        super.start();
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
     }
 
 
