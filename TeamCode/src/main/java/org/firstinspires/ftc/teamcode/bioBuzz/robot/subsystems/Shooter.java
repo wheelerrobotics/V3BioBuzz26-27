@@ -4,13 +4,13 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER2;
 
 import com.acmerobotics.dashboard.config.Config;
-import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import com.pedropathing.controllers.Controller;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 @Config
 public class Shooter {

@@ -1,6 +1,21 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware;
 
-import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.*;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_LEFT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_RIGHT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_LEFT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_RIGHT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.HOOD;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.INTAKE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LEFT_SLIDE_SERVO;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIMELIGHT;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.PINPOINT;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.RIGHT_SLIDE_SERVO;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER1;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER2;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.STOPPER;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.TRANSFER;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.TURRET_SERVO_1;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.TURRET_SERVO_2;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
