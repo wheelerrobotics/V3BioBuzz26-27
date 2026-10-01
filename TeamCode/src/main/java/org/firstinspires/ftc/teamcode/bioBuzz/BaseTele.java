@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 public abstract class BaseTele extends BaseOpMode {
 
     boolean lastA = false;
+    boolean lastB = false;
     @Override
     public void init() {
         super.init();
@@ -23,6 +24,17 @@ public abstract class BaseTele extends BaseOpMode {
             r.commands.shootCommand().cancel();
             lastA = false;
         }
+
+        if (!gamepad1.b) lastB = false;
+        else if (!lastB) {
+            if (r.commands.extendCommand().isScheduled()) {
+                r.commands.extendCommand().cancel();
+            } else {
+                r.commands.extendCommand().schedule();
+            }
+            lastB = true;
+        }
+
 
     }
 }
