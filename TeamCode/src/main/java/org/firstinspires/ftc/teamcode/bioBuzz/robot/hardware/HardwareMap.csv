@@ -1,15 +1,21 @@
 Hardware Piece,Purpose,Config Name,Hub,Port,Notes
 Motor,Front-left wheel,motorFrontLeft,Control Hub,Motor 0,Reversed
-Motor,Front-right wheel,motorFrontRight,TBD,TBD,
-Motor,Back-left wheel,motorBackLeft,TBD,TBD,
-Motor,Back-right wheel,motorBackRight,TBD,TBD,
-Motor,Left shooter flywheel,s1,TBD,TBD,
-Motor,Right shooter flywheel,s2,TBD,TBD,
-Motor,Intake,intake,TBD,TBD,
-Motor,Transfer,transfer,TBD,TBD,
-Servo,Hood angle,hood,TBD,TBD,
-Servo,First turret servo,servo1,TBD,TBD,
-Servo,Second turret servo,servo2,TBD,TBD,
-Servo,Game-piece stopper,stopper,TBD,TBD,
-Limelight,Vision camera,limelight,TBD,TBD,Pipeline 0 by default
-Pinpoint,Robot localization,pinpoint,Control Hub,I2C bus 3,
+Motor,Front-right wheel,motorFrontRight,Control Hub,Motor 1,
+Motor,Back-left wheel,motorBackLeft,Control,Motor 2,
+Motor,Back-right wheel,motorBackRight,Control ,Motor 3
+Motor,Left shooter flywheel,s1,Expansion  ,0,
+Motor,Right shooter flywheel,s2,Expansion,1
+Motor,Intake,intake,Expansion,2
+Motor,Transfer,transfer,Expansion,3
+Servo,Hood angle,hood,Expansion,Servo 0
+Servo,First turret servo,servo1,Expansion   ,Servo 1
+Servo,Second turret servo,servo2,Expansion,Servo 2
+Servo,Game-piece stopper,stopper,Control,Servo 0,
+Limelight,Vision camera,limelight,Control ,Still needs config,Pipeline 0 by default
+Pinpoint,Robot localization,pinpoint,Control Hub,I2C bus 0,
+Breakbeam,Transfer sensor,breakbeams,,,
+Limit Switch,Transfer sensor,in,,,
+Limit Switch,Transfer sensor,out,,,
+Sensor,Intake sensor,intakesensor,,,
+Servo,Expansion slides right,rightSlidesServo,,,
+Servo,Expansion slides left,leftSlidesServo,,,
