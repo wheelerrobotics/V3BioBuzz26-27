@@ -159,6 +159,13 @@ public class Robot {
                     .setStart(slides::extendMin);
         }
 
+        public Command extendCommand() {
+            return build()
+                    .setStart(() -> slides.extendMax())
+                    .setEnd(endCondition -> slides.extendMin());
+            
+        }
+
         //STOPPER
         public Command stopper() {
             return build()
