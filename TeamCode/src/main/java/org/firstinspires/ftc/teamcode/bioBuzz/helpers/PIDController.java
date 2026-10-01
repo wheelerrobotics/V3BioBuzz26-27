@@ -15,6 +15,8 @@ public class PIDController {
     private double kP;
     private double kI;
     private double kD;
+    private double kS;
+    private double kV;
 
     private double target;
     private double integral;
@@ -34,8 +36,18 @@ public class PIDController {
     private final ElapsedTime timer = new ElapsedTime();
 
     public PIDController(double kP, double kI, double kD) {
-        setCoefficients(kP, kI, kD);
+        this(kP, kI, kD, 0.0, 0.0);
+    }
+
+    /** Creates a PID controller with static-friction and velocity feedforward. */
+    public PIDController(double kP, double kI, double kD, double kS, double kV) {
+        setCoefficients(kP, kI, kD, kS, kV);
         reset();
+    }
+
+    /** Backward-compatible overload: the fourth value is static-friction feedforward. */
+    public PIDController(double kP, double kI, double kD, double kS) {
+        this(kP, kI, kD, kS, 0.0);
     }
 
     /** Calculates and returns the next limited controller output. */
@@ -46,18 +58,37 @@ public class PIDController {
         error = target - measurement;
         hasMeasurement = true;
 
+        double nextIntegral = integral;
         if (firstUpdate || deltaTime <= 0.0 || deltaTime > 0.5) {
             derivative = 0.0;
             firstUpdate = false;
         } else {
-            integral += error * deltaTime;
-            integral = Range.clip(integral, -maxIntegral, maxIntegral);
+            nextIntegral = Range.clip(
+                    integral + error * deltaTime,
+                    -maxIntegral,
+                    maxIntegral);
             derivative = (error - lastError) / deltaTime;
         }
 
-        lastError = error;
+        double feedforward = target == 0.0
+                ? 0.0
+                : Math.copySign(kS, target) + kV * target;
 
-        output = kP * error + kI * integral + kD * derivative;
+        // Do not keep integrating while the output is saturated in the same
+        // direction as the error. This prevents the integral term from
+        // winding up and causing a long overshoot after the target changes.
+        double candidateOutput = kP * error
+                + kI * nextIntegral
+                + kD * derivative
+                + feedforward;
+        boolean saturatedHigh = candidateOutput > maxOutput && error > 0.0;
+        boolean saturatedLow = candidateOutput < minOutput && error < 0.0;
+        if (!saturatedHigh && !saturatedLow) {
+            integral = nextIntegral;
+        }
+
+        lastError = error;
+        output = kP * error + kI * integral + kD * derivative + feedforward;
         output = Range.clip(output, minOutput, maxOutput);
         return output;
     }
@@ -71,10 +102,17 @@ public class PIDController {
     }
 
     /** Changes PID gains without discarding the current target or state. */
-    public void setCoefficients(double kP, double kI, double kD) {
+    public void setCoefficients(double kP, double kI, double kD, double kS) {
+        setCoefficients(kP, kI, kD, kS, this.kV);
+    }
+
+    /** Changes PID and feedforward gains without discarding controller state. */
+    public void setCoefficients(double kP, double kI, double kD, double kS, double kV) {
         this.kP = kP;
         this.kI = kI;
         this.kD = kD;
+        this.kS = kS;
+        this.kV = kV;
     }
 
     public void setOutputLimits(double minOutput, double maxOutput) {
@@ -129,6 +167,14 @@ public class PIDController {
 
     public double getKD() {
         return kD;
+    }
+
+    public double getKS() {
+        return kS;
+    }
+
+    public double getKV() {
+        return kV;
     }
 
     public double getTarget() {
