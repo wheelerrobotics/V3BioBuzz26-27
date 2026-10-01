@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 public class TurretTest extends OpMode {
     Turret turret;
     LL limelight;
-    DashboardTelemetry tm;
+    private DashboardTelemetry tm;
 
 
     @Override
@@ -24,7 +24,7 @@ public class TurretTest extends OpMode {
     @Override
     public void loop() {
         telemetry.addData("angle: ", turret.getAngle());
-        telemetry.update();
+        tm.update(telemetry);
 
         turret.startFollowingTarget();
         turret.update();
