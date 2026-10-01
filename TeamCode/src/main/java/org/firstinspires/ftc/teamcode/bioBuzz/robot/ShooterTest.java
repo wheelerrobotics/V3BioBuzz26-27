@@ -20,11 +20,12 @@ public class ShooterTest extends OpMode {
         RUN_HOOD_DEGREES //NOT RECOMMENDED
     }
 
-    public static volatile String testMode = TestMode.STOPPED.name();
+    public static TestMode testMode = TestMode.STOPPED;
     private DashboardTelemetry tm;
     public static double targetRPM = 1000;
     @SuppressWarnings("CanBeFinal")
     public static double hoodPos = 0;
+    @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
 
     boolean lastA = false;
@@ -45,19 +46,14 @@ public class ShooterTest extends OpMode {
     public void loop() {
         telemetry.addData("targetRPM JAVA", targetRPM);
         telemetry.addData("hoodPos JAVA", hoodPos);
-        TestMode mode = parseTestMode(testMode);
-        telemetry.addData("testMode JAVA", testMode);
-        telemetry.addData("testMode parsed", mode);
+        telemetry.addData("testMode JAVA", testMode.toString());
 
-        if (gamepad1.a) testMode = TestMode.RUN.name();
-        if (gamepad1.b) testMode = TestMode.STOPPED.name();
+        if (gamepad1.a) testMode = TestMode.RUN;
+        if (gamepad1.b) testMode = TestMode.STOPPED;
 
         if (gamepad1.x) targetRPM = targetRPM + 10;
         if (gamepad1.y) targetRPM = targetRPM - 10;
 
-<<<<<<< HEAD
-        switch (mode) {
-=======
         if (gamepad1.a && !lastA) {
             transfer.setTransferPower(1);
             lastA = true;
@@ -68,36 +64,26 @@ public class ShooterTest extends OpMode {
 
 
         switch (testMode) {
->>>>>>> 9943a093bdb1e289abc39103a003585232779ce7
             case RUN:
                 shooter.test(targetRPM);
 //                hood.test(hoodPos);
 //                shooter.getShooter1().setPower(1);
                 telemetry.addData("reached1", testMode.toString());
-                break;
+                return;
             case RUN_NO_HOOD:
                 shooter.test(targetRPM);
 //                shooter.getShooter1().setPower(1);
-                break;
+                return;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
 //                shooter.getShooter1().setPower(1);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
-                break;
+                return;
             case STOPPED:
                 shooter.getShooter1().setPower(0);
                 shooter.getShooter2().setPower(0);
                 break;
         }
         tm.update(telemetry);
-    }
-
-    private static TestMode parseTestMode(String value) {
-        if (value == null) return TestMode.STOPPED;
-        try {
-            return TestMode.valueOf(value.trim().toUpperCase(java.util.Locale.US));
-        } catch (IllegalArgumentException ignored) {
-            return TestMode.STOPPED;
-        }
     }
 }
