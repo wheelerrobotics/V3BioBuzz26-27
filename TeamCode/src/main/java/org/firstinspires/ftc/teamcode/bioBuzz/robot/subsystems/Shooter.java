@@ -4,20 +4,24 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER2;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.pedropathing.controllers.Controller;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PIDController;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 @Config
 public class Shooter {
     private final DashboardTelemetry tm;
-    public static final double kP = 0.1;
-    public static final double kI = 0;
-    public static final double kD = 0;
+    public static double kP = 0.005;
+    public static double kI = 0.0;
+    public static double kD = 0.0001;
+    public static double kS = 0.0;
+    public static double kV = 0.00051;
 
     public DcMotorEx getShooter1() {
         return shooter1;
@@ -28,16 +32,20 @@ public class Shooter {
 
     private final DcMotorEx shooter1;
     private final DcMotorEx shooter2;
-    private final Controller pid1;
-    private final Controller pid2;
+    private final PIDController pid1;
+    private final PIDController pid2;
 
     public Shooter(HardwareMap hardwareMap) {
         tm = DashboardTelemetry.getInstance();
         shooter1 = hardwareMap.get(DcMotorEx.class, SHOOTER1);
         shooter2 = hardwareMap.get(DcMotorEx.class, SHOOTER2);
         shooter2.setDirection(DcMotorSimple.Direction.REVERSE);
-        pid1 = Controller.pid(kP, kI, kD);
-        pid2 = Controller.pid(kP, kI, kD);
+        shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooter2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        pid1 = new PIDController(kP, kI, kD, kS, kV);
+        pid2 = new PIDController(kP, kI, kD, kS, kV);
+        pid1.setOutputLimits(0,1);
+        pid2.setOutputLimits(0,1);
         ShooterLUT.init();
     }
 
@@ -49,12 +57,12 @@ public class Shooter {
         tm.addData("s2 current", shooter2.getCurrent(CurrentUnit.AMPS));
     }
 
-    private double lastTime = 0;
     public void test(Double tps) {
-        double dt = 0 - lastTime;
-        lastTime = System.nanoTime();
-        shooter1.setPower(pid1.calculate(tps, (tps - shooter1.getVelocity()), dt));
-        shooter2.setPower(pid2.calculate(tps, (tps - shooter2.getVelocity()), dt));
+        applyLiveGains(tps);
+        double pidOutput1 = pid1.update(shooter1.getVelocity());
+        double pidOutput2 = pid2.update(shooter2.getVelocity());
+        shooter1.setPower(Range.clip(pidOutput1, 0.0, 1.0));
+        shooter2.setPower(Range.clip(pidOutput2, 0.0, 1.0));
 
         data(tps);
     }
@@ -62,13 +70,19 @@ public class Shooter {
     public void update() {
         double tps = 0;//ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
 
-        double dt = 0 - lastTime;
-        lastTime = System.nanoTime();
-
-        shooter1.setPower(pid1.calculate(tps, (tps - shooter1.getVelocity()), dt));
-        shooter2.setPower(pid2.calculate(tps, (tps - shooter2.getVelocity()), dt));
+        applyLiveGains(tps);
+        double pidOutput1 = pid1.update(shooter1.getVelocity());
+        double pidOutput2 = pid2.update(shooter2.getVelocity());
+        shooter1.setPower(Range.clip(pidOutput1, 0.0, 1.0));
+        shooter2.setPower(Range.clip(pidOutput2, 0.0, 1.0));
 
         data(tps);
     }
 
+    private void applyLiveGains(double targetTicksPerSecond) {
+        pid1.setCoefficients(kP, kI, kD, kS, kV);
+        pid2.setCoefficients(kP, kI, kD, kS, kV);
+        pid1.setTarget(targetTicksPerSecond);
+        pid2.setTarget(targetTicksPerSecond);
+    }
 }

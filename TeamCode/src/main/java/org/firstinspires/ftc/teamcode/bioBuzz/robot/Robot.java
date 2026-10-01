@@ -37,7 +37,6 @@ public class Robot {
     public final Follower follower;
     public final Commands commands;
     public final Hood hood;
-
     public final LL limelight;
     public final Turret turret;
     public final Shooter shooter;

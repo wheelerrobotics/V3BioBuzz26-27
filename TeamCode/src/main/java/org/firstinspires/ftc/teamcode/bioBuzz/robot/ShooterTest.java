@@ -19,12 +19,11 @@ public class ShooterTest extends OpMode {
         RUN_HOOD_DEGREES //NOT RECOMMENDED
     }
 
-    public static TestMode testMode = TestMode.STOPPED;
+    public static volatile String testMode = TestMode.STOPPED.name();
     private DashboardTelemetry tm;
     public static double targetRPM = 1000;
     @SuppressWarnings("CanBeFinal")
     public static double hoodPos = 0;
-    @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
 
     Shooter shooter;
@@ -42,35 +41,46 @@ public class ShooterTest extends OpMode {
     public void loop() {
         telemetry.addData("targetRPM JAVA", targetRPM);
         telemetry.addData("hoodPos JAVA", hoodPos);
-        telemetry.addData("testMode JAVA", testMode.toString());
+        TestMode mode = parseTestMode(testMode);
+        telemetry.addData("testMode JAVA", testMode);
+        telemetry.addData("testMode parsed", mode);
 
-        if (gamepad1.a) testMode = TestMode.RUN;
-        if (gamepad1.b) testMode = TestMode.STOPPED;
+        if (gamepad1.a) testMode = TestMode.RUN.name();
+        if (gamepad1.b) testMode = TestMode.STOPPED.name();
 
         if (gamepad1.x) targetRPM = targetRPM + 10;
         if (gamepad1.y) targetRPM = targetRPM - 10;
 
-        switch (testMode) {
+        switch (mode) {
             case RUN:
                 shooter.test(targetRPM);
 //                hood.test(hoodPos);
 //                shooter.getShooter1().setPower(1);
                 telemetry.addData("reached1", testMode.toString());
-                return;
+                break;
             case RUN_NO_HOOD:
                 shooter.test(targetRPM);
 //                shooter.getShooter1().setPower(1);
-                return;
+                break;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
 //                shooter.getShooter1().setPower(1);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
-                return;
+                break;
             case STOPPED:
                 shooter.getShooter1().setPower(0);
                 shooter.getShooter2().setPower(0);
                 break;
         }
         tm.update(telemetry);
+    }
+
+    private static TestMode parseTestMode(String value) {
+        if (value == null) return TestMode.STOPPED;
+        try {
+            return TestMode.valueOf(value.trim().toUpperCase(java.util.Locale.US));
+        } catch (IllegalArgumentException ignored) {
+            return TestMode.STOPPED;
+        }
     }
 }
