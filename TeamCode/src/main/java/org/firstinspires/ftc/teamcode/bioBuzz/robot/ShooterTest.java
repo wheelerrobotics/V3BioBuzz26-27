@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 @TeleOp
@@ -27,12 +28,15 @@ public class ShooterTest extends OpMode {
     @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
 
+    boolean lastA = false;
     Shooter shooter;
     Hood hood;
+    Transfer transfer;
 
     @Override
     public void init() {
         tm = DashboardTelemetry.begin(telemetry);
+        transfer = new Transfer(hardwareMap);
         shooter = new Shooter(hardwareMap);
         hood = new Hood(hardwareMap);
     }
@@ -49,6 +53,15 @@ public class ShooterTest extends OpMode {
 
         if (gamepad1.x) targetRPM = targetRPM + 10;
         if (gamepad1.y) targetRPM = targetRPM - 10;
+
+        if (gamepad1.a && !lastA) {
+            transfer.setTransferPower(1);
+            lastA = true;
+        } else if (!gamepad1.a && lastA) {
+            transfer.setTransferPower(0);
+            lastA = false;
+        }
+
 
         switch (testMode) {
             case RUN:
