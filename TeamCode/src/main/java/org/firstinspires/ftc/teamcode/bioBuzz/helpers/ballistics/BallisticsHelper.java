@@ -239,7 +239,7 @@ public class BallisticsHelper {
             }
 
             Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
-            double distance = tPose.getPosition().x * -0.1; // convert to meters
+            double distance = Math.sqrt(Math.pow(tPose.getPosition().x, 2) + Math.pow(tPose.getPosition().y, 2)); // get flat distance
             t.addData("distance", distance);
             return distance;
 
