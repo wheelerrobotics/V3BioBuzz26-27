@@ -13,9 +13,9 @@ Servo,Second turret servo,servo2,Expansion,Servo 2
 Servo,Game-piece stopper,stopper,Control,Servo 0,
 Limelight,Vision camera,limelight,Control ,Still needs config,Pipeline 0 by default
 Pinpoint,Robot localization,pinpoint,Control Hub,I2C bus 0,
-Breakbeam,Transfer sensor,breakbeams,,,
-Limit Switch,Transfer sensor,in,,,
-Limit Switch,Transfer sensor,out,,,
-Sensor,Intake sensor,intakesensor,,,
-Servo,Expansion slides right,rightSlidesServo,,,
-Servo,Expansion slides left,leftSlidesServo,,,
+Analog Sensor,Transfer breakbeams,breakbeams,Control,0
+Analog Sensor,Transfer limit switch,in,Expansion,0
+Analog Sensor,Transfer limit switch,out,Expansion,1
+Analog Sensor,Intake breakbeams,intakesensor,Control,1
+Servo,Expansion slides right,rightSlidesServo,Control,Servo 1,
+Servo,Expansion slides left,leftSlidesServo,Control,Servo 2,
