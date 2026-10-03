@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 
 @Config
@@ -18,16 +19,12 @@ public class Stopper {
     public boolean lastOut = false;
     public static final double stopperIn = 0;
     public static final double stopperOut = 0.5;
-
-
-    public int numBalls;
+    public static int numBalls = 0;
     public Stopper (HardwareMap hardwareMap) {
         stopper = hardwareMap.get(Servo.class, HardwareNames.STOPPER);
         breakbeams = hardwareMap.get(AnalogSensor.class, HardwareNames.BREAKBEAMS);
         in = hardwareMap.get(AnalogSensor.class, HardwareNames.IN_SWITCH);
         out = hardwareMap.get(AnalogSensor.class, HardwareNames.OUT_SWITCH);
-
-
     }
 
     public void setStopperPos(double position) {
@@ -54,17 +51,17 @@ public class Stopper {
             lastOut = false;
         }
 
-        if (areBalls()) numBalls = 0;
+        if (!areBalls()) numBalls = 0;
+
+        GlobalT.get_telemetry().addData("Balls", numBalls);
     }
 
-    public int getNumBalls() {
+    public static int getNumBalls() {
         return numBalls;
     }
 
-    public boolean isEmpty() {
+    public static boolean isEmpty() {
         return numBalls == 0;
     }
-
-
 
 }

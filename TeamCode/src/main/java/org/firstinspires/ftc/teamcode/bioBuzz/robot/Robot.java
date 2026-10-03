@@ -31,6 +31,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Slides;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Lights;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 public class Robot {
@@ -44,6 +45,7 @@ public class Robot {
     public final Intake intake;
     public final Stopper stopper;
     public final Slides slides;
+    public final Lights lights;
 
 
     public Robot(HardwareMap hardwareMap) {
@@ -70,7 +72,7 @@ public class Robot {
         hood = new Hood(hardwareMap);
 
 
-
+        lights = new Lights(hardwareMap, follower);
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
@@ -110,7 +112,7 @@ public class Robot {
         //INTAKE
         public Command intake() {
             return infinite(() -> {
-                if (intake.pollenPresent() && stopper.getNumBalls() < 4) {
+                if (intake.pollenPresent() && Stopper.getNumBalls() < 4) {
                     intake.setIntakePower(intakePower);
                 } else {
                     intake.setIntakePower(0);
@@ -123,7 +125,7 @@ public class Robot {
         public Command intakeOn() {
             return build()
                     .setStart(() -> intake.setIntakePower(intakePower))
-                    .setDone(() -> stopper.getNumBalls() >= 4)
+                    .setDone(() -> Stopper.getNumBalls() >= 4)
                     .setEnd(endCondition -> intake.setIntakePower(0))
                     .requiring(Intake.class)
                     .setPriority(10);
@@ -160,7 +162,7 @@ public class Robot {
 
         public Command extendCommand() {
             return build()
-                    .setStart(() -> slides.extendMax())
+                    .setStart(slides::extendMax)
                     .setEnd(endCondition -> slides.extendMin());
             
         }
@@ -184,7 +186,7 @@ public class Robot {
                         transfer().schedule();
                         stopper().schedule();
                     })
-                    .setDone(stopper::isEmpty)
+                    .setDone(Stopper::isEmpty)
                     .setEnd(endCondition -> {
                         cancel(transfer());
                         cancel(stopper());

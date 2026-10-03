@@ -25,4 +25,7 @@ public final class HardwareNames {
     public static final String INTAKE_SENSOR = "intakesensor";
     public static final String RIGHT_SLIDE_SERVO = "rightSlideServo";
     public static final String LEFT_SLIDE_SERVO = "leftSlideServo";
+    public static final String LIGHT1 = "l1";
+    public static final String LIGHT2 = "l2";
+    public static final String LIGHT3 = "l3";
 }
