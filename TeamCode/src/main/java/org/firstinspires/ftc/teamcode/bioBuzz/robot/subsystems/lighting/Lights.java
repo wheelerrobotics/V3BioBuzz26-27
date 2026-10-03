@@ -8,6 +8,7 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 
 import java.util.ArrayList;
@@ -47,12 +48,16 @@ public class Lights {
     }
 
     private Colorable getCellLight() {
-        if (f.pose().heading() < 180) return l1;
+        if (PoseLib.getActiveCell() == PoseLib.Cell.NECTAR) {
+            if (f.pose().heading() < 180) return l1;
+        }
         return l3;
     }
 
     private Colorable getAlertLight() {
-        if (f.pose().heading() > 180) return l1;
+        if (PoseLib.getActiveCell() == PoseLib.Cell.NECTAR) {
+            if (f.pose().heading() > 180) return l1;
+        }
         return l3;
     }
 
