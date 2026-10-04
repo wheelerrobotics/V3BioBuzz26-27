@@ -47,6 +47,4 @@ public abstract class BaseOpMode extends OpMode {
         }
     }
 
-    //test
-
 }
