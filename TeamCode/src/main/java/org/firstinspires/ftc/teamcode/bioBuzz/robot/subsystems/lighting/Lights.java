@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT2;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT3;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+@Config
 public class Lights {
     public static InnerModes getInnerMode() {
         return innerMode;
@@ -37,6 +39,7 @@ public class Lights {
     private static InnerModes innerMode = InnerModes.COUNT;
     private static ArrayList<Consumer<Colorable>> alerts;
     private static float alertTime = 0;
+    public static final float alertDuration = 1;
 
     public Lights(HardwareMap hardwareMap, Follower f) {
         this.f = f;
@@ -81,7 +84,7 @@ public class Lights {
 
     private void updateAlertLight() {
         if (alerts.isEmpty()) return;
-        if (System.nanoTime() - alertTime > 1) {
+        if (System.nanoTime() - alertTime > alertDuration || alertTime == 0) {
             if (alerts.size() == 1) {
                 setAlert();
                 alerts.remove(0);
