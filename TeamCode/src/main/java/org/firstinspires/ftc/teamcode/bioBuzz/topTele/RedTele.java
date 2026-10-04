@@ -13,18 +13,4 @@ public class RedTele extends BaseTele {
         Alliance.set(Alliance.Color.RED);
     }
 
-    @Override
-    public void loop() {
-        super.loop();
-    }
-
-    @Override
-    public void start() {
-        super.start();
-    }
-
-    @Override
-    public void stop() {
-        super.stop();
-    }
 }
