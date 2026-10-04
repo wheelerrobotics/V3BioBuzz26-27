@@ -17,10 +17,12 @@ import java.util.function.Consumer;
 
 @Config
 public class Lights {
+    @SuppressWarnings("unused")
     public static InnerModes getInnerMode() {
         return innerMode;
     }
 
+    @SuppressWarnings("unused")
     public static void setInnerMode(InnerModes innerMode) {
         Lights.innerMode = innerMode;
     }

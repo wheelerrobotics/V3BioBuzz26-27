@@ -17,10 +17,15 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 @Config
 public class Shooter {
     private final DashboardTelemetry tm;
+    @SuppressWarnings("CanBeFinal")
     public static double kP = 0.005;
+    @SuppressWarnings("CanBeFinal")
     public static double kI = 0.0;
+    @SuppressWarnings("CanBeFinal")
     public static double kD = 0.0001;
+    @SuppressWarnings("CanBeFinal")
     public static double kS = 0.0;
+    @SuppressWarnings("CanBeFinal")
     public static double kV = 0.00051;
 
     public DcMotorEx getShooter1() {
