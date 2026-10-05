@@ -145,6 +145,8 @@ public class BallisticsHelper {
                 RobotVars.setFollowerDisabled(true);
             }
 
+            t.addData("targetingIntegral", targetErrorIntegral);
+
             // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
             return LLX;
         }
