@@ -2,12 +2,19 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware;
 
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_LEFT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BACK_RIGHT_DRIVE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.BREAKBEAMS;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_LEFT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.FRONT_RIGHT_DRIVE;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.HOOD;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.INTAKE;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.INTAKE_SENSOR;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.IN_SWITCH;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LEFT_SLIDE_SERVO;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT1;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT2;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT3;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIMELIGHT;
+import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.OUT_SWITCH;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.PINPOINT;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.RIGHT_SLIDE_SERVO;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.SHOOTER1;
@@ -19,6 +26,7 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -54,12 +62,12 @@ public final class ExpectedHardware {
             new HardwareDeviceSpec(
                     SHOOTER1,
                     DcMotorEx.class,
-                    "top shooter"
+                    "Left shooter flywheel"
             ),
             new HardwareDeviceSpec(
                     SHOOTER2,
                     DcMotorEx.class,
-                    "bottom shooter"
+                    "Right shooter flywheel"
             ),
             new HardwareDeviceSpec(
                     LIMELIGHT,
@@ -105,6 +113,41 @@ public final class ExpectedHardware {
                     LEFT_SLIDE_SERVO,
                     Servo.class,
                     "Left slide servo"
+            ),
+            new HardwareDeviceSpec(
+                    BREAKBEAMS,
+                    AnalogInput.class,
+                    "Transfer breakbeams"
+            ),
+            new HardwareDeviceSpec(
+                    IN_SWITCH,
+                    AnalogInput.class,
+                    "Transfer limit switch (in)"
+            ),
+            new HardwareDeviceSpec(
+                    OUT_SWITCH,
+                    AnalogInput.class,
+                    "Transfer limit switch (out)"
+            ),
+            new HardwareDeviceSpec(
+                    INTAKE_SENSOR,
+                    AnalogInput.class,
+                    "Intake breakbeams"
+            ),
+            new HardwareDeviceSpec(
+                    LIGHT1,
+                    Servo.class,
+                    "Light 1"
+            ),
+            new HardwareDeviceSpec(
+                    LIGHT2,
+                    Servo.class,
+                    "Light 2"
+            ),
+            new HardwareDeviceSpec(
+                    LIGHT3,
+                    Servo.class,
+                    "Light 3"
             )
     };
 }
