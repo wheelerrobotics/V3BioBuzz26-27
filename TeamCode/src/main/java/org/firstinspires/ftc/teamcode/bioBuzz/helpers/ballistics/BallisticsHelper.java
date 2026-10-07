@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.limelightvision.LLResult;
@@ -78,7 +80,7 @@ public class BallisticsHelper {
         return ((departureMath * tps) / Constants.encoderTPR) * 60;
     }
 
-    private static double getV0(double tps, Telemetry t) {
+    private static double getV0(double tps, @NonNull Telemetry t) {
         double v0 = getFlywheelSurfaceSpeed(tps) * Constants.kDepartureLoss;
         t.addData("getV0()", v0);
         return v0;
@@ -96,13 +98,13 @@ public class BallisticsHelper {
         return angle;
     }
 
-    private static double getFlightTime(double x, double hoodAngle, Telemetry t) {
+    private static double getFlightTime(double x, double hoodAngle, @NonNull Telemetry t) {
         double time = x / (v0 * Math.cos(hoodAngle));
         t.addData("getFlightTime()", time);
         return time;
     }
 
-    private static double getV(Telemetry t) {
+    private static double getV(@NonNull Telemetry t) {
         double v = Math.sqrt(Math.pow(v0, 2) - (2 * Constants.gravity * Constants.targetY));
         t.addData("getV()", v);
         return v;
@@ -178,6 +180,7 @@ public class BallisticsHelper {
 
     private static class TargetHelper {
 
+        @NonNull
         private static HashSet<Integer> getCurrentIDs() {
             HashSet<Integer> list = new HashSet<>();
             if (Alliance.get() == Alliance.Color.RED) {
