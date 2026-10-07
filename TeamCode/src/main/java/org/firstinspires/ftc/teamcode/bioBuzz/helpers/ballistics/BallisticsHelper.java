@@ -23,14 +23,14 @@ public class BallisticsHelper {
 
     @Config
     public static class Constants {
-        public static final double flywheelDiameter = 5; // FIXME: 9/19/26 SET
+        public static final double flywheelDiameter = 0.072; // FIXME: 9/19/26 SET //
         public static final double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE
         public static final double encoderTPR = 24;
-        public static final double targetY = 86; // FIXME: 9/19/26 TUNE
+        public static final double targetY = 1.52;
         public static final double gravity = 9.81;
         public static final double p = 1.2; // air density
-        public static final double ballDiameter = 0.071; // FIXME: 9/19/26 TUNE
-        public static final double ballMass = 0.071; // FIXME: 9/19/26 TUNE
+        public static final double ballDiameter = 0.071;
+        public static final double ballMass = 26;
         public static final double kBallSpin = 1; // FIXME: 9/19/26 TUNE
         public static final double kTargetErrorTolerance = 0.13; // meters
         public static final double kTargetErrorIntegralMax = 9999999; // meters // FIXME: 9/19/26 TUNE
