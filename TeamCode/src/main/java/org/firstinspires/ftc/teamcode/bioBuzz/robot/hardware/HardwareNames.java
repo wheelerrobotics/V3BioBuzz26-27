@@ -8,10 +8,10 @@ public final class HardwareNames {
     public static final String BACK_RIGHT_DRIVE = "motorBackRight";
     public static final String LIMELIGHT = "limelight";
     public static final String PINPOINT = "pinpoint";
-    public static final String TURRET_SERVO_1 = "servo1";
-    public static final String TURRET_SERVO_2 = "servo2";
-    public static final String SHOOTER1 = "s1";
-    public static final String SHOOTER2 = "s2";
+    public static final String TURRET_SERVO_1 = "turretServo1";
+    public static final String TURRET_SERVO_2 = "turretServo2";
+    public static final String SHOOTER1 = "shooter1";
+    public static final String SHOOTER2 = "shooter2";
 
     public static final String TRANSFER = "transfer";
     public static final String INTAKE = "intake";
@@ -23,8 +23,8 @@ public final class HardwareNames {
     public static final String OUT_SWITCH = "out";
     @SuppressWarnings("SpellCheckingInspection")
     public static final String INTAKE_SENSOR = "intakesensor";
-    public static final String RIGHT_SLIDE_SERVO = "rightSlideServo";
-    public static final String LEFT_SLIDE_SERVO = "leftSlideServo";
+    public static final String RIGHT_SLIDE_SERVO = "rightSlidesServo";
+    public static final String LEFT_SLIDE_SERVO = "leftSlidesServo";
     public static final String LIGHT1 = "l1";
     public static final String LIGHT2 = "l2";
     public static final String LIGHT3 = "l3";

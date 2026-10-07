@@ -3,13 +3,13 @@ Motor,Front-left wheel,motorFrontLeft,Control Hub,Motor 0,Reversed
 Motor,Front-right wheel,motorFrontRight,Control Hub,Motor 1,
 Motor,Back-left wheel,motorBackLeft,Control,Motor 2,
 Motor,Back-right wheel,motorBackRight,Control ,Motor 3
-Motor,Left shooter flywheel,s1,Expansion  ,0,
-Motor,Right shooter flywheel,s2,Expansion,1
-Motor,Intake,intake,Expansion,2
-Motor,Transfer,transfer,Expansion,3
+Motor,Left shooter flywheel,shooter1,Expansion  ,Motor 0,
+Motor,Right shooter flywheel,shooter2,Expansion,Motor 1
+Motor,Intake,intake,Expansion,Motor 2
+Motor,Transfer,transfer,Expansion,Motor 3
 Servo,Hood angle,hood,Expansion,Servo 0
-Servo,First turret servo,servo1,Expansion   ,Servo 1
-Servo,Second turret servo,servo2,Expansion,Servo 2
+Servo,First turret servo,turretServo1,Expansion   ,Servo 1
+Servo,Second turret servo,turretServo2,Expansion,Servo 2
 Servo,Game-piece stopper,stopper,Control,Servo 0,
 Limelight,Vision camera,limelight,Control ,Still needs config,Pipeline 0 by default
 Pinpoint,Robot localization,pinpoint,Control Hub,I2C bus 0,
@@ -19,3 +19,6 @@ Analog Sensor,Transfer limit switch,out,Expansion,1
 Analog Sensor,Intake breakbeams,intakesensor,Control,1
 Servo,Expansion slides right,rightSlidesServo,Control,Servo 1,
 Servo,Expansion slides left,leftSlidesServo,Control,Servo 2,
+Servo,Light 1,l1,Control,Servo 3
+Servo,Light 2,l2,Expansion,Servo 3
+Servo,Light 3,l3,Expansion,Servo 4,
