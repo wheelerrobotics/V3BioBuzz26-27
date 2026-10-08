@@ -36,10 +36,10 @@ public class BallisticsHelper {
         public static final double kTargetErrorIntegralMax = 9999999; // meters // FIXME: 9/19/26 TUNE
 
         //Spin values in rad/s
-        public static final double spinAt1000TPS = 0;
-        public static final double spinAt1500TPS = 0;
-        public static final double spinAt2000TPS = 0;
-        public static final double spinAt2500TPS = 0;
+        public static final double spinAt1000TPS = 0; // FIXME: 9/19/26 TUNE
+        public static final double spinAt1500TPS = 0; // FIXME: 9/19/26 TUNE
+        public static final double spinAt2000TPS = 0; // FIXME: 9/19/26 TUNE
+        public static final double spinAt2500TPS = 0; // FIXME: 9/19/26 TUNE
     }
 
     private final Follower f;
