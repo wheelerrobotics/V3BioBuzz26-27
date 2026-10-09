@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.LL;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Turret;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
@@ -12,7 +11,6 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 @Config
 public class TurretTest extends OpMode {
     Turret turret;
-    LL limelight;
     public static double setAngle_WillBeClipped; //I am sorry for the naming - Emad
     private DashboardTelemetry tm;
 
@@ -20,7 +18,6 @@ public class TurretTest extends OpMode {
     @Override
     public void init() {
         tm = DashboardTelemetry.begin(telemetry);
-        limelight = new LL(hardwareMap);
         turret = new Turret(hardwareMap);
     }
 
