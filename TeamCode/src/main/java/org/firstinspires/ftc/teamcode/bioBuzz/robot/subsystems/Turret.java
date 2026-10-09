@@ -18,7 +18,7 @@ public class Turret {
 
 
     // Servo to turret
-    public static final double servoRatio = 1/1.8;
+    public static final double servoRatio = 1/1.8/360;
     public static final double maxAngleDegrees = 90;
     public static final double minAngleDegrees = -90;
     public Turret(HardwareMap hardwareMap) {
