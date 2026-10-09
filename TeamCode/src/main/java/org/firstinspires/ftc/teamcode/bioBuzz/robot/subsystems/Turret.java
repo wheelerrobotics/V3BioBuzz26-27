@@ -18,9 +18,9 @@ public class Turret {
 
 
     // Servo to turret
-    public static final double servoRatio = 360;
-    public static final double maxAngleDegrees = 360;
-    public static final double minAngleDegrees = 0;
+    public static final double servoRatio = 1/1.8;
+    public static final double maxAngleDegrees = 90;
+    public static final double minAngleDegrees = -90;
     public Turret(HardwareMap hardwareMap) {
         servo1 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_1);
         servo2 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_2);
