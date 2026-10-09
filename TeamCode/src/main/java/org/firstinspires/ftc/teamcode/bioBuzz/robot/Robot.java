@@ -64,7 +64,7 @@ public class Robot {
         slides = new Slides(hardwareMap);
 
         limelight = new LL(hardwareMap);
-        turret = new Turret(hardwareMap, limelight);
+        turret = new Turret(hardwareMap);
 
         commands = new Commands();
 
@@ -93,7 +93,6 @@ public class Robot {
 
     public void stop() {
         follower.stop();
-        turret.stop();
         limelight.stop();
     }
 

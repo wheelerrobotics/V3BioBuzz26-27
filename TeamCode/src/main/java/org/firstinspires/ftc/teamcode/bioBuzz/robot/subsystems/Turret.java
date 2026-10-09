@@ -13,87 +13,38 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 public class Turret {
     private final Servo servo1;
     private final Servo servo2;
-    private final LL limelight;
     public static final Servo.Direction SERVO_1_DIRECTION = Servo.Direction.REVERSE;
     public static final Servo.Direction SERVO_2_DIRECTION = Servo.Direction.REVERSE;
 
 
-
-
     // Servo to turret
-    public static final double SERVO_RATIO = 360;
-    public static final double GEAR_RATIO = 1.44;
-    public static final double TX_TOLERANCE_DEGREES = 1.0;
-    public static final double MAX_STEP_DEGREES = 3.0;
-    public static final double AIM_KP = 0.15;
-    public static final double AIM_DIRECTION = 1.0;
-    public static final double MAX_ANGLE_DEGREES = 360;
-    public static final double MIN_ANGLE_DEGREES = 0;
-    public boolean trackingEnabled = false;
-
-    public Turret(HardwareMap hardwareMap, LL limelight) {
+    public static final double servoRatio = 360;
+    public static final double maxAngleDegrees = 360;
+    public static final double minAngleDegrees = 0;
+    public Turret(HardwareMap hardwareMap) {
         servo1 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_1);
         servo2 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_2);
 
         servo1.setDirection(SERVO_1_DIRECTION);
         servo2.setDirection(SERVO_2_DIRECTION);
 
-        this.limelight = limelight;
     }
 
     public void turnTo(double angle) {
         angle = Range.clip(
                 angle,
-                MIN_ANGLE_DEGREES,
-                MAX_ANGLE_DEGREES
+                minAngleDegrees,
+                maxAngleDegrees
         );
 
-        double servoPos = (angle/GEAR_RATIO)/SERVO_RATIO;
+        double servoPos = (angle * servoRatio);
 
         servo1.setPosition(servoPos);
         servo2.setPosition(servoPos);
     }
 
-    public double getAngle() {
-        double servoPosAvg = (servo1.getPosition()+servo2.getPosition())/2;
-
-        return servoPosAvg*360*GEAR_RATIO;
-    }
-
-    public void startFollowingTarget() {
-        trackingEnabled = true;
-    }
-
-    public void stop() {
-        trackingEnabled = false;
-    }
-
-    private void followTargetTick() {
-        if (!limelight.hasTarget()) return;
-
-        double tx = limelight.getTx();
-
-        if (Math.abs(tx) <= TX_TOLERANCE_DEGREES) {
-            return;
-        }
-
-        // Calculate a small turret correction from the camera error.
-        double turretCorrectionDegrees = Range.clip(
-                tx * AIM_KP,
-                -MAX_STEP_DEGREES,
-                MAX_STEP_DEGREES
-        );
-
-        turnTo(getAngle()+turretCorrectionDegrees*AIM_DIRECTION);
-    }
-
-    private void followBallisticAngle() {
+    public void update() {
         turnTo(Ballistics.getResult().getTurretAngleRS());
     }
 
-    public void update() {
-        if (trackingEnabled) {
-            followBallisticAngle();
-        }
-    }
 }
