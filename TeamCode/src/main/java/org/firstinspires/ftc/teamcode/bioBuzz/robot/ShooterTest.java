@@ -66,8 +66,8 @@ public class ShooterTest extends OpMode {
         switch (testMode) {
             case RUN:
                 shooter.test(targetRPM);
-//                hood.test(hoodPos);
-//                shooter.getShooter1().setPower(1);
+                hood.test(hoodPos);
+                shooter.getShooter1().setPower(1);
                 telemetry.addData("reached1", testMode.toString());
                 return;
             case RUN_NO_HOOD:
