@@ -33,18 +33,18 @@ public abstract class BaseOpMode extends OpMode {
 
     @Override
     public void loop() {
-        r.update(gamepad1, gamepad2);
         r.follower.update();
-        execute();
+        r.limelight.update();
+        r.turret.update();
+        execute(); // ivy
         telemetryManager.update(telemetry);
         r.lights.loop();
     }
 
     @Override
     public void stop() {
-        if (r != null) {
-            r.stop();
-        }
+        r.follower.stop();
+        r.limelight.stop();
     }
 
 }

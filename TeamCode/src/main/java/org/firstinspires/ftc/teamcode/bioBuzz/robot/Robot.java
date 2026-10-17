@@ -17,7 +17,6 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
@@ -75,25 +74,8 @@ public class Robot {
         lights = new Lights(hardwareMap, follower);
     }
 
-    public void update(Gamepad gamepad1, Gamepad gamepad2) {
-//        boolean driverWantsControl =
-//                Math.abs(gamepad1.left_stick_x) > 0.1 ||
-//                Math.abs(gamepad1.left_stick_y) > 0.1 ||
-//                Math.abs(gamepad1.right_stick_x) > 0.1;
-//
-//
-//        if (driverWantsControl && (follower.following() || follower.holding())) {
-//            follower.stop();
-//        }
-
-        follower.update();
-        limelight.update();
-        turret.update();
-    }
-
     public void stop() {
-        follower.stop();
-        limelight.stop();
+
     }
 
 
