@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz;
+package org.firstinspires.ftc.teamcode.bioBuzz.OpModes;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 

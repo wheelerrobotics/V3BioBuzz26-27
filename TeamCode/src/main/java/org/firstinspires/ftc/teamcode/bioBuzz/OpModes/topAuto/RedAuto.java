@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.topAuto;
+package org.firstinspires.ftc.teamcode.bioBuzz.OpModes.topAuto;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.BaseAuto;
+import org.firstinspires.ftc.teamcode.bioBuzz.OpModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
 public class RedAuto extends BaseAuto {

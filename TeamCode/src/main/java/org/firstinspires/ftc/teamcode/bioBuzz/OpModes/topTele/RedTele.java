@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.topTele;
+package org.firstinspires.ftc.teamcode.bioBuzz.OpModes.topTele;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.BaseTele;
+import org.firstinspires.ftc.teamcode.bioBuzz.OpModes.BaseTele;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
 @TeleOp
