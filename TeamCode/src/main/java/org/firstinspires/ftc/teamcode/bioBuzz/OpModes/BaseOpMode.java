@@ -19,7 +19,7 @@ public abstract class BaseOpMode extends OpMode {
         reset();
         telemetryManager = DashboardTelemetry.begin(telemetry);
         GlobalT.set_telemetry(telemetry);
-        r = new Robot(hardwareMap);
+        r = new Robot(hardwareMap, gamepad1, gamepad2);
     }
 
     @Override
