@@ -11,11 +11,24 @@ apply plugin: 'com.android.application'
 // before doing so.
 
 // Custom definitions may go here
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        maven {
+            url "https://repo.dairy.foundation/releases"
+        }
+    }
+    dependencies {
+        classpath "dev.frozenmilk:Load:0.3.2"
+    }
+}
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'dev.frozenmilk.sinister.sloth.load'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
@@ -40,8 +53,16 @@ android {
 //        languageVersion.set(JavaLanguageVersion.of(21))
 //    }
 //}
+repositories {
+    // Dairy releases repository
+    maven {
+        url = "https://repo.dairy.foundation/releases"
+    }
+}
 
 dependencies {
     implementation project(':FtcRobotController')
+    implementation("dev.frozenmilk.sinister:Sloth:0.3.2")
+    implementation("com.acmerobotics.slothboard:dashboard:0.3.2+0.6.0")
 //    implementation 'androidx.core:core-ktx:1.19.0'
 }
