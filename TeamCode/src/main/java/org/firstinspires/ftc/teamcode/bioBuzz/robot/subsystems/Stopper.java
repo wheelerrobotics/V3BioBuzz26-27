@@ -17,8 +17,8 @@ public class Stopper {
     public final AnalogSensor out;
     public boolean lastIn = false;
     public boolean lastOut = false;
-    public static final double stopperIn = 0;
-    public static final double stopperOut = 0.5;
+    public static final double stopperIn = 0; // FIXME: 10/22/26 
+    public static final double stopperOut = 0.5; // FIXME: 10/22/26 
     public static int numBalls = 0;
     public Stopper (HardwareMap hardwareMap) {
         stopper = hardwareMap.get(Servo.class, HardwareNames.STOPPER);
