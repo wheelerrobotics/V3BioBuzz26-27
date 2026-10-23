@@ -8,15 +8,17 @@ Motor,Right shooter flywheel,shooter2,Expansion,Motor 1,NULL
 Motor,Intake,intake,Expansion,Motor 2,NULL
 Motor,Transfer,transfer,Expansion,Motor 3,NULL
 Servo,Hood angle,hood,Expansion,Servo 0,NULL
-Servo,left turret servo,"",Control,Servo 0,fix
-Servo,right turret servo,"",Expansion,Servo 3,fix
-Servo,Game-piece stopper,stopper,Expansion,Servo 2,fix
+Servo,left turret servo,turretServo0,Control,Servo 0,""
+Servo,right turret servo,turretServo1,Expansion,Servo 3,""
+Servo,Game-piece stopper,stopper,Expansion,Servo 2,""
 Limelight,Vision camera,limelight,Control ,Still needs config,Pipeline 0 by default
 Pinpoint,Robot localization,pinpoint,Control Hub,I2C bus 0,
 Analog Sensor,Transfer breakbeams,breakbeams,Control,0,NULL
 Analog Sensor,Transfer limit switch,in,Expansion,0,NULL
 Analog Sensor,Transfer limit switch,out,Expansion,1,NULL
 Analog Sensor,Intake breakbeams,intakesensor,Control,1,NULL
-Servo,Expansion slides right,rightSlidesServo,"","",fix
-Servo,Expansion slides left,leftSlidesServo,"","",fix
-Servo,Light 1,l1,Expansion,Servo 5,fix
+Servo,Expansion slides right,rightSlidesServo,"","",""
+Servo,Expansion slides left,leftSlidesServo,"","",""
+Servo,Light 1,l1,Expansion,Servo 5,""
+Servo,Light 2,l2,,,
+Servo,Light 3,l3,,,
