@@ -97,7 +97,7 @@ public class Lights {
     }
 
     private void updateInnerLight() {
-        int nBalls = Stopper.getNumBalls();
+        int nBalls = 0;// Stopper.getNumBalls();
         switch(innerMode) {
             case COUNT:
                 switch (nBalls) {
