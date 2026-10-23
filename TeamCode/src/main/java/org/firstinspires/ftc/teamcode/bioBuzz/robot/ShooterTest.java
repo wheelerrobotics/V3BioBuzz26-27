@@ -27,6 +27,7 @@ public class ShooterTest extends OpMode {
     public static double hoodPos = 0;
     @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
+    public static int testSwitch = 0;
 
     boolean lastA = false;
     Shooter shooter;
@@ -62,6 +63,23 @@ public class ShooterTest extends OpMode {
             lastA = false;
         }
 
+        switch (testSwitch) {
+            case 1:
+                testMode = TestMode.RUN;
+                break;
+            case 0:
+                testMode = TestMode.STOPPED;
+                break;
+            case 2:
+                testMode = TestMode.RUN_HOOD_DEGREES;
+                break;
+            case 3:
+                testMode = TestMode.RUN_NO_HOOD;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + testSwitch);
+        }
+
 
         switch (testMode) {
             case RUN:
@@ -72,11 +90,9 @@ public class ShooterTest extends OpMode {
                 return;
             case RUN_NO_HOOD:
                 shooter.test(targetRPM);
-//                shooter.getShooter1().setPower(1);
                 return;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
-//                shooter.getShooter1().setPower(1);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
                 return;
             case STOPPED:
