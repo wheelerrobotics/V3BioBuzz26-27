@@ -59,7 +59,7 @@ public class Robot {
 
 
         transfer = new Transfer(hardwareMap);
-        intake = new Intake(hardwareMap, gamepad2);
+        intake = new Intake(hardwareMap);
         stopper = new Stopper(hardwareMap);
         slides = new Slides(hardwareMap);
 
