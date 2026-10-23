@@ -6,6 +6,7 @@ public abstract class BaseTele extends BaseOpMode {
 
     boolean lastA = false;
     boolean lastB = false;
+    boolean lastX = false;
     @Override
     public void init() {
         super.init();
@@ -33,6 +34,14 @@ public abstract class BaseTele extends BaseOpMode {
                 r.commands.extendCommand().schedule();
             }
             lastB = true;
+        }
+
+        if (gamepad1.x && !lastX) {
+            r.commands.intakeOn().schedule();
+            lastX = true;
+        } else if (!gamepad1.x && lastX) {
+            r.commands.intakeOff().schedule();
+            lastX = false;
         }
 
 

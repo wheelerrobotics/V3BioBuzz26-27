@@ -92,23 +92,22 @@ public class Robot {
         }
 
         //INTAKE
-        public Command intake() {
-            return infinite(() -> {
-                if (intake.pollenPresent() && Stopper.getNumBalls() < 4) {
-                    intake.setIntakePower(intakePower);
-                } else {
-                    intake.setIntakePower(0);
-                }
-            })
-                    .setPriority(1)
-                    .requiring(Intake.class);
-        }
+
+//        public Command intake() {
+//            return infinite(() -> {
+//                if (intake.pollenPresent() && Stopper.getNumBalls() < 4) {
+//                    intake.setIntakePower(intakePower);
+//                } else {
+//                    intake.setIntakePower(0);
+//                }
+//            })
+//                    .setPriority(1)
+//                    .requiring(Intake.class);
+//        }
 
         public Command intakeOn() {
             return build()
                     .setStart(() -> intake.setIntakePower(intakePower))
-                    .setDone(() -> Stopper.getNumBalls() >= 4)
-                    .setEnd(endCondition -> intake.setIntakePower(0))
                     .requiring(Intake.class)
                     .setPriority(10);
         }
@@ -116,7 +115,6 @@ public class Robot {
         public Command intakeOff() {
             return build()
                     .setStart(() -> intake.setIntakePower(0))
-                    .setEnd(endCondition -> intake().schedule())
                     .requiring(Intake.class)
                     .setPriority(10);
         }
@@ -126,8 +124,7 @@ public class Robot {
                         intake.setIntakePower(-intakePower);
                         transfer.setTransferPower(-transferPower);
                     })
-                    .setEnd(endCondition -> intake().schedule())
-                    .requiring(Transfer.class, Intake.class)
+//                    .requiring(Transfer.class, Intake.class)
                     .setPriority(100);
         }
 
@@ -168,7 +165,7 @@ public class Robot {
                         transfer().schedule();
                         stopper().schedule();
                     })
-                    .setDone(Stopper::isEmpty)
+                    .setDone(stopper::isEmpty)
                     .setEnd(endCondition -> {
                         cancel(transfer());
                         cancel(stopper());
