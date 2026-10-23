@@ -6,6 +6,7 @@ import static com.pedropathing.ivy.Scheduler.reset;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
@@ -39,6 +40,7 @@ public abstract class BaseOpMode extends OpMode {
         execute(); // ivy
         telemetryManager.update(telemetry);
         r.lights.loop();
+        PoseLib.update(r.follower);
     }
 
     @Override

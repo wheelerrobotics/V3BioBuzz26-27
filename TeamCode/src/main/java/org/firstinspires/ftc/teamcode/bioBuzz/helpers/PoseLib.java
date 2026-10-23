@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.helpers;
 
 import com.pedropathing.api.PoseFactory;
+import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
 @SuppressWarnings("CanBeFinal")
@@ -50,5 +51,10 @@ public class PoseLib {
         return tPose;
     }
 
+    public static void update(Follower f) {
+        if (f.pose().y() > 72) {
+            setActiveCell(Cell.EMPTY);
+        } else setActiveCell(Cell.NECTAR);
+    }
 
 }
