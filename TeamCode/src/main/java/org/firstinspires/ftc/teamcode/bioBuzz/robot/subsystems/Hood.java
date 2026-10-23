@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareName
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
@@ -31,6 +32,7 @@ public final class Hood {
 
     public void updatePosition() {
         double pos = Ballistics.getResult().getHoodAngle() * radPosRelation;
+        pos = Range.clip(pos, hoodMin, hoodMax);
         hoodServo.setPosition(pos);
     }
 

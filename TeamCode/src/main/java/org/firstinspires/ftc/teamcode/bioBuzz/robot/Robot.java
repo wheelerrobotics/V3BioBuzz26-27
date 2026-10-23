@@ -17,6 +17,7 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
@@ -47,7 +48,7 @@ public class Robot {
     public final Lights lights;
 
 
-    public Robot(HardwareMap hardwareMap) {
+    public Robot(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2) {
         follower = Constants.createFollower(hardwareMap);
         shooter = new Shooter(hardwareMap);
         Ballistics.init(follower,
@@ -58,7 +59,7 @@ public class Robot {
 
 
         transfer = new Transfer(hardwareMap);
-        intake = new Intake(hardwareMap);
+        intake = new Intake(hardwareMap, gamepad2);
         stopper = new Stopper(hardwareMap);
         slides = new Slides(hardwareMap);
 

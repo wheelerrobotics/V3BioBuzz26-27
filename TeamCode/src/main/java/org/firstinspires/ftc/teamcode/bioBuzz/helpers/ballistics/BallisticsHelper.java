@@ -37,9 +37,9 @@ public class BallisticsHelper {
 
         //Spin values in rad/s
         public static final double spinAt1000TPS = 0; // FIXME: 9/19/26 TUNE
-        public static final double spinAt1500TPS = 0; // FIXME: 9/19/26 TUNE
-        public static final double spinAt2000TPS = 0; // FIXME: 9/19/26 TUNE
-        public static final double spinAt2500TPS = 0; // FIXME: 9/19/26 TUNE
+        public static final double spinAt1500TPS = 1; // FIXME: 9/19/26 TUNE
+        public static final double spinAt2000TPS = 2; // FIXME: 9/19/26 TUNE
+        public static final double spinAt2500TPS = 3; // FIXME: 9/19/26 TUNE
     }
 
     private final Follower f;

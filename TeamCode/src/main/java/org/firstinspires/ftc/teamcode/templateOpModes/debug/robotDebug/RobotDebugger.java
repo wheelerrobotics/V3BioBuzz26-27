@@ -27,7 +27,7 @@ public class RobotDebugger extends OpMode {
     @Override
     public void init() {
         telemetryM = DashboardTelemetry.begin(telemetry);
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, gamepad1, gamepad2);
         stopDrivetrain();
 
         telemetryM.addLine("Robot Debugger initialized");
