@@ -9,11 +9,11 @@ data class ShootPoint(val d: Int, val v: Int)
 object ShooterLUT {
     @JvmField
     val points = arrayOf(
-        ShootPoint(10, 1500),
-        ShootPoint(20, 1500),
-        ShootPoint(30, 1500),
-        ShootPoint(40, 1500),
-        ShootPoint(50, 1500),
+        ShootPoint(10, 450),
+        ShootPoint(20, 500),
+        ShootPoint(30, 600),
+        ShootPoint(40, 700),
+        ShootPoint(50, 800),
     )
 
     private lateinit var _lut: InterpLUT
