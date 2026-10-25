@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PIDController;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 @Config
@@ -56,26 +57,29 @@ public class Shooter {
 
     public void data(Double target) {
         tm.addData("targetTicks", target);
+        tm.addData("s1 power", shooter1.getPower());
+        tm.addData("s2 power", shooter2.getPower());
         tm.addData("s1 velocity", shooter1.getVelocity());
         tm.addData("s2 velocity", shooter2.getVelocity());
         tm.addData("s1 current", shooter1.getCurrent(CurrentUnit.AMPS));
         tm.addData("s2 current", shooter2.getCurrent(CurrentUnit.AMPS));
     }
 
-    public void test(Double tps) {
-        applyLiveGains(tps);
+    public void test(Double targetTPS) {
+        updatePIDSettings(targetTPS);
         double pidOutput1 = pid1.update(shooter1.getVelocity());
         double pidOutput2 = pid2.update(shooter2.getVelocity());
         shooter1.setPower(Range.clip(pidOutput1, 0.0, 1.0));
         shooter2.setPower(Range.clip(pidOutput2, 0.0, 1.0));
 
-        data(tps);
+        data(targetTPS);
     }
 
     public void update() {
-        double tps = 0;//ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
+        double tps = ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
 
-        applyLiveGains(tps);
+        pid1.setTarget(tps);
+        pid2.setTarget(tps);
         double pidOutput1 = pid1.update(shooter1.getVelocity());
         double pidOutput2 = pid2.update(shooter2.getVelocity());
         shooter1.setPower(Range.clip(pidOutput1, 0.0, 1.0));
@@ -84,7 +88,7 @@ public class Shooter {
         data(tps);
     }
 
-    private void applyLiveGains(double targetTicksPerSecond) {
+    private void updatePIDSettings(double targetTicksPerSecond) {
         pid1.setCoefficients(kP, kI, kD, kS, kV);
         pid2.setCoefficients(kP, kI, kD, kS, kV);
         pid1.setTarget(targetTicksPerSecond);
