@@ -31,6 +31,7 @@ public class SwyftCam {
 //        public static double cameraZ = 0; // pedro pose is 2d
         public static Size resolution = new Size(640, 480);
     }
+    private final String logTag = "swyft";
     public VisionPortal portal;
     public AprilTagProcessor processor = new AprilTagProcessor.Builder().build();
     private HashMap<Integer, Double> offsets = new HashMap<>();
@@ -57,9 +58,9 @@ public class SwyftCam {
         double x = detection.ftcPose.x;
         double y = detection.ftcPose.y;
         double z = detection.ftcPose.z;
-        t.addData("cx", x);
-        t.addData("cy", y);
-        t.addData("cz", z);
+        RobotLog.ii("cx", String.valueOf(x));
+        RobotLog.ii("cy", String.valueOf(y));
+        RobotLog.ii("cz", String.valueOf(z));
 
         double pitch = Math.toRadians(SwyftCamConstants.cameraPitch);
 
@@ -74,9 +75,9 @@ public class SwyftCam {
         double degrees = Math.toDegrees(Math.atan2(robotX, robotY));
 
         Pose pose = poseFactory.of(robotX, robotY, -degrees);
-        t.addData("x", pose.x());
-        t.addData("y", pose.y());
-        t.addData("heading", pose.heading());
+        RobotLog.ii("x", String.valueOf(pose.x()));
+        RobotLog.ii("y", String.valueOf(pose.y()));
+        RobotLog.ii("heading", String.valueOf(pose.heading()));
 
         return pose;
     }
