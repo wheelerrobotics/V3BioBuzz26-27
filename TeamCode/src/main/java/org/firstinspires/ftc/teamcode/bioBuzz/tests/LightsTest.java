@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.robot;
+package org.firstinspires.ftc.teamcode.bioBuzz.tests;
 
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT1;
 import static org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames.LIGHT2;

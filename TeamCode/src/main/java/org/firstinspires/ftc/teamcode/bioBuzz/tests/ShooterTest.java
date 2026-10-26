@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.robot;
+package org.firstinspires.ftc.teamcode.bioBuzz.tests;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

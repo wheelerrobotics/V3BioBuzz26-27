@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.OpModes;
+package org.firstinspires.ftc.teamcode.bioBuzz.opModes;
 
 import static com.pedropathing.ivy.Scheduler.execute;
 import static com.pedropathing.ivy.Scheduler.reset;

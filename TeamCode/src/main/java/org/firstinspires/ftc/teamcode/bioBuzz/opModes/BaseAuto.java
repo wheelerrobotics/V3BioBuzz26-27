@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.OpModes;
+package org.firstinspires.ftc.teamcode.bioBuzz.opModes;
 
 import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
