@@ -13,9 +13,6 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 @TeleOp
 @Config
 public class ShooterTest extends OpMode {
-
-    private Intake intake;
-
     public enum TestMode {
         STOPPED,
         RUN_NO_HOOD,
@@ -31,6 +28,7 @@ public class ShooterTest extends OpMode {
     @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
     public static int testSwitch = 0;
+    private Intake intake;
 
     boolean lastA = false;
     Shooter shooter;
@@ -46,7 +44,6 @@ public class ShooterTest extends OpMode {
         hood = new Hood(hardwareMap);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public void loop() {
         telemetry.addData("targetRPM JAVA", targetRPM);
