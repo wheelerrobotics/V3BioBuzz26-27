@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-class RGBIndicator implements Colorable {
+public class RGBIndicator implements Colorable {
     final Servo light;
     public RGBIndicator(HardwareMap hardwareMap, String name) {
         light = hardwareMap.get(Servo.class, name);

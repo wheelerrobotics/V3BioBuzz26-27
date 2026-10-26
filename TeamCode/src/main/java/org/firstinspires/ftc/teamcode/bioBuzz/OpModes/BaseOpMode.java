@@ -40,6 +40,7 @@ public abstract class BaseOpMode extends OpMode {
         telemetryManager.update(telemetry);
         r.lights.loop();
         PoseLib.update(r.follower);
+        telemetryManager.update(telemetry);
     }
 
     @Override

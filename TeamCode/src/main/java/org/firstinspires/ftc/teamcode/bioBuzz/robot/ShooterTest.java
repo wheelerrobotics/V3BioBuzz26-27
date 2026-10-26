@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
@@ -12,6 +13,8 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 @TeleOp
 @Config
 public class ShooterTest extends OpMode {
+
+    private Intake intake;
 
     public enum TestMode {
         STOPPED,
@@ -38,6 +41,7 @@ public class ShooterTest extends OpMode {
     public void init() {
         tm = DashboardTelemetry.begin(telemetry);
         transfer = new Transfer(hardwareMap);
+        intake = new Intake(hardwareMap);
         shooter = new Shooter(hardwareMap);
         hood = new Hood(hardwareMap);
     }
@@ -49,17 +53,17 @@ public class ShooterTest extends OpMode {
         telemetry.addData("hoodPos JAVA", hoodPos);
         telemetry.addData("testMode JAVA", testMode.toString());
 
-        if (gamepad1.a) testMode = TestMode.RUN;
-        if (gamepad1.b) testMode = TestMode.STOPPED;
 
         if (gamepad1.x) targetRPM = targetRPM + 10;
         if (gamepad1.y) targetRPM = targetRPM - 10;
 
         if (gamepad1.a && !lastA) {
             transfer.setTransferPower(1);
+            intake.setIntakePower(1);
             lastA = true;
         } else if (!gamepad1.a && lastA) {
             transfer.setTransferPower(0);
+            intake.setIntakePower(0);
             lastA = false;
         }
 
@@ -99,6 +103,7 @@ public class ShooterTest extends OpMode {
                 shooter.getShooter2().setPower(0);
                 break;
         }
+
         tm.update(telemetry);
     }
 }

@@ -11,12 +11,13 @@ import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 @Config
 public class TurretTest extends OpMode {
     Turret turret;
-    public static double setAngle_WillBeClipped; //I am sorry for the naming - Emad
+    public static double setAngle_WillBeClipped = 0; //I am sorry for the naming - Emad
     private DashboardTelemetry tm;
 
 
     @Override
     public void init() {
+        setAngle_WillBeClipped = 0;
         tm = DashboardTelemetry.begin(telemetry);
         turret = new Turret(hardwareMap);
     }
@@ -24,7 +25,8 @@ public class TurretTest extends OpMode {
     @Override
     public void loop() {
         tm.update(telemetry);
-        turret.turnTo(setAngle_WillBeClipped); // FIXME: 10/9/26
+        turret.turnTo(setAngle_WillBeClipped);
+        tm.update(telemetry);
     }
 
 }
