@@ -31,10 +31,9 @@ public class SwyftCam {
 //        public static double cameraZ = 0; // pedro pose is 2d
         public static Size resolution = new Size(640, 480);
     }
-    private final String logTag = "swyft";
     public VisionPortal portal;
     public AprilTagProcessor processor = new AprilTagProcessor.Builder().build();
-    private HashMap<Integer, Double> offsets = new HashMap<>();
+    private final HashMap<Integer, Double> offsets = new HashMap<>(); // FIXME: 10/25/26 
     private final PoseFactory poseFactory = PoseFactory.degrees();
     private final DashboardTelemetry t;
 
