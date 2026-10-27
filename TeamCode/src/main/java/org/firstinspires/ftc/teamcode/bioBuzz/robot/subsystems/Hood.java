@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 public final class Hood {
     private final Servo hoodServo;
     public static final double radPosRelation = 0.5; // FIXME: 9/20/26 TUNE
-    public static double hoodMax = 0.1; // FIXME: 9/20/26 TUNE
-    public static double hoodMin = 0; // FIXME: 9/20/26 TUNE
+    public static double hoodMax = 0.24;
+    public static double hoodMin = 0;
     public Hood(HardwareMap hardwareMap) {
         hoodServo = hardwareMap.get(Servo.class, HOOD);
     }
