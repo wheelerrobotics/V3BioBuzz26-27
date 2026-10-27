@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.tests;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Intake;
@@ -11,8 +9,6 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 
-@Config
-@TeleOp
 public class ShooterTest extends OpMode {
     public enum TestMode {
         STOPPED,
