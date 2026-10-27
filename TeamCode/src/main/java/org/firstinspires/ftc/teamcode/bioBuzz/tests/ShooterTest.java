@@ -37,6 +37,7 @@ public class ShooterTest extends OpMode {
 
     @Override
     public void init() {
+
         tm = DashboardTelemetry.begin(telemetry);
         transfer = new Transfer(hardwareMap);
         intake = new Intake(hardwareMap);
@@ -86,15 +87,14 @@ public class ShooterTest extends OpMode {
             case RUN:
                 shooter.test(targetRPM);
                 hood.test(hoodPos);
-                telemetry.addData("reached1", testMode.toString());
-                return;
+                break;
             case RUN_NO_HOOD:
                 shooter.test(targetRPM);
-                return;
+                break;
             case RUN_HOOD_DEGREES:
                 shooter.test(targetRPM);
                 tm.addData("hoodSet", hood.testInDegreesGetPosition(hoodAngle));
-                return;
+                break;
             case STOPPED:
                 shooter.getShooter1().setPower(0);
                 shooter.getShooter2().setPower(0);

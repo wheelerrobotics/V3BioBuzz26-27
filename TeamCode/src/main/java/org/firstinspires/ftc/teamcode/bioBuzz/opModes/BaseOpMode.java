@@ -5,7 +5,6 @@ import static com.pedropathing.ivy.Scheduler.reset;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
@@ -19,8 +18,7 @@ public abstract class BaseOpMode extends OpMode {
     public void init() {
         reset();
         telemetryManager = DashboardTelemetry.begin(telemetry);
-        GlobalT.set_telemetry(telemetry);
-        r = new Robot(hardwareMap, gamepad1, gamepad2);
+        r = new Robot(hardwareMap, gamepad1, gamepad2, telemetry);
     }
 
     @Override
@@ -37,7 +35,6 @@ public abstract class BaseOpMode extends OpMode {
         r.limelight.update();
         r.turret.update();
         execute(); // ivy
-        telemetryManager.update(telemetry);
         r.lights.loop();
         PoseLib.update(r.follower);
         telemetryManager.update(telemetry);
