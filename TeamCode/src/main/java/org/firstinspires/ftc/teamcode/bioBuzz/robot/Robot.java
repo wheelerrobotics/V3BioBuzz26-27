@@ -20,7 +20,7 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.helpers.GlobalT;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Hood;
@@ -48,12 +48,12 @@ public class Robot {
     public final Lights lights;
 
 
-    public Robot(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2) {
+    public Robot(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         follower = Constants.createFollower(hardwareMap);
         shooter = new Shooter(hardwareMap);
         Ballistics.init(follower,
                 hardwareMap.get(Limelight3A.class, HardwareNames.LIMELIGHT),
-                GlobalT.get_telemetry(),
+                telemetry,
                 shooter.getShooter1(),
                 shooter.getShooter2());
 
