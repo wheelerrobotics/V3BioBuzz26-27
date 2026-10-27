@@ -34,6 +34,9 @@ public class NewShooterTest extends OpMode {
     @Override
     public void loop() {
 
+
+
+
         //Transfer gamepad logic
         if (gamepad1.a && !lastA) {
             transfer.setTransferPower(1);
