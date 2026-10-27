@@ -45,8 +45,9 @@ public class Shooter {
         tm = DashboardTelemetry.getInstance();
         shooter1 = hardwareMap.get(DcMotorEx.class, SHOOTER1);
         shooter2 = hardwareMap.get(DcMotorEx.class, SHOOTER2);
-        shooter2.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooter2.setDirection(DcMotorSimple.Direction.FORWARD);
         shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooter1.setDirection(DcMotorSimple.Direction.REVERSE);
         shooter2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         pid1 = new PIDController(kP, kI, kD, kS, kV);
         pid2 = new PIDController(kP, kI, kD, kS, kV);
