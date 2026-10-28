@@ -19,8 +19,6 @@ public class HoodTester extends OpMode {
     public void init() {
         hood = new Hood(hardwareMap);
         testInt = 0;
-        testPos = 0;
-        testDegPos = 15;
     }
 
     @Override

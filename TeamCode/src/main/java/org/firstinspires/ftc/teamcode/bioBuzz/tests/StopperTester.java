@@ -13,7 +13,7 @@ public class StopperTester extends OpMode {
 
     public static double stopperPos = 0;
     public static boolean closed = false;
-    public static int testInt = 0;
+    public static int testInt = 0; // 0 = pos, 1 = toggle
     @SuppressWarnings("FieldMayBeFinal")
     public static double testPos = 0;
 
