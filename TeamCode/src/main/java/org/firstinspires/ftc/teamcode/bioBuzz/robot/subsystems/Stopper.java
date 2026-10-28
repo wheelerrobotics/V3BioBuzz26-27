@@ -11,10 +11,9 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 @Config
 public class Stopper {
     public final Servo stopper;
-    @SuppressWarnings("SpellCheckingInspection")
     public final AnalogInput breakbeams;
-    public static double stopperIn = 0; // FIXME: 10/23/26
-    public static double stopperOut = 0.5; // FIXME: 10/23/26
+    public static final double stopperIn = 0; // FIXME: 10/23/26
+    public static final double stopperOut = 0.5; // FIXME: 10/23/26
     public Stopper (HardwareMap hardwareMap) {
         stopper = hardwareMap.get(Servo.class, HardwareNames.STOPPER);
         breakbeams = hardwareMap.get(AnalogInput.class, HardwareNames.BREAKBEAMS);

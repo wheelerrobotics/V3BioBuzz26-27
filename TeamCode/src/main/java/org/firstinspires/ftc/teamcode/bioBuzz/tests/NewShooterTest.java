@@ -20,7 +20,9 @@ public class NewShooterTest extends OpMode {
     Hood hood;
     Stopper stopper;
 
+    @SuppressWarnings("CanBeFinal")
     public static double shooterTPS = 0;
+    @SuppressWarnings("CanBeFinal")
     public static double hoodPos = 0;
     private boolean lastA = false;
 

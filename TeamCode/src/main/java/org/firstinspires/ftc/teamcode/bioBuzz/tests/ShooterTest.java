@@ -24,6 +24,7 @@ public class ShooterTest extends OpMode {
     public static double hoodPos = 0;
     @SuppressWarnings("CanBeFinal")
     public static double hoodAngle = 10;
+    @SuppressWarnings("CanBeFinal")
     public static int testSwitch = 0;
     private Intake intake;
 

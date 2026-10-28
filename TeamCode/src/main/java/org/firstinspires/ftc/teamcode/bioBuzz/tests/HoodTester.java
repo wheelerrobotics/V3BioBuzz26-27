@@ -12,7 +12,9 @@ public class HoodTester extends OpMode {
 
     private Hood hood;
     public static int testInt = 0;
+    @SuppressWarnings("CanBeFinal")
     public static double testPos = 0;
+    @SuppressWarnings("CanBeFinal")
     public static double testDegPos = 15;
 
     @Override

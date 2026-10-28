@@ -17,11 +17,9 @@ public final class HardwareNames {
     public static final String INTAKE = "intake";
     public static final String STOPPER = "stopper";
     public static final String HOOD = "hood";
-    @SuppressWarnings("SpellCheckingInspection")
     public static final String BREAKBEAMS = "bb";
     public static final String IN_SWITCH = "in";
     public static final String OUT_SWITCH = "out";
-    @SuppressWarnings("SpellCheckingInspection")
     public static final String INTAKE_SENSOR = "intakesensor";
     public static final String RIGHT_SLIDE_SERVO = "rightSlidesServo";
     public static final String LEFT_SLIDE_SERVO = "leftSlidesServo";

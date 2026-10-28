@@ -25,20 +25,20 @@ public class SwyftCam {
     @Config
     public static class SwyftCamConstants {
         // THESE SHOULD BE FOR TURRET OFFSET IF CAMERA IS TURRET MOUNTED
-        public static double cameraPitch = 55; // FIXME: 10/24/26 ask Eric
-        public static double cameraX = 0;
-        public static double cameraY = 2; // FIXME: 10/24/26
+        public static final double cameraPitch = 55; // FIXME: 10/24/26 ask Eric
+        public static final double cameraX = 0;
+        public static final double cameraY = 2; // FIXME: 10/24/26
 //        public static double cameraZ = 0; // pedro pose is 2d
-        public static Size resolution = new Size(640, 480);
+        public static final Size resolution = new Size(640, 480);
     }
-    public VisionPortal portal;
-    public AprilTagProcessor processor = new AprilTagProcessor.Builder().build();
+    public final VisionPortal portal;
+    public final AprilTagProcessor processor = new AprilTagProcessor.Builder().build();
     private final HashMap<Integer, Double> offsets = new HashMap<>(); // FIXME: 10/25/26 
     private final PoseFactory poseFactory = PoseFactory.degrees();
-    private final DashboardTelemetry t;
+//    private final DashboardTelemetry t;
 
     public SwyftCam(HardwareMap hardwareMap, String name, DashboardTelemetry t) {
-        this.t = t;
+//        this.t = t;
         WebcamName camera = hardwareMap.get(WebcamName.class, name);
         RobotLog.ii("SWYFT CAM SERIAL", camera.getSerialNumber().toString());
         portal = new VisionPortal.Builder()
