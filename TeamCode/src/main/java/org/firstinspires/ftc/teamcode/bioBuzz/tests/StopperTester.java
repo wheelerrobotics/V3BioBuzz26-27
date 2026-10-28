@@ -15,7 +15,7 @@ public class StopperTester extends OpMode {
     public static boolean closed = false;
     public static int testInt = 0;
     @SuppressWarnings("FieldMayBeFinal")
-    public static int testPos = 0;
+    public static double testPos = 0;
 
     @Override
     public void init() {

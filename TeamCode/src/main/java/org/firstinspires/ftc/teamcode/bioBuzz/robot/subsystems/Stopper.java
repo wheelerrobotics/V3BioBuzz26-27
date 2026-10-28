@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.AnalogSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -11,12 +12,12 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 public class Stopper {
     public final Servo stopper;
     @SuppressWarnings("SpellCheckingInspection")
-    public final AnalogSensor breakbeams;
+    public final AnalogInput breakbeams;
     public static double stopperIn = 0; // FIXME: 10/23/26
     public static double stopperOut = 0.5; // FIXME: 10/23/26
     public Stopper (HardwareMap hardwareMap) {
         stopper = hardwareMap.get(Servo.class, HardwareNames.STOPPER);
-        breakbeams = hardwareMap.get(AnalogSensor.class, HardwareNames.BREAKBEAMS);
+        breakbeams = hardwareMap.get(AnalogInput.class, HardwareNames.BREAKBEAMS);
     }
 
     public void setStopperPos(double position) {
@@ -25,7 +26,7 @@ public class Stopper {
 
 
     public boolean isEmpty() {
-        return !(breakbeams.readRawVoltage() > 2);
+        return !(breakbeams.getVoltage() > 2);
     }
 
 
