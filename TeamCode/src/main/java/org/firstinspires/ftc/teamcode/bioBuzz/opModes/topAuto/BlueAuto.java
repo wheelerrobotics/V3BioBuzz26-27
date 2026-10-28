@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.opModes.topAuto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.bioBuzz.opModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
-public class BlueAuto extends BaseAuto {
+@Autonomous
+public final class BlueAuto extends BaseAuto {
 
     @Override
     public void init() {

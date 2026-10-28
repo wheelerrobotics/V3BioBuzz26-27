@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
-
+@Deprecated
 public class ShooterTest extends OpMode {
     public enum TestMode {
         STOPPED,

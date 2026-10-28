@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.opModes.topAuto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.bioBuzz.opModes.BaseAuto;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
-public class RedAuto extends BaseAuto {
+@Autonomous
+public final class RedAuto extends BaseAuto {
 
     public void init() {
         Alliance.set(Alliance.Color.RED);

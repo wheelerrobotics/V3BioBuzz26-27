@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.opModes.BaseTele;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 
 @TeleOp
-public class RedTele extends BaseTele {
+public final class RedTele extends BaseTele {
     @Override
     public void init() {
         super.init();
