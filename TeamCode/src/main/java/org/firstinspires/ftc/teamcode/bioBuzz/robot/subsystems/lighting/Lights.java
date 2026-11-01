@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.Stopper;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -164,7 +163,7 @@ public class Lights {
     }
 
     public void loop() {
-        setCellLight(); //TODO: OPTIMIZE
+        setCellLight();
         updateAlertLight();
         updateInnerLight();
     }

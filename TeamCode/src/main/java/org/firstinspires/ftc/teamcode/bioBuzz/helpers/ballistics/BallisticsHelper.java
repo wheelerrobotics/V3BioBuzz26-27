@@ -17,7 +17,7 @@ public class BallisticsHelper {
 
     @Config
     public static class Constants {
-        public static final double flywheelDiameter = 0.072; // FIXME: 9/19/26 SET //
+        public static final double flywheelDiameter = 0.072;
         public static final double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE
         public static final double encoderTPR = 24;
         public static final double targetY = 1.52;

@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -25,9 +26,9 @@ public class SwyftCam {
     @Config
     public static class SwyftCamConstants {
         // THESE SHOULD BE FOR TURRET OFFSET IF CAMERA IS TURRET MOUNTED
-        public static final double cameraPitch = 55; // FIXME: 10/24/26 ask Eric
+        public static final double cameraPitchOffset = 121.8;
         public static final double cameraX = 0;
-        public static final double cameraY = 2; // FIXME: 10/24/26
+        public static final double cameraY = 5.32;
 //        public static double cameraZ = 0; // pedro pose is 2d
         public static final Size resolution = new Size(640, 480);
     }
@@ -61,7 +62,8 @@ public class SwyftCam {
         RobotLog.ii("cy", String.valueOf(y));
         RobotLog.ii("cz", String.valueOf(z));
 
-        double pitch = Math.toRadians(SwyftCamConstants.cameraPitch);
+        double pitch = Ballistics.getResult().getHoodAngle() //get the hood angle
+                + Math.toRadians(SwyftCamConstants.cameraPitchOffset); // get the
 
         //this math is from chat, seems good tho
         double cos = Math.cos(pitch);
