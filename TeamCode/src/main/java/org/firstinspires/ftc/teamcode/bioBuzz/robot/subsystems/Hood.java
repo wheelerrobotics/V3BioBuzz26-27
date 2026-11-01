@@ -13,7 +13,8 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 @Config
 public final class Hood {
     private final Servo hoodServo;
-    public static final double radPosRelation = 0.5; // FIXME: 9/20/26 TUNE
+    public static final double radPosSlope = -0.346053;
+    public static final double radPosIntercept = 2.97328;
     @SuppressWarnings("CanBeFinal")
     public static double hoodMax = 0.24;
     @SuppressWarnings("CanBeFinal")
@@ -27,13 +28,18 @@ public final class Hood {
     }
 
     public double testInDegreesGetPosition(double deg) {
-        double pos = deg * radPosRelation;
+        double pos = getPos(Math.toRadians(deg));
         hoodServo.setPosition(pos);
         return pos;
     }
 
+    public static double getPos(double rads) {
+        rads *= radPosSlope;
+        return  rads + radPosIntercept;
+    }
+
     public void updatePosition() {
-        double pos = Ballistics.getResult().getHoodAngle() * radPosRelation;
+        double pos = getPos(Ballistics.getResult().getHoodAngle());
         pos = Range.clip(pos, hoodMin, hoodMax);
         hoodServo.setPosition(pos);
     }
