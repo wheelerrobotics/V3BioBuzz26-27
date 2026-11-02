@@ -15,25 +15,26 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
 class BallisticsHelper {
 
+    @SuppressWarnings("CanBeFinal")
     @Config
     public static class Constants {
-        public static final double flywheelDiameter = 0.072;
-        public static final double kDepartureLoss = 0.3141;
-        public static final double encoderTPR = 24;
-        public static final double targetY = 1.52;
-        public static final double gravity = 9.81;
-        public static final double p = 1.2; // air density
-        public static final double ballDiameter = 0.071;
-        public static final double ballMass = 26;
-        public static final double kBallSpin = 1; // F/IXME: 9/19/26 TUNE
-        public static final double kTargetErrorTolerance = 0.13; // meters
-        public static final double kTargetErrorIntegralMax = 1; // meters // FIXME: 9/19/26 TUNE
+        public static double flywheelDiameter = 0.072;
+        public static double kDepartureLoss = 0.3141;
+        public static double encoderTPR = 24;
+        public static double targetY = 1.52; //fixme robot height?
+        public static double gravity = 9.81;
+        public static double p = 1.2; // air density
+        public static double ballDiameter = 0.071;
+        public static double ballMass = 0.026;
+        public static double kBallSpin = 1; // F/IXME: 9/19/26 TUNE
+        public static double kTargetErrorTolerance = 0.13; // meters
+        public static double kTargetErrorIntegralMax = 1; // meters // FIXME: 9/19/26 TUNE
 
         //Spin values in rad/s
-        public static final double spinAt1000TPS = 0; // F/IXME: 9/19/26 TUNE
-        public static final double spinAt1500TPS = 1; // F/IXME: 9/19/26 TUNE
-        public static final double spinAt2000TPS = 2; // F/IXME: 9/19/26 TUNE
-        public static final double spinAt2500TPS = 3; // F/IXME: 9/19/26 TUNE
+        public static double spinAt1000TPS = 0; // F/IXME: 9/19/26 TUNE
+        public static double spinAt1500TPS = 1; // F/IXME: 9/19/26 TUNE
+        public static double spinAt2000TPS = 2; // F/IXME: 9/19/26 TUNE
+        public static double spinAt2500TPS = 3; // F/IXME: 9/19/26 TUNE
     }
 
     private final Follower f;
@@ -84,8 +85,16 @@ class BallisticsHelper {
     private static double getHoodAngle(double tps, double x, Telemetry t) {
         double g = getG_eff(tps, t);
 
+        double sqrt = Math.pow(v0, 4) - g * (g * Math.pow(x, 2) + 2 * Constants.targetY * Math.pow(v0, 2));
+        if (sqrt >= 0) {
+            sqrt = Math.sqrt(sqrt);
+        } else {
+            t.addData("getHoodAngle()", 0);
+            return 0;
+        }
+
         double angle = Math.atan(
-                (Math.pow(v0, 2) + Math.sqrt(Math.pow(v0, 4) - g * (g * Math.pow(x, 2) + 2 * Constants.targetY * Math.pow(v0, 2))))
+                (Math.pow(v0, 2) + sqrt)
                         / (g * x));
 
         t.addData("getHoodAngle()", angle);
@@ -128,7 +137,7 @@ class BallisticsHelper {
         double LLX = TargetHelper.getLLX(r, t);
         double pinpointX = TargetHelper.getPinpointX(f, t);
         double error = LLX - pinpointX;
-        double nowTime = System.nanoTime();
+        double nowTime = System.nanoTime() / 1e9;
         double dt = nowTime - lastTargetTime;
         lastTargetTime = nowTime;
 
@@ -232,9 +241,9 @@ class BallisticsHelper {
         public static double getTurretAngle_rs(Follower f, double flightTime, Telemetry t) {
             double y = f.pose().y() - PoseLib.targetPose().y();
             double x = f.pose().x() - PoseLib.targetPose().x();
-            double targetAngle_fs = Math.tan(y/x);
+            double targetAngle_fs = Math.atan2(y,x);
             t.addData("TargetAngle_fs", targetAngle_fs);
-            double targetAngle_rs = f.pose().heading() - targetAngle_fs;
+            double targetAngle_rs = targetAngle_fs - f.pose().heading();
             t.addData("TargetAngle_rs", targetAngle_rs);
             return targetAngle_rs + getLead(f, flightTime, t);
         }
