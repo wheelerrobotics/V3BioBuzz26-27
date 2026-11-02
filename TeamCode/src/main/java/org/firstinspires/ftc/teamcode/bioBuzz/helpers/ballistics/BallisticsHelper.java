@@ -13,27 +13,27 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
-public class BallisticsHelper {
+class BallisticsHelper {
 
     @Config
     public static class Constants {
         public static final double flywheelDiameter = 0.072;
-        public static final double kDepartureLoss = -0.01; // FIXME: 9/19/26 TUNE
+        public static final double kDepartureLoss = 0.3141;
         public static final double encoderTPR = 24;
         public static final double targetY = 1.52;
         public static final double gravity = 9.81;
         public static final double p = 1.2; // air density
         public static final double ballDiameter = 0.071;
         public static final double ballMass = 26;
-        public static final double kBallSpin = 1; // FIXME: 9/19/26 TUNE
+        public static final double kBallSpin = 1; // F/IXME: 9/19/26 TUNE
         public static final double kTargetErrorTolerance = 0.13; // meters
-        public static final double kTargetErrorIntegralMax = 9999999; // meters // FIXME: 9/19/26 TUNE
+        public static final double kTargetErrorIntegralMax = 1; // meters // FIXME: 9/19/26 TUNE
 
         //Spin values in rad/s
-        public static final double spinAt1000TPS = 0; // FIXME: 9/19/26 TUNE
-        public static final double spinAt1500TPS = 1; // FIXME: 9/19/26 TUNE
-        public static final double spinAt2000TPS = 2; // FIXME: 9/19/26 TUNE
-        public static final double spinAt2500TPS = 3; // FIXME: 9/19/26 TUNE
+        public static final double spinAt1000TPS = 0; // F/IXME: 9/19/26 TUNE
+        public static final double spinAt1500TPS = 1; // F/IXME: 9/19/26 TUNE
+        public static final double spinAt2000TPS = 2; // F/IXME: 9/19/26 TUNE
+        public static final double spinAt2500TPS = 3; // F/IXME: 9/19/26 TUNE
     }
 
     private final Follower f;
@@ -71,7 +71,7 @@ public class BallisticsHelper {
     }
 
     private static double getFlywheelSurfaceSpeed(double tps) {
-        return ((departureMath * tps) / Constants.encoderTPR) * 60;
+        return ((departureMath * tps) / Constants.encoderTPR);
     }
 
     private static double getV0(double tps, @NonNull Telemetry t) {
@@ -120,7 +120,8 @@ public class BallisticsHelper {
                 Math.pow(V, 2))
                 / (2 * Constants.ballMass));
         t.addData("getG_eff()", g_eff);
-        return g_eff;
+//        return g_eff; // FIXME: 11/1/26 SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE
+        return Constants.gravity;
     }
 
     private static double updateTargetX(Follower f, LLResult r, Telemetry t) {
