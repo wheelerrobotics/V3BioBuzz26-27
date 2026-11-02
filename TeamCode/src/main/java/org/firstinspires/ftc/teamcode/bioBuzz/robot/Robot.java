@@ -107,17 +107,27 @@ public class Robot {
 
         public Command intakeOn() {
             return build()
-                    .setStart(() -> intake.setIntakePower(intakePower))
+                    .setStart(() -> {
+                        intake.setIntakePower(intakePower);
+                        transfer().schedule();
+                    })
+                    .setEnd(endCondition -> {
+                        intake.setIntakePower(0);
+                        transfer().cancel();
+                    })
                     .requiring(Intake.class)
                     .setPriority(10);
         }
 
-        public Command intakeOff() {
-            return build()
-                    .setStart(() -> intake.setIntakePower(0))
-                    .requiring(Intake.class)
-                    .setPriority(10);
-        }
+//        public Command intakeOff() {
+//            return build()
+//                    .setStart(() -> {
+//                        intake.setIntakePower(0);
+//                        transfer.setTransferPower(0);
+//                    })
+//                    .requiring(Intake.class)
+//                    .setPriority(10);
+//        }
         public Command outtake() {
             return build()
                     .setStart(() -> {
@@ -165,7 +175,7 @@ public class Robot {
                         transfer().schedule();
                         stopper().schedule();
                     })
-                    .setDone(stopper::isEmpty)
+                    //.setDone(stopper::isEmpty)
                     .setEnd(endCondition -> {
                         cancel(transfer());
                         cancel(stopper());

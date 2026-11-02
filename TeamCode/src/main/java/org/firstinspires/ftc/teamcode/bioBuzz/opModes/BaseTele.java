@@ -26,21 +26,21 @@ public abstract class BaseTele extends BaseOpMode {
             lastA = false;
         }
 
-        if (!gamepad1.b) lastB = false;
-        else if (!lastB) {
-            if (r.commands.extendCommand().isScheduled()) {
-                r.commands.extendCommand().cancel();
-            } else {
-                r.commands.extendCommand().schedule();
-            }
-            lastB = true;
-        }
+//        if (!gamepad1.b) lastB = false;
+//        else if (!lastB) {
+//            if (r.commands.extendCommand().isScheduled()) {
+//                r.commands.extendCommand().cancel();
+//            } else {
+//                r.commands.extendCommand().schedule();
+//            }
+//            lastB = true;
+//        }
 
         if (gamepad1.x && !lastX) {
             r.commands.intakeOn().schedule();
             lastX = true;
         } else if (!gamepad1.x && lastX) {
-            r.commands.intakeOff().schedule();
+            r.commands.intakeOn().cancel();
             lastX = false;
         }
 
