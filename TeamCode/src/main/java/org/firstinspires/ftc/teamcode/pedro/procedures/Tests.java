@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.pedro.procedures;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.pedropathing.algorithm.Algorithm;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.drivetrain.Drivetrain;
@@ -15,6 +13,8 @@ import com.pedropathing.tuning.autotune.Inputs;
 import com.pedropathing.tuning.autotune.Procedure;
 import com.pedropathing.tuning.autotune.TuningOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -129,12 +129,15 @@ class TestsHold extends TuningOpMode<Boolean> {
 
     @Override
     public Boolean runTuningOpMode() throws InterruptedException {
+        DashboardTelemetry dashboardTelemetry = DashboardTelemetry.begin(telemetry);
         Follower follower = followerFunction.apply(hardwareMap);
         follower.setPose(Pose.zero());
         waitForStart();
         follower.hold(Pose.zero());
         while (opModeIsActive()) {
             follower.update();
+            dashboardTelemetry.setRobotPose(follower.pose());
+            dashboardTelemetry.update(telemetry);
         }
         return true;
     }
@@ -152,6 +155,7 @@ class TestsLine extends TuningOpMode<Boolean> {
 
     @Override
     public Boolean runTuningOpMode() throws InterruptedException {
+        DashboardTelemetry dashboardTelemetry = DashboardTelemetry.begin(telemetry);
         Follower follower = followerFunction.apply(hardwareMap);
         follower.setPose(Pose.zero());
 
@@ -174,6 +178,8 @@ class TestsLine extends TuningOpMode<Boolean> {
                 }
                 forward = !forward;
             }
+            dashboardTelemetry.setRobotPose(follower.pose());
+            dashboardTelemetry.update(telemetry);
         }
         return true;
     }
@@ -191,6 +197,7 @@ class TestsCurve extends TuningOpMode<Boolean> {
 
     @Override
     public Boolean runTuningOpMode() throws InterruptedException {
+        DashboardTelemetry dashboardTelemetry = DashboardTelemetry.begin(telemetry);
         Follower follower = followerFunction.apply(hardwareMap);
         follower.setPose(Pose.zero());
 
@@ -213,6 +220,8 @@ class TestsCurve extends TuningOpMode<Boolean> {
                 }
                 forward = !forward;
             }
+            dashboardTelemetry.setRobotPose(follower.pose());
+            dashboardTelemetry.update(telemetry);
         }
         return true;
     }
@@ -230,6 +239,7 @@ class TestsInterpolation extends TuningOpMode<Boolean> {
 
     @Override
     public Boolean runTuningOpMode() throws InterruptedException {
+        DashboardTelemetry dashboardTelemetry = DashboardTelemetry.begin(telemetry);
         Follower follower = followerFunction.apply(hardwareMap);
         follower.setPose(Pose.zero());
 
@@ -252,6 +262,8 @@ class TestsInterpolation extends TuningOpMode<Boolean> {
                 }
                 forward = !forward;
             }
+            dashboardTelemetry.setRobotPose(follower.pose());
+            dashboardTelemetry.update(telemetry);
         }
         return true;
     }
@@ -269,9 +281,9 @@ class TestsLocalization extends TuningOpMode<Boolean> {
 
     @Override
     public Boolean runTuningOpMode() throws InterruptedException {
+        DashboardTelemetry dashboardTelemetry = DashboardTelemetry.begin(telemetry);
         Localizer localizer = localizerFunction.apply(hardwareMap);
         Drivetrain drivetrain = drivetrainFunction.apply(hardwareMap);
-        FtcDashboard dashboard = FtcDashboard.getInstance();
 
         // Match the physical center-field starting position and orientation.
         localizer.setPose(new Pose(72, 72, 0));
@@ -282,27 +294,9 @@ class TestsLocalization extends TuningOpMode<Boolean> {
             drivetrain.drive(new DrivePowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x), false);
             localizer.update();
             Pose pose = localizer.pose();
-
-            // Convert Pedro's corner-origin frame to the FTC Dashboard field frame.
-            double x = 72 - pose.y();
-            double y = pose.x() - 72;
-            double heading = pose.heading() + Math.PI / 2;
-
-            TelemetryPacket packet = new TelemetryPacket();
-            packet.put("Pedro X", pose.x());
-            packet.put("Pedro Y", pose.y());
-            packet.put("Heading degrees", Math.toDegrees(pose.heading()));
-            packet.fieldOverlay()
-                    .setStroke("#3F51B5")
-                    .setStrokeWidth(2)
-                    .strokeCircle(x, y, 8)
-                    .strokeLine(x, y,
-                            x + 8 * Math.cos(heading),
-                            y + 8 * Math.sin(heading));
-            dashboard.sendTelemetryPacket(packet);
-
-            telemetry.addData("Pose", pose);
-            telemetry.update();
+            dashboardTelemetry.setRobotPose(pose);
+            dashboardTelemetry.addData("Pose", pose);
+            dashboardTelemetry.update(telemetry);
         }
         return true;
     }
@@ -337,12 +331,15 @@ class TestsPose extends TuningOpMode<Boolean> {
 
     @Override
     public Boolean runTuningOpMode() throws InterruptedException {
+        DashboardTelemetry dashboardTelemetry = DashboardTelemetry.begin(telemetry);
         Localizer localizer = localizerFunction.apply(hardwareMap);
         waitForStart();
         while (opModeIsActive()) {
             localizer.update();
-            telemetry.addData("Pose", localizer.pose());
-            telemetry.update();
+            Pose pose = localizer.pose();
+            dashboardTelemetry.setRobotPose(pose);
+            dashboardTelemetry.addData("Pose", pose);
+            dashboardTelemetry.update(telemetry);
         }
         return true;
     }

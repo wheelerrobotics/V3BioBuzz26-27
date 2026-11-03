@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.pedropathing.math.Pose;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ public final class DashboardTelemetry {
     private static final DashboardTelemetry INSTANCE = new DashboardTelemetry();
     private final Map<String, Object> values = new LinkedHashMap<>();
     private final List<String> lines = new ArrayList<>();
+    private Pose robotPose;
 
     private DashboardTelemetry() { }
 
@@ -25,6 +27,7 @@ public final class DashboardTelemetry {
         synchronized (INSTANCE) {
             INSTANCE.values.clear();
             INSTANCE.lines.clear();
+            INSTANCE.robotPose = null;
         }
         driverStation.clearAll();
         return INSTANCE;
@@ -44,9 +47,31 @@ public final class DashboardTelemetry {
         if (lines.size() < 100) lines.add(line);
     }
 
+    /** Include the current Pedro pose in this loop's telemetry and field drawing. */
+    public synchronized void setRobotPose(Pose pose) {
+        robotPose = pose;
+    }
+
     /** Flush once at the end of a loop, after subsystems have added their readings. */
     public synchronized void update(Telemetry driverStation) {
         TelemetryPacket packet = new TelemetryPacket();
+        if (robotPose != null) {
+            addData("Pedro X", robotPose.x());
+            addData("Pedro Y", robotPose.y());
+            addData("Heading degrees", Math.toDegrees(robotPose.heading()));
+
+            // Convert Pedro's corner-origin frame to the FTC Dashboard field frame.
+            double x = 72 - robotPose.y();
+            double y = robotPose.x() - 72;
+            double heading = robotPose.heading() + Math.PI / 2;
+            packet.fieldOverlay()
+                    .setStroke("#3F51B5")
+                    .setStrokeWidth(2)
+                    .strokeCircle(x, y, 8)
+                    .strokeLine(x, y,
+                            x + 8 * Math.cos(heading),
+                            y + 8 * Math.sin(heading));
+        }
         for (Map.Entry<String, Object> entry : values.entrySet()) {
             packet.put(entry.getKey(), entry.getValue());
             driverStation.addData(entry.getKey(), entry.getValue());
@@ -57,6 +82,7 @@ public final class DashboardTelemetry {
         }
         values.clear();
         lines.clear();
+        robotPose = null;
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
         driverStation.update();
     }

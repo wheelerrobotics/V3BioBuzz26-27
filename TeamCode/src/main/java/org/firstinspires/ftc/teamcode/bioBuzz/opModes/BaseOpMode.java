@@ -32,6 +32,7 @@ public abstract class BaseOpMode extends OpMode {
     @Override
     public void loop() {
         r.follower.update();
+        telemetryManager.setRobotPose(r.follower.pose());
         telemetryManager.addData("x", r.follower.pose().x());
         telemetryManager.addData("y", r.follower.pose().y());
         r.limelight.update();
