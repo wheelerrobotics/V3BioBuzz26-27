@@ -11,7 +11,6 @@ import com.seattlesolvers.solverslib.util.InterpLUT;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
-import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
 class BallisticsHelper {
 
@@ -43,7 +42,7 @@ class BallisticsHelper {
     private final DcMotorEx[] motors;
     private static final double ballRadius = Constants.ballDiameter / 2;
     private static final double A = Math.pow(ballRadius, 2) * Math.PI;
-    private static final InterpLUT lut = new InterpLUT();
+    private final InterpLUT lut = new InterpLUT();
     private static final double departureMath = 2 * Math.PI * (Constants.flywheelDiameter / 2);
     private static boolean readyToShoot = true;
     private static double lastTargetTime = 0;
@@ -56,7 +55,7 @@ class BallisticsHelper {
         this.ll = ll;
         this.t = t;
         this.motors = motors;
-        lut.add(1000, Constants.spinAt1000TPS);
+        lut.add(-1000, Constants.spinAt1000TPS);
         lut.add(1500, Constants.spinAt1500TPS);
         lut.add(2000, Constants.spinAt2000TPS);
         lut.add(2500, Constants.spinAt2500TPS);
@@ -82,7 +81,7 @@ class BallisticsHelper {
 
     }
 
-    private static double getHoodAngle(double tps, double x, Telemetry t) {
+    private double getHoodAngle(double tps, double x, Telemetry t) {
         double g = getG_eff(tps, t);
 
         double sqrt = Math.pow(v0, 4) - g * (g * Math.pow(x, 2) + 2 * Constants.targetY * Math.pow(v0, 2));
@@ -93,9 +92,11 @@ class BallisticsHelper {
             return 0;
         }
 
+        double denominator = g * x == 0 ? 1 : g * x;
+
         double angle = Math.atan(
                 (Math.pow(v0, 2) + sqrt)
-                        / (g * x));
+                        / (denominator));
 
         t.addData("getHoodAngle()", angle);
         return angle;
@@ -109,17 +110,17 @@ class BallisticsHelper {
 
     private static double getV(@NonNull Telemetry t) {
         double v = Math.sqrt(Math.pow(v0, 2) - (2 * Constants.gravity * Constants.targetY));
-        t.addData("getV()", v);
+        t.addData("getV() SPIN OFF NOT AFFECTING", v);
         return v;
     }
 
-    private static double getSpinRate(double tps, Telemetry t) {
+    private double getSpinRate(double tps, Telemetry t) {
         double S = lut.get(tps) / getV(t);
-        t.addData("getSpinRate()", S);
+        t.addData("getSpinRate() SPIN OFF NO EFFECTS", S);
         return S;
     }
 
-    private static double getG_eff(double tps, Telemetry t) {
+    private double getG_eff(double tps, Telemetry t) {
         double S = getSpinRate(tps, t);
         double V = getV(t);
         double g_eff = Constants.gravity - ((Constants.p *
@@ -128,42 +129,48 @@ class BallisticsHelper {
                 A *
                 Math.pow(V, 2))
                 / (2 * Constants.ballMass));
-        t.addData("getG_eff()", g_eff);
-//        return g_eff; // FIXME: 11/1/26 SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE
+        t.addData("getG_eff() SPIN OFF NOT AFFECTING ANYTHING", g_eff);
+//        return g_eff; //SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE SPIN REMOVED HERE
         return Constants.gravity;
     }
 
-    private static double updateTargetX(Follower f, LLResult r, Telemetry t) {
+//    private static double updateTargetX(Follower f, LLResult r, Telemetry t) { // FIXME TODAY TODAY TODAY REPLACE WITH SIMPLE
+//        double LLX = TargetHelper.getLLX(r, t);
+//        double pinpointX = TargetHelper.getPinpointX(f, t);
+//        double error = LLX - pinpointX;
+//        double nowTime = System.nanoTime() / 1e9;
+//        double dt = nowTime - lastTargetTime;
+//        lastTargetTime = nowTime;
+//
+//        if (LLX > 0) { // limelight worked
+//            if (error < Constants.kTargetErrorTolerance) {
+//                targetErrorIntegral = 0;
+//            } else {
+//                targetErrorIntegral += error * dt;
+//            }
+//            if (targetErrorIntegral > Constants.kTargetErrorIntegralMax) {
+//                RobotVars.setFollowerDisabled(true);
+//            }
+//
+//            t.addData("targetingIntegral", targetErrorIntegral);
+//
+//            // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
+//            return LLX;
+//        }
+//
+//        if (RobotVars.getFollowerDisabled()) {
+//            readyToShoot = false;
+//            return 0;
+//        }
+//
+//        // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
+//        return pinpointX;
+//    }
+
+    private static double updateTargetX(Follower f, LLResult r, Telemetry t) { // FIXME TODAY TODAY TODAY REPLACE WITH SIMPLE
         double LLX = TargetHelper.getLLX(r, t);
         double pinpointX = TargetHelper.getPinpointX(f, t);
-        double error = LLX - pinpointX;
-        double nowTime = System.nanoTime() / 1e9;
-        double dt = nowTime - lastTargetTime;
-        lastTargetTime = nowTime;
-
-        if (LLX > 0) { // limelight worked
-            if (error < Constants.kTargetErrorTolerance) {
-                targetErrorIntegral = 0;
-            } else {
-                targetErrorIntegral += error * dt;
-            }
-            if (targetErrorIntegral > Constants.kTargetErrorIntegralMax) {
-                RobotVars.setFollowerDisabled(true);
-            }
-
-            t.addData("targetingIntegral", targetErrorIntegral);
-
-            // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
-            return LLX;
-        }
-
-        if (RobotVars.getFollowerDisabled()) {
-            readyToShoot = false;
-            return 0;
-        }
-
-        // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
-        return pinpointX;
+        return LLX == 0 ? pinpointX : LLX; //ts syntax is fire
     }
 
 
@@ -178,7 +185,9 @@ class BallisticsHelper {
         double flightTime = getFlightTime(distance, hoodAngle, t);
         double turretAngle_rs = SOTM.getTurretAngle_rs(f, flightTime, t);
 
-        return new BallisticResult(hoodAngle, turretAngle_rs, distance, readyToShoot);
+        return new BallisticResult(hoodAngle, turretAngle_rs, distance
+//                , readyToShoot Fixme: implement
+                );
     }
 
 
@@ -190,8 +199,7 @@ class BallisticsHelper {
         private static double lastVx = 0;
         private static double lastVy = 0;
 
-        private SOTM() {
-        }
+        private SOTM() {}
 
         private static double getAngular(double x, double y) {
             return Math.PI - Math.atan(y / x);
@@ -238,14 +246,33 @@ class BallisticsHelper {
             return lead;
         }
 
+        private static double lastTurretAngle = 0; //won't need reset
+        public static double filterTurretAngle(double targetAngle, Telemetry t) {
+            double deadband = Math.toRadians(0.3);
+
+            double difference = Math.atan2( //math for difference is chat
+                    Math.sin(targetAngle - lastTurretAngle),
+                    Math.cos(targetAngle - lastTurretAngle)
+            );
+            t.addData("filterTurretAngleDifference", difference);
+
+            if (Math.abs(difference) > deadband) {
+                lastTurretAngle = targetAngle; //weird pattern where last angle gets returned
+                t.addData("turretFilter", "Changed");
+            } else t.addData("turretFilter", "Filtered");
+
+            t.addData("setTurretAngle", lastTurretAngle);
+            return lastTurretAngle;
+        }
+
         public static double getTurretAngle_rs(Follower f, double flightTime, Telemetry t) {
-            double y = f.pose().y() - PoseLib.targetPose().y();
-            double x = f.pose().x() - PoseLib.targetPose().x();
+            double y = PoseLib.targetPose().y() - f.pose().y() ;
+            double x = PoseLib.targetPose().x() - f.pose().x();
             double targetAngle_fs = Math.atan2(y,x);
             t.addData("TargetAngle_fs", targetAngle_fs);
             double targetAngle_rs = targetAngle_fs - f.pose().heading();
             t.addData("TargetAngle_rs", targetAngle_rs);
-            return targetAngle_rs + getLead(f, flightTime, t);
+            return filterTurretAngle(targetAngle_rs, t); // + getLead(f, flightTime, t);
         }
 
     }
