@@ -7,14 +7,14 @@ import com.pedropathing.math.Pose;
 @SuppressWarnings("CanBeFinal")
 public class PoseLib {
     private PoseLib() {}
-    private static final PoseFactory field = PoseFactory.degrees();
+    private static PoseFactory field = PoseFactory.degrees();
     private static Alliance.Color cFactoryAlliance = Alliance.Color.RED;
 
     public static void setField(Alliance.Color nAlliance) {
         if (cFactoryAlliance != nAlliance) {
-            field.mirrorX(70.75);
-            field.mirrorY(70.75);
-            target.mirrorX(70.75);
+            field = field.mirrorX(70.75);
+            field = field.mirrorY(70.75);
+            target = target.mirrorX(70.75);
             cFactoryAlliance = nAlliance;
             initPoses();
         }
@@ -50,10 +50,10 @@ public class PoseLib {
         EMPTY
     }
     private static Cell cFactoryCell = Cell.NECTAR;
-    private static final PoseFactory target = PoseFactory.degrees();
+    private static PoseFactory target = PoseFactory.degrees();
     public static void setActiveCell(Cell nCell) {
         if (cFactoryCell != nCell) {
-            target.mirrorY(70.75);
+            target = target.mirrorY(70.75);
             cFactoryCell = nCell;
         }
     }
