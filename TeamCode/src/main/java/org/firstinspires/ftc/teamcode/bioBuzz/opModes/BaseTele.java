@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.opModes;
 
+import com.pedropathing.math.Pose;
+
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
 public abstract class BaseTele extends BaseOpMode {
-
-    boolean lastA = false;
-    boolean lastB = false;
-    boolean lastX = false;
     @Override
     public void init() {
         super.init();
@@ -16,14 +14,15 @@ public abstract class BaseTele extends BaseOpMode {
     @Override
     public void loop() {
         super.loop();
-        r.follower.manual(-gamepad1.left_stick_x, -gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
-        if (gamepad1.a && !lastA) {
+        if (gamepad1.right_bumper) r.follower.setPose(new Pose(72,72,0));
+
+        r.follower.manual(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
+
+        if (gamepad1.aWasPressed()) {
             r.commands.shootCommand().schedule();
-            lastA = true;
-        } else if (!gamepad1.a && lastA) {
+        } else if (gamepad1.aWasReleased()) {
             r.commands.shootCommand().cancel();
-            lastA = false;
         }
 
 //        if (!gamepad1.b) lastB = false;
@@ -36,12 +35,10 @@ public abstract class BaseTele extends BaseOpMode {
 //            lastB = true;
 //        }
 
-        if (gamepad1.x && !lastX) {
+        if (gamepad1.bWasPressed()) {
             r.commands.intakeOn().schedule();
-            lastX = true;
-        } else if (!gamepad1.x && lastX) {
+        } else if (gamepad1.bWasReleased()) {
             r.commands.intakeOn().cancel();
-            lastX = false;
         }
 
 
