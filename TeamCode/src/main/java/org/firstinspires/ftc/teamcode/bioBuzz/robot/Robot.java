@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot;
 
 import static com.pedropathing.api.Paths.line;
 import static com.pedropathing.ivy.Command.build;
-import static com.pedropathing.ivy.Scheduler.cancel;
 import static com.pedropathing.ivy.commands.Commands.infinite;
 import static com.pedropathing.ivy.commands.Commands.lazy;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
@@ -106,20 +105,22 @@ public class Robot {
 //        }
 
         public Command intakeOn() {
-            return build()
-                    .setStart(() -> {
-                        intake.setIntakePower(intakePower);
-                        transfer().schedule();
-                    })
-                    .setEnd(endCondition -> {
-                        intake.setIntakePower(0);
-                        transfer().cancel();
-                    })
-                    .requiring(Intake.class)
-                    .setPriority(10);
+            return intakeCommand;
         }
 
-//        public Command intakeOff() {
+        private final Command intakeCommand = build()
+                .setStart(() -> {
+                    intake.setIntakePower(intakePower);
+                    transfer.setTransferPower(transferPower);
+                })
+                .setEnd(endCondition -> {
+                    intake.setIntakePower(0);
+                    transfer.setTransferPower(0);
+                })
+                .requiring(Intake.class)
+                .setPriority(10);
+
+        //        public Command intakeOff() {
 //            return build()
 //                    .setStart(() -> {
 //                        intake.setIntakePower(0);
@@ -170,18 +171,19 @@ public class Robot {
         }
 
         public Command shootCommand() {
-            return build()
-                    .setStart(() -> {
-                        transfer().schedule();
-                        stopper().schedule();
-                    })
-                    //.setDone(stopper::isEmpty)
-                    .setEnd(endCondition -> {
-                        cancel(transfer());
-                        cancel(stopper());
-                    });
-
+            return shootCommand;
         }
+
+        private final Command shootCommand = build()
+                    .setStart(() -> {
+            transfer.setTransferPower(transferPower);
+            stopper.setStopperPos(stopperOut);
+        })
+                //.setDone(stopper::isEmpty)
+                .setEnd(endCondition -> {
+            transfer.setTransferPower(0);
+            stopper.setStopperPos(stopperIn);
+        });
 
         public Command hood() {
             return infinite(hood::updatePosition);
