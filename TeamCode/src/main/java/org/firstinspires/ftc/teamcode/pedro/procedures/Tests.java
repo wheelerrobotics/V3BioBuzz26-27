@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.pedro.procedures;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.pedropathing.algorithm.Algorithm;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.drivetrain.Drivetrain;
@@ -260,7 +262,7 @@ class TestsLocalization extends TuningOpMode<Boolean> {
     Function<HardwareMap, Localizer> localizerFunction;
 
     public TestsLocalization(Function<HardwareMap, Drivetrain> drivetrainFunction, Function<HardwareMap, Localizer> localizerFunction) {
-        super("Localization Test", "Verifies localization and manual control.", true);
+        super("Localization Test", "Start at field center (72, 72), facing Pedro heading 0. Displays live pose in FTC Dashboard Field View.", true);
         this.drivetrainFunction = drivetrainFunction;
         this.localizerFunction = localizerFunction;
     }
@@ -269,15 +271,37 @@ class TestsLocalization extends TuningOpMode<Boolean> {
     public Boolean runTuningOpMode() throws InterruptedException {
         Localizer localizer = localizerFunction.apply(hardwareMap);
         Drivetrain drivetrain = drivetrainFunction.apply(hardwareMap);
+        FtcDashboard dashboard = FtcDashboard.getInstance();
 
-        localizer.setPose(Pose.zero());
+        // Match the physical center-field starting position and orientation.
+        localizer.setPose(new Pose(72, 72, 0));
 
         waitForStart();
 
         while (opModeIsActive()) {
             drivetrain.drive(new DrivePowers(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x), false);
             localizer.update();
-            telemetry.addData("Pose", localizer.pose());
+            Pose pose = localizer.pose();
+
+            // Convert Pedro's corner-origin frame to the FTC Dashboard field frame.
+            double x = 72 - pose.y();
+            double y = pose.x() - 72;
+            double heading = pose.heading() + Math.PI / 2;
+
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.put("Pedro X", pose.x());
+            packet.put("Pedro Y", pose.y());
+            packet.put("Heading degrees", Math.toDegrees(pose.heading()));
+            packet.fieldOverlay()
+                    .setStroke("#3F51B5")
+                    .setStrokeWidth(2)
+                    .strokeCircle(x, y, 8)
+                    .strokeLine(x, y,
+                            x + 8 * Math.cos(heading),
+                            y + 8 * Math.sin(heading));
+            dashboard.sendTelemetryPacket(packet);
+
+            telemetry.addData("Pose", pose);
             telemetry.update();
         }
         return true;
