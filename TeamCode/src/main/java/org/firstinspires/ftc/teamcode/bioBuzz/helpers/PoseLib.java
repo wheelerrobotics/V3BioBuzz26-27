@@ -16,19 +16,34 @@ public class PoseLib {
             field.mirrorY(70.75);
             target.mirrorX(70.75);
             cFactoryAlliance = nAlliance;
+            initPoses();
         }
     }
 
     //field poses
-    public static Pose startNectarSide = field.of(58,8, 90);
-    public static Pose startEmptySide = field.of(58,133.5, 270);
-    public static Pose passUnderCTRL = field.of(71,70.75, 0);
-    public static Pose sideFlower = field.of(47.5, 133.5, 90); public static Pose sideFlowerCTRL = field.of(47.5, 124.5, 90);
-    public static Pose bottomFlower = field.of(8, 47.5, 180); public static Pose bottomFlowerCTRL = field.of(17, 47.5, 180);
-    public static Pose partnerPickup = field.of(31, 133.5, 90); public static Pose partnerPickupCTRL = field.of(35, 113, 90);
-    public static Pose gardenPickup = field.of(9, 9, 270); public static Pose gardenPickupCTRL = field.of(9, 16, 270);
-    public static Pose park = field.of(10, 95, 90);
-    public static Pose nectarCell = field.of(58,56,90); public static Pose emptyCell = field.of(nectarCell.x(), nectarCell.invert().y(),270);
+    public static Pose startNectarSide, startEmptySide, passUnderCTRL, sideFlower, sideFlowerCTRL,
+            bottomFlower, bottomFlowerCTRL, partnerPickup, partnerPickupCTRL, gardenPickup,
+            gardenPickupCTRL, park, nectarCell, emptyCell;
+
+    static {initPoses();}
+    private static void initPoses() {
+        startNectarSide = field.of(58, 8, 90);
+        startEmptySide = field.of(58, 133.5, 270);
+        passUnderCTRL = field.of(71, 70.75, 0);
+        sideFlower = field.of(47.5, 133.5, 90);
+        sideFlowerCTRL = field.of(47.5, 124.5, 90);
+        bottomFlower = field.of(8, 47.5, 180);
+        bottomFlowerCTRL = field.of(17, 47.5, 180);
+        partnerPickup = field.of(31, 133.5, 90);
+        partnerPickupCTRL = field.of(35, 113, 90);
+        gardenPickup = field.of(9, 9, 270);
+        gardenPickupCTRL = field.of(9, 16, 270);
+        park = field.of(10, 95, 90);
+        nectarCell = field.of(58, 56, 90);
+        emptyCell = field.of(nectarCell.x(), nectarCell.invert().y(), 270);
+    }
+
+
 
     public enum Cell {
         NECTAR,
@@ -36,7 +51,6 @@ public class PoseLib {
     }
     private static Cell cFactoryCell = Cell.NECTAR;
     private static final PoseFactory target = PoseFactory.degrees();
-    private static final Pose tPose = target.of(58, 60, 90);
     public static void setActiveCell(Cell nCell) {
         if (cFactoryCell != nCell) {
             target.mirrorY(70.75);
@@ -48,7 +62,7 @@ public class PoseLib {
     }
 
     public static Pose targetPose() {
-        return tPose;
+        return target.of(58, 60, 90);
     }
 
     public static void update(Follower f) {
