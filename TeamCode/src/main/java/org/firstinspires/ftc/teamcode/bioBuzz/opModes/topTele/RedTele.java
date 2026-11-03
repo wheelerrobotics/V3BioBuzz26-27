@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 public final class RedTele extends BaseTele {
     @Override
     public void init() {
-        super.init();
         Alliance.set(Alliance.Color.RED);
+        super.init();
     }
 
 }
