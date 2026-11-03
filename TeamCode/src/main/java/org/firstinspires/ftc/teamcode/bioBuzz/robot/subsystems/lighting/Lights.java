@@ -89,6 +89,7 @@ public class Lights {
             if (alerts.size() == 1) {
                 setAlert();
                 alerts.remove(0);
+                return;
             }
             alerts.remove(0);
             setAlert();

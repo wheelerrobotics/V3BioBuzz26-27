@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Colorable;
+import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Lights;
 
 // This is made for two positional servos
 @Config
@@ -37,6 +39,12 @@ public class Turret {
                 maxAngleDegrees
         );
 
+        if (Double.isNaN(angle)) {
+            Lights.queueAlert(Colorable::sage);
+            return;
+        }
+
+
         double servoPos = ((angle + 90) * servoRatio);
 
         servo1.setPosition(servoPos);
@@ -44,7 +52,7 @@ public class Turret {
     }
 
     public void update() {
-        turnTo(Ballistics.getResult().getTurretAngleRS());
+        turnTo(Math.toDegrees(Ballistics.getResult().getTurretAngleRS()));
     }
 
 }

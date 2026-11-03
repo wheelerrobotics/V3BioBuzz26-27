@@ -68,20 +68,20 @@ class TargetHelper {
 
     static double getLLX(LLResult r, Telemetry t) {
         if (!r.isValid()) {
-            t.addData("distance", "not valid 65");
+            t.addData("getLLX()", "not valid 65");
             return 0; // returns 0 if things don't work out
         }
 
         LLResultTypes.FiducialResult idealResult = getIdealResult(r);
 
         if (idealResult == null) {
-            t.addData("distance", "null 72");
+            t.addData("getLLX()", "null 72");
             return 0; // returns 0 if things don't work out
         }
 
         Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
         double distance = Math.sqrt(Math.pow(tPose.getPosition().x, 2) + Math.pow(tPose.getPosition().y, 2)); // get flat distance
-        t.addData("distance", distance);
+        t.addData("getLLX()", distance);
         return distance;
 
     }
