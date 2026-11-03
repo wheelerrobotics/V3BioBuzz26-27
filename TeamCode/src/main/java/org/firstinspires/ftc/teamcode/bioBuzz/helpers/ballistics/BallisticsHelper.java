@@ -247,13 +247,9 @@ class BallisticsHelper {
         }
 
         private static double lastTurretAngle = 0; //won't need reset
+        private final static double deadband = Math.toRadians(0.3);
         public static double filterTurretAngle(double targetAngle, Telemetry t) {
-            double deadband = Math.toRadians(0.3);
-
-            double difference = Math.atan2( //math for difference is chat
-                    Math.sin(targetAngle - lastTurretAngle),
-                    Math.cos(targetAngle - lastTurretAngle)
-            );
+            double difference = targetAngle - lastTurretAngle;
             t.addData("filterTurretAngleDifference", difference);
 
             if (Math.abs(difference) > deadband) {
@@ -270,9 +266,10 @@ class BallisticsHelper {
             double x = PoseLib.targetPose().x() - f.pose().x();
             double targetAngle_fs = Math.atan2(y,x);
             t.addData("TargetAngle_fs", targetAngle_fs);
+            t.addData("heading", f.pose().heading());
             double targetAngle_rs = targetAngle_fs - f.pose().heading();
             t.addData("TargetAngle_rs", targetAngle_rs);
-            return filterTurretAngle(targetAngle_rs, t); // + getLead(f, flightTime, t);
+            return targetAngle_rs; // + getLead(f, flightTime, t);
         }
 
     }

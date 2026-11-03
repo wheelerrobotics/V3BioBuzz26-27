@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.hardware.HardwareNames;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Colorable;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Lights;
+import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
 
 // This is made for two positional servos
 @Config
@@ -21,8 +22,8 @@ public class Turret {
 
     // Servo to turret
     public static final double servoRatio = 1/1.8/360;
-    public static final double maxAngleDegrees = 90;
     public static final double minAngleDegrees = -90;
+    public static final double maxAngleDegrees = 90;
     public Turret(HardwareMap hardwareMap) {
         servo1 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_1);
         servo2 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_2);
@@ -32,27 +33,32 @@ public class Turret {
 
     }
 
-    public void turnTo(double angle) {
-        angle = Range.clip(
-                angle,
+    public void turnTo(double deg) {
+        deg = Range.clip(
+                deg,
                 minAngleDegrees,
                 maxAngleDegrees
         );
 
-        if (Double.isNaN(angle)) {
+        if (Double.isNaN(deg)) {
             Lights.queueAlert(Colorable::sage);
+            DashboardTelemetry.getInstance().addData("turnTo()", "bad");
             return;
         }
+        DashboardTelemetry.getInstance().addData("turnTo()", "good");
 
 
-        double servoPos = ((angle + 90) * servoRatio);
+        double servoPos = ((90 - deg) * servoRatio);
+        DashboardTelemetry.getInstance().addData("turnTo() servoPos", servoPos);
 
         servo1.setPosition(servoPos);
         servo2.setPosition(servoPos);
     }
 
     public void update() {
-        turnTo(Math.toDegrees(Ballistics.getResult().getTurretAngleRS()));
+        double deg = Math.toDegrees(Ballistics.getResult().getTurretAngleRS());
+        DashboardTelemetry.getInstance().addData("Turret: update() deg", deg);
+        turnTo(deg);
     }
 
 }
