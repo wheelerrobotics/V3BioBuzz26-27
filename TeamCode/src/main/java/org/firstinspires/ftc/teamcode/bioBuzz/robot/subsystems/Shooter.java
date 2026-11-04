@@ -77,7 +77,8 @@ public class Shooter {
     }
 
     public void update() {
-        double tps = ShooterLUT.getLut().get(Ballistics.getResult().getDistance());
+        double inches = Ballistics.getResult().getDistance() * 39.37;
+        double tps = ShooterLUT.getLut().get(inches);
 
         pid1.setTarget(tps);
         pid2.setTarget(tps);
