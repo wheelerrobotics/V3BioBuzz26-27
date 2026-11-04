@@ -16,9 +16,9 @@ public final class Hood {
     public static final double degPosSlope = -0.0113458;
     public static final double degPosIntercept = 1.9668;
     @SuppressWarnings("CanBeFinal")
-    public static double hoodMax = 0.24;
+    public static double hoodMax = 0.254;
     @SuppressWarnings("CanBeFinal")
-    public static double hoodMin = 0;
+    public static double hoodMin = 0.01;
     public Hood(HardwareMap hardwareMap) {
         hoodServo = hardwareMap.get(Servo.class, HOOD);
     }

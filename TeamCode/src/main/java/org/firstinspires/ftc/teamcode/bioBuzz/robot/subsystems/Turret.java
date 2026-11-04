@@ -48,7 +48,7 @@ public class Turret {
         DashboardTelemetry.getInstance().addData("turnTo()", "good");
 
 
-        double servoPos = ((90 - deg) * servoRatio);
+        double servoPos = ((deg+90) * servoRatio);
         DashboardTelemetry.getInstance().addData("turnTo() servoPos", servoPos);
 
         servo1.setPosition(servoPos);
