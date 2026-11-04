@@ -88,8 +88,8 @@ class BallisticsHelper {
         if (sqrt >= 0) {
             sqrt = Math.sqrt(sqrt);
         } else {
-            t.addData("getHoodAngle()", 0);
-            return 0;
+            t.addData("getHoodAngle()", "brokie");
+            return Math.toRadians(72);
         }
 
         double denominator = g * x == 0 ? 1 : g * x;
