@@ -268,6 +268,11 @@ class BallisticsHelper {
             t.addData("TargetAngle_fs", targetAngle_fs);
             t.addData("heading", f.pose().heading());
             double targetAngle_rs = targetAngle_fs - f.pose().heading();
+            // Normalize to [-pi, pi] before the turret applies its angle limits.
+            targetAngle_rs = Math.atan2(
+                    Math.sin(targetAngle_rs),
+                    Math.cos(targetAngle_rs)
+            );
             t.addData("TargetAngle_rs", targetAngle_rs);
             return targetAngle_rs; // + getLead(f, flightTime, t);
         }
