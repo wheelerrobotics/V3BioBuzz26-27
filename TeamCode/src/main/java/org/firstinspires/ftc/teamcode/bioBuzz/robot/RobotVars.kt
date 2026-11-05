@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.robot
 
+import com.acmerobotics.dashboard.config.Config
 import com.pedropathing.math.Pose
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Colorable
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems.lighting.Lights
 
+@Config
 object RobotVars {
     private var _followerDisabled: Boolean = false
 
@@ -17,5 +19,8 @@ object RobotVars {
 
     @JvmStatic
     var lastPose: Pose = Pose(0.0,0.0,0.0)
+
+    @JvmStatic
+    var waitTime: Int = 10000
 
 }

@@ -23,7 +23,7 @@ public class PoseLib {
     //field poses
     public static Pose startNectarSide, startEmptySide, passUnderCTRL, sideFlower, sideFlowerCTRL,
             bottomFlower, bottomFlowerCTRL, partnerPickup, partnerPickupCTRL, gardenPickup,
-            gardenPickupCTRL, park, nectarCell, emptyCell;
+            gardenPickupCTRL, park, nectarCell, emptyCell, park2;
 
     static {initPoses();}
     private static void initPoses() {
@@ -39,6 +39,7 @@ public class PoseLib {
         gardenPickup = field.of(9, 9, 270);
         gardenPickupCTRL = field.of(9, 16, 270);
         park = field.of(10, 95, 90);
+        park2 = field.of(9, 118, 180);
         nectarCell = field.of(58, 56, 90);
         emptyCell = field.of(nectarCell.x(), nectarCell.invert().y(), 270);
     }
