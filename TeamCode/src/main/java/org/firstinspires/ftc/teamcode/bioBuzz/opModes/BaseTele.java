@@ -19,9 +19,9 @@ public abstract class BaseTele extends BaseOpMode {
 
         r.follower.manual(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
 
-        if (gamepad1.aWasPressed()) {
+        if (gamepad2.aWasPressed()) {
             r.commands.shootCommand().schedule();
-        } else if (gamepad1.aWasReleased()) {
+        } else if (gamepad2.aWasReleased()) {
             r.commands.shootCommand().cancel();
         }
 
@@ -35,10 +35,16 @@ public abstract class BaseTele extends BaseOpMode {
 //            lastB = true;
 //        }
 
-        if (gamepad1.bWasPressed()) {
+        if (gamepad2.bWasPressed()) {
             r.commands.intakeOn().schedule();
-        } else if (gamepad1.bWasReleased()) {
+        } else if (gamepad2.bWasReleased()) {
             r.commands.intakeOn().cancel();
+        }
+
+        if (gamepad2.xWasPressed()) {
+            r.commands.outtake().schedule();
+        } else if (gamepad2.xWasReleased()) {
+            r.commands.outtake().cancel();
         }
 
 

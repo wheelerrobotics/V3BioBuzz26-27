@@ -274,7 +274,7 @@ class BallisticsHelper {
                     Math.cos(targetAngle_rs)
             );
             t.addData("TargetAngle_rs", targetAngle_rs);
-            return targetAngle_rs; // + getLead(f, flightTime, t);
+            return filterTurretAngle(targetAngle_rs, t); // + getLead(f, flightTime, t);
         }
 
     }

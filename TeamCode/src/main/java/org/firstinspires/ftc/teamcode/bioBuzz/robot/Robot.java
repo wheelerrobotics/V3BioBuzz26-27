@@ -130,14 +130,20 @@ public class Robot {
 //                    .setPriority(10);
 //        }
         public Command outtake() {
-            return build()
-                    .setStart(() -> {
-                        intake.setIntakePower(-intakePower);
-                        transfer.setTransferPower(-transferPower);
-                    })
-//                    .requiring(Transfer.class, Intake.class)
-                    .setPriority(100);
+            return intakeCommand;
         }
+
+        private final Command outtakeCommand = build()
+                .setStart(() -> {
+                    intake.setIntakePower(-intakePower);
+                    transfer.setTransferPower(-transferPower);
+                })
+                .setEnd(endCondition -> {
+                    intake.setIntakePower(0);
+                    transfer.setTransferPower(0);
+                })
+//                    .requiring(Transfer.class, Intake.class)
+                .setPriority(100);
 
         //INTAKE SLIDES
         public Command extendOut() {

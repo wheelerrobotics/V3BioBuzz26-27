@@ -12,9 +12,9 @@ public class PoseLib {
 
     public static void setField(Alliance.Color nAlliance) {
         if (cFactoryAlliance != nAlliance) {
-            field = field.mirrorX(70.75);
-            field = field.mirrorY(70.75);
-            target = target.mirrorX(70.75);
+            field = field.mirrorX(72);
+            field = field.mirrorY(72);
+            target = target.mirrorX(72);
             cFactoryAlliance = nAlliance;
             initPoses();
         }
@@ -54,7 +54,7 @@ public class PoseLib {
     private static PoseFactory target = PoseFactory.degrees();
     public static void setActiveCell(Cell nCell) {
         if (cFactoryCell != nCell) {
-            target = target.mirrorY(70.75);
+            target = target.mirrorY(72);
             cFactoryCell = nCell;
         }
     }
@@ -70,6 +70,7 @@ public class PoseLib {
         if (f.pose().y() > 72) {
             setActiveCell(Cell.EMPTY);
         } else setActiveCell(Cell.NECTAR);
+        initPoses();
     }
 
 }
