@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedro;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.algorithm.Foresight;
 import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.controllers.Controller;
@@ -19,14 +20,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 /**
  * Pedro Pathing 3 configuration for this robot.
  */
+@Config
 public final class Constants {
     private Constants() {}
+
+//    public static double ypod = -4.277178846944975;
+//    public static double xpod = 0.19534809382881707;
 
     public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
         c.name.set("pinpoint");
         c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        c.xPodOffset.set(-4.278453316275529);
-        c.yPodOffset.set(1.3929287467415876);
+        c.xPodOffset.set(0.4);
+        c.yPodOffset.set(6.1);
         c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
         c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
         c.globalDistanceUnit.set(DistanceUnit.INCH);

@@ -173,8 +173,10 @@ public class Robot {
 
         //Shooter + Hood
         public Command shooterUpdate() {
-            return infinite(shooter::update);
+            return shooterUpdateCommand;
         }
+
+        private final Command shooterUpdateCommand = infinite(shooter::update);
 
         public Command shootCommand() {
             return shootCommand;

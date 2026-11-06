@@ -5,6 +5,7 @@ import com.pedropathing.math.Pose;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
 public abstract class BaseTele extends BaseOpMode {
+    private boolean shooterToggle = true;
     @Override
     public void init() {
         super.init();
@@ -23,6 +24,16 @@ public abstract class BaseTele extends BaseOpMode {
             r.commands.shootCommand().schedule();
         } else if (gamepad2.aWasReleased()) {
             r.commands.shootCommand().cancel();
+        }
+
+        if (gamepad2.xWasPressed()) {
+            if (shooterToggle) {
+                r.commands.shooterUpdate().cancel();
+                shooterToggle = false;
+            } else {
+                r.commands.shooterUpdate().schedule();
+                shooterToggle = true;
+            }
         }
 
 //        if (!gamepad1.b) lastB = false;
