@@ -10,6 +10,7 @@ public abstract class BaseTele extends BaseOpMode {
     public void init() {
         super.init();
         r.follower.setPose(RobotVars.getLastPose());
+        r.commands.stopItPlsInfinite.schedule();
     }
 
     @Override
@@ -20,13 +21,13 @@ public abstract class BaseTele extends BaseOpMode {
 
         r.follower.manual(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
 
-        if (gamepad2.aWasPressed()) {
+        if (gamepad2.xWasPressed()) {
             r.commands.shootCommand().schedule();
-        } else if (gamepad2.aWasReleased()) {
+        } else if (gamepad2.xWasReleased()) {
             r.commands.shootCommand().cancel();
         }
 
-        if (gamepad2.xWasPressed()) {
+        if (gamepad2.dpad_up) {
             if (shooterToggle) {
                 r.commands.shooterUpdate().cancel();
                 shooterToggle = false;
@@ -46,15 +47,15 @@ public abstract class BaseTele extends BaseOpMode {
 //            lastB = true;
 //        }
 
-        if (gamepad2.bWasPressed()) {
+        if (gamepad2.aWasPressed()) {
             r.commands.intakeOn().schedule();
-        } else if (gamepad2.bWasReleased()) {
+        } else if (gamepad2.aWasReleased()) {
             r.commands.intakeOn().cancel();
         }
 
-        if (gamepad2.xWasPressed()) {
+        if (gamepad2.yWasPressed()) {
             r.commands.outtake().schedule();
-        } else if (gamepad2.xWasReleased()) {
+        } else if (gamepad2.yWasReleased()) {
             r.commands.outtake().cancel();
         }
 

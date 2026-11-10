@@ -26,6 +26,8 @@ public class Turret {
     public static final double servoRatio = 1/1.8/360;
     public static final double minAngleDegrees = -90;
     public static final double maxAngleDegrees = 90;
+
+    public static double llmultiplier = 1;
     private final Limelight3A ll;
     public Turret(HardwareMap hardwareMap) {
         servo1 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_1);
@@ -65,7 +67,7 @@ public class Turret {
         double deg = result !=  null ? result.getTargetXDegrees() : 0;
 //                Math.toDegrees(Ballistics.getResult().getTurretAngleRS());
         DashboardTelemetry.getInstance().addData("Turret: update() deg", deg);
-        turnTo(-deg);
+        turnTo(-deg * llmultiplier);
     }
 
 }

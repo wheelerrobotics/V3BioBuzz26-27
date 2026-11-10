@@ -198,7 +198,7 @@ public class Robot {
                 .requiring(Stopper.class)
                 .setPriority(Integer.MAX_VALUE)//hehe
                 .setDone(() -> Ballistics.getResult().getReadyToShoot());
-        private final Command stopItPlsInfinite = infinite(() -> {
+        public final Command stopItPlsInfinite = infinite(() -> {
             if(!Ballistics.getResult().getReadyToShoot() && !stopItPls.isScheduled()) {
                 stopItPls.schedule();
             }

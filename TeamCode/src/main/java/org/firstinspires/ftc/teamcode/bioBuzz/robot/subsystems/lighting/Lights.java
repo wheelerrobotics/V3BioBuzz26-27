@@ -10,13 +10,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.ballistics.Ballistics;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 @Config
 public class Lights {
-    @SuppressWarnings("unused")
     public static InnerModes getInnerMode() {
         return innerMode;
     }
@@ -159,6 +159,12 @@ public class Lights {
         }
     }
 
+    private void updateInnerLightShoot() {
+        if (!Ballistics.getResult().getReadyToShoot()) {
+            l2.off();
+        } else l2.green();
+    }
+
     public static void queueAlert(Consumer<Colorable> alert) {
         alerts.add(alert);
     }
@@ -166,7 +172,7 @@ public class Lights {
     public void loop() {
         setCellLight();
         updateAlertLight();
-        updateInnerLight();
+        updateInnerLightShoot();
     }
 
 }

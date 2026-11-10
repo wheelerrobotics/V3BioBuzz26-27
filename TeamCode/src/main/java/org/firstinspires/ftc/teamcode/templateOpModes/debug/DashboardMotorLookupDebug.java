@@ -38,7 +38,7 @@ public class DashboardMotorLookupDebug extends OpMode {
     private void report() {
         lastReport = System.nanoTime();
         String requested = TEST_NAME;
-        output.addData("Build marker", "FTC-DASHBOARD-SLOTH-1");
+        output.addData("Build marker", "FTC-DASHBOARD-2");
         output.addData("Loop counter", loops);
         output.addData("PROBE_NUMBER (Java)", PROBE_NUMBER);
         output.addData("TEST_NAME (Java)", "[" + requested + "]");
