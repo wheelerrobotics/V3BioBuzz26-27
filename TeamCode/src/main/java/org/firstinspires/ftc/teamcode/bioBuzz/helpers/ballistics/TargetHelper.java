@@ -22,26 +22,26 @@ public class TargetHelper {
         if (Alliance.get() == Alliance.Color.RED) {
             if (PoseLib.getActiveCell() == PoseLib.Cell.NECTAR) {
                 list.add(34);
-                list.add(35);
-                list.add(36);
-                list.add(37);
+//                list.add(35);
+//                list.add(36);
+//                list.add(37);
             } else {
                 list.add(30);
-                list.add(31);
-                list.add(32);
-                list.add(33);
+//                list.add(31);
+//                list.add(32);
+//                list.add(33);
             }
         } else {
             if (PoseLib.getActiveCell() == PoseLib.Cell.NECTAR) {
                 list.add(42);
-                list.add(43);
-                list.add(44);
-                list.add(45);
+//                list.add(43);
+//                list.add(44);
+//                list.add(45);
             } else {
                 list.add(38);
-                list.add(39);
-                list.add(40);
-                list.add(41);
+//                list.add(39);
+//                list.add(40);
+//                list.add(41);
             }
         }
 
@@ -81,9 +81,9 @@ public class TargetHelper {
 
 
         t.addData("getLLX() id", idealResult.getFiducialId());
-        Pose3D tPose = idealResult.getCameraPoseTargetSpace(); //Point-of-Interest Tracking for tag offset
-        t.addData("getLLX() x", tPose.getPosition().x);
-        double distance = Math.cos(0.942)*tPose.getPosition().x; // get flat distance
+        Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
+        //t.addData("getLLX() x", tPose.getPosition().x);
+        double distance = 10*tPose.getPosition().x; // get flat distance
         t.addData("getLLX()", distance);
         return distance;
 
