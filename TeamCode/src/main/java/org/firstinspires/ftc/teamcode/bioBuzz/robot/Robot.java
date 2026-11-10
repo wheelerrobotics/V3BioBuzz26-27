@@ -191,6 +191,17 @@ public class Robot {
                 .setEnd(endCondition -> {
             transfer.setTransferPower(0);
             stopper.setStopperPos(stopperIn);
+        }).requiring(Stopper.class);
+
+        private final Command stopItPls =  build()
+                .setStart(() -> stopper.setStopperPos(stopperIn))
+                .requiring(Stopper.class)
+                .setPriority(Integer.MAX_VALUE)//hehe
+                .setDone(() -> Ballistics.getResult().getReadyToShoot());
+        private final Command stopItPlsInfinite = infinite(() -> {
+            if(!Ballistics.getResult().getReadyToShoot() && !stopItPls.isScheduled()) {
+                stopItPls.schedule();
+            }
         });
 
         public Command hood() {

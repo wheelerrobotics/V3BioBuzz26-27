@@ -89,7 +89,8 @@ class BallisticsHelper {
             sqrt = Math.sqrt(sqrt);
         } else {
             t.addData("getHoodAngle()", "brokie");
-            return Math.toRadians(72);
+            readyToShoot = false;
+            return Math.toRadians(0); //most likely to make the shot
         }
 
         double denominator = g * x == 0 ? 1 : g * x;
@@ -134,7 +135,7 @@ class BallisticsHelper {
         return Constants.gravity;
     }
 
-//    private static double updateTargetX(Follower f, LLResult r, Telemetry t) { // FIXME TODAY TODAY TODAY REPLACE WITH SIMPLE
+//    private static double updateTargetX(Follower f, LLResult r, Telemetry t) {
 //        double LLX = TargetHelper.getLLX(r, t);
 //        double pinpointX = TargetHelper.getPinpointX(f, t);
 //        double error = LLX - pinpointX;
@@ -154,7 +155,6 @@ class BallisticsHelper {
 //
 //            t.addData("targetingIntegral", targetErrorIntegral);
 //
-//            // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
 //            return LLX;
 //        }
 //
@@ -163,7 +163,6 @@ class BallisticsHelper {
 //            return 0;
 //        }
 //
-//        // FIXME: 9/20/26 ADD CALL TO TARGET SPACE CHECK
 //        return pinpointX;
 //    }
 
@@ -176,19 +175,19 @@ class BallisticsHelper {
 
 
     BallisticResult getResult() {
+        readyToShoot = true;
         LLResult r = ll.getLatestResult();
         double tps = getMotorTPS();
         v0 = getV0(tps, t);
         double distance = updateTargetX(f, r, t);
+        if (distance == 0) readyToShoot = false;
 
         double hoodAngle = getHoodAngle(tps, distance, t);
 
         double flightTime = getFlightTime(distance, hoodAngle, t);
         double turretAngle_rs = SOTM.getTurretAngle_rs(f, flightTime, t);
 
-        return new BallisticResult(hoodAngle, turretAngle_rs, distance
-//                , readyToShoot Fixme: implement
-                );
+        return new BallisticResult(hoodAngle, turretAngle_rs, distance, readyToShoot);
     }
 
 

@@ -41,8 +41,8 @@ public abstract class BaseOpMode extends OpMode {
         r.lights.loop();
 //        PoseLib.update(r.follower);
         telemetryManager.update(telemetry);
-        if (gamepad2.right_bumper) PoseLib.setActiveCell(PoseLib.Cell.EMPTY);
         if (gamepad2.right_bumper) PoseLib.setActiveCell(PoseLib.Cell.NECTAR);
+        if (gamepad2.left_bumper) PoseLib.setActiveCell(PoseLib.Cell.EMPTY);
     }
 
     @Override
