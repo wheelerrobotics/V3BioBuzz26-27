@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
 import java.util.HashSet;
 import java.util.List;
 
-class TargetHelper {
+public class TargetHelper {
 
     @NonNull
     private static HashSet<Integer> getCurrentIDs() {
@@ -49,7 +49,7 @@ class TargetHelper {
 
     }
 
-    private static LLResultTypes.FiducialResult getIdealResult(LLResult r) {
+    public static LLResultTypes.FiducialResult getIdealResult(LLResult r) {
         List<LLResultTypes.FiducialResult> results = r.getFiducialResults();
         LLResultTypes.FiducialResult idealResult = null;
         HashSet<Integer> IDs = getCurrentIDs();
@@ -79,8 +79,11 @@ class TargetHelper {
             return 0; // returns 0 if things don't work out
         }
 
-        Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
-        double distance = Math.sqrt(Math.pow(tPose.getPosition().x, 2) + Math.pow(tPose.getPosition().y, 2)); // get flat distance
+
+        t.addData("getLLX() id", idealResult.getFiducialId());
+        Pose3D tPose = idealResult.getCameraPoseTargetSpace(); //Point-of-Interest Tracking for tag offset
+        t.addData("getLLX() x", tPose.getPosition().x);
+        double distance = Math.cos(0.942)*tPose.getPosition().x; // get flat distance
         t.addData("getLLX()", distance);
         return distance;
 

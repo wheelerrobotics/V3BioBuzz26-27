@@ -167,10 +167,11 @@ class BallisticsHelper {
 //        return pinpointX;
 //    }
 
-    private static double updateTargetX(Follower f, LLResult r, Telemetry t) { // FIXME TODAY TODAY TODAY REPLACE WITH SIMPLE
-        double LLX = TargetHelper.getLLX(r, t);
-        double pinpointX = TargetHelper.getPinpointX(f, t);
-        return LLX == 0 ? pinpointX : LLX; //ts syntax is fire
+    private static double updateTargetX(Follower f, LLResult r, Telemetry t) {
+//        double LLX = TargetHelper.getLLX(r, t);
+//        double pinpointX = TargetHelper.getPinpointX(f, t);
+//        return LLX == 0 ? pinpointX : LLX; //ts syntax is fire
+        return TargetHelper.getLLX(r, t);
     }
 
 

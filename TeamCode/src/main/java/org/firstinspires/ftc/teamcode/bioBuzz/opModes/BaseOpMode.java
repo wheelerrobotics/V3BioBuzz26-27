@@ -39,8 +39,10 @@ public abstract class BaseOpMode extends OpMode {
         r.turret.update();
         execute(); // ivy
         r.lights.loop();
-        PoseLib.update(r.follower);
+//        PoseLib.update(r.follower);
         telemetryManager.update(telemetry);
+        if (gamepad2.right_bumper) PoseLib.setActiveCell(PoseLib.Cell.EMPTY);
+        if (gamepad2.right_bumper) PoseLib.setActiveCell(PoseLib.Cell.NECTAR);
     }
 
     @Override
