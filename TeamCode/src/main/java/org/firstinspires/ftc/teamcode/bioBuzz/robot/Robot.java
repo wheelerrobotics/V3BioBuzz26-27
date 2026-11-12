@@ -130,7 +130,7 @@ public class Robot {
 //                    .setPriority(10);
 //        }
         public Command outtake() {
-            return intakeCommand;
+            return outtakeCommand;
         }
 
         private final Command outtakeCommand = build()
