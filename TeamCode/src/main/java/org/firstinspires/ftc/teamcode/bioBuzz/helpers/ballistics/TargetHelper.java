@@ -81,13 +81,23 @@ public class TargetHelper {
 
 
         t.addData("getLLX() id", idealResult.getFiducialId());
+
         Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
         //t.addData("getLLX() x", tPose.getPosition().x);
         double distance = 10*tPose.getPosition().x; // get flat distance
+
+
+        Pose3D pose = idealResult.getTargetPoseRobotSpace(); //chat for flat distance
+        double x = pose.getPosition().x;
+        double y = pose.getPosition().y;
+        double chatDistance = Math.hypot(x, y);
+        t.addData("chatDistance", chatDistance);
+
         t.addData("getTargetPoseCameraSpace", idealResult.getTargetPoseCameraSpace().toString());
         t.addData("getRobotPoseTargetSpace", idealResult.getRobotPoseTargetSpace().toString());
         t.addData("getTargetPoseRobotSpace", idealResult.getTargetPoseRobotSpace().toString());
-        t.addData("getLLX()", distance);
+
+        t.addData("getLLX() in use", distance);
         return distance;
 
     }
