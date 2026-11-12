@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.bioBuzz.robot.subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.robotcore.hardware.AnalogSensor;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -28,9 +28,8 @@ public class Turret {
     public static final double minAngleDegrees = -90;
     public static final double maxAngleDegrees = 90;
 
-    public static double llMultiplier = 1;
     private final Limelight3A ll;
-    private final AnalogSensor e;
+    private final AnalogInput e;
     public Turret(HardwareMap hardwareMap) {
         servo1 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_1);
         servo2 = hardwareMap.get(Servo.class, HardwareNames.TURRET_SERVO_2);
@@ -40,18 +39,18 @@ public class Turret {
 
 
         ll = hardwareMap.get(Limelight3A.class, "limelight");
-        e = hardwareMap.get(AnalogSensor.class, "as");
+        e = hardwareMap.get(AnalogInput.class, "as");
     }
 
-    private static double pos = 0;
-    public double getDeg(double deg) {
-        double volts = e.readRawVoltage();
+    public double getPos() {
+        double volts = e.getVoltage();
         DashboardTelemetry.getInstance().addData("encoder raw", volts);
-        pos = volts/3.3;
-        DashboardTelemetry.getInstance().addData("encoder pos", pos);
-        if (deg < 1) return pos;
-        return deg+pos;
+        double pos = volts / 3.3; // convert to 0-1
+        pos = pos / servoRatio - 90; // convert to correct degrees
+        DashboardTelemetry.getInstance().addData("pos from axon", pos);
+        return pos;
     }
+
     public void turnTo(double deg) {
         deg = Range.clip(
                 deg,
@@ -78,7 +77,12 @@ public class Turret {
         double deg = result !=  null ? result.getTargetXDegrees() : 0;
 //                Math.toDegrees(Ballistics.getResult().getTurretAngleRS());
         DashboardTelemetry.getInstance().addData("Turret: update() deg", deg);
-        turnTo(getDeg(-deg));
+        double pos = getPos();
+        if (deg < 1) {
+            turnTo(pos);
+            return;
+        }
+        turnTo(deg + pos);
     }
 
 }

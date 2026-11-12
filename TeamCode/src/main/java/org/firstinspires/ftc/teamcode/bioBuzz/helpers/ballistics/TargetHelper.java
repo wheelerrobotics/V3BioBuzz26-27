@@ -84,6 +84,9 @@ public class TargetHelper {
         Pose3D tPose = idealResult.getTargetPoseRobotSpace(); //Point-of-Interest Tracking for tag offset
         //t.addData("getLLX() x", tPose.getPosition().x);
         double distance = 10*tPose.getPosition().x; // get flat distance
+        t.addData("getTargetPoseCameraSpace", idealResult.getTargetPoseCameraSpace().toString());
+        t.addData("getRobotPoseTargetSpace", idealResult.getRobotPoseTargetSpace().toString());
+        t.addData("getTargetPoseRobotSpace", idealResult.getTargetPoseRobotSpace().toString());
         t.addData("getLLX()", distance);
         return distance;
 
