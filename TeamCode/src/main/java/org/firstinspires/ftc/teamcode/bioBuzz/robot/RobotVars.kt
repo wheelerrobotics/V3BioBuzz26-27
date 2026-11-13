@@ -17,8 +17,9 @@ object RobotVars {
             _followerDisabled = value
         }
 
+    // Null until auto records a pose; shared only for this app session.
     @JvmStatic
-    var lastPose: Pose = Pose(0.0,0.0,0.0)
+    var lastPose: Pose? = null
 
     @JvmStatic
     var waitTime: Int = 10000

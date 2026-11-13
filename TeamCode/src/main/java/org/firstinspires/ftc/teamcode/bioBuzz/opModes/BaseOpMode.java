@@ -5,6 +5,7 @@ import static com.pedropathing.ivy.Scheduler.reset;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.PoseLib;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.Robot;
 import org.firstinspires.ftc.teamcode.util.DashboardTelemetry;
@@ -13,9 +14,11 @@ public abstract class BaseOpMode extends OpMode {
 
     public Robot r;
     DashboardTelemetry telemetryManager;
+    protected abstract Alliance.Color getAlliance();
 
     @Override
     public void init() {
+        Alliance.set(getAlliance());
         reset();
         telemetryManager = DashboardTelemetry.begin(telemetry);
         r = new Robot(hardwareMap, gamepad1, gamepad2, telemetry);

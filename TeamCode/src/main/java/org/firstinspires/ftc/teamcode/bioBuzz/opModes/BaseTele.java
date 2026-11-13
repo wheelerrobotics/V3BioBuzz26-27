@@ -6,10 +6,14 @@ import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
 public abstract class BaseTele extends BaseOpMode {
     private boolean shooterToggle = true;
+
+    protected abstract Pose getStartingPose();
+
     @Override
     public void init() {
         super.init();
-        r.follower.setPose(RobotVars.getLastPose());
+        Pose lastAutoPose = RobotVars.getLastPose();
+        r.follower.setPose(lastAutoPose != null ? lastAutoPose : getStartingPose());
         r.commands.stopItPlsInfinite.schedule();
     }
 
