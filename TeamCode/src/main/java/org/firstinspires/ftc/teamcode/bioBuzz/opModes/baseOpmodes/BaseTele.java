@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.opModes;
+package org.firstinspires.ftc.teamcode.bioBuzz.opModes.baseOpmodes;
 
 import com.pedropathing.math.Pose;
 

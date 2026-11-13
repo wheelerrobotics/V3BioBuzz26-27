@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.bioBuzz.opModes.topAuto.blue;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
-import org.firstinspires.ftc.teamcode.bioBuzz.opModes.routines.FullCycleAuto;
+import org.firstinspires.ftc.teamcode.bioBuzz.opModes.routines.autos.FullCycleAuto;
 
-// Restored with the same disabled status as before removal.
-@Disabled
 @Autonomous
 public final class BlueFullCycleAuto extends FullCycleAuto {
     @Override

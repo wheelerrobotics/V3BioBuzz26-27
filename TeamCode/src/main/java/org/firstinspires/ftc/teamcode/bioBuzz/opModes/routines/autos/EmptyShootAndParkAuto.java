@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.bioBuzz.opModes.routines;
+package org.firstinspires.ftc.teamcode.bioBuzz.opModes.routines.autos;
 
 import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.ivy.commands.Commands.instant;
@@ -13,7 +13,7 @@ import com.pedropathing.ivy.Command;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 
-import org.firstinspires.ftc.teamcode.bioBuzz.opModes.BaseAuto;
+import org.firstinspires.ftc.teamcode.bioBuzz.opModes.baseOpmodes.BaseAuto;
 import org.firstinspires.ftc.teamcode.bioBuzz.robot.RobotVars;
 
 public abstract class EmptyShootAndParkAuto extends BaseAuto {

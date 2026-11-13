@@ -5,7 +5,7 @@ import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.bioBuzz.helpers.Alliance;
-import org.firstinspires.ftc.teamcode.bioBuzz.opModes.BaseTele;
+import org.firstinspires.ftc.teamcode.bioBuzz.opModes.baseOpmodes.BaseTele;
 
 @TeleOp
 public final class BlueBaseTele extends BaseTele {
